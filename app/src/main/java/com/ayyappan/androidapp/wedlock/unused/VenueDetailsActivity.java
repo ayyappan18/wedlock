@@ -1,11 +1,9 @@
-package com.ayyappan.androidapp.wedlock.venue;
+package com.ayyappan.androidapp.wedlock.unused;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -40,9 +38,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class VenueDetailsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -238,24 +239,45 @@ public class VenueDetailsActivity extends AppCompatActivity
                 		    }
 
 */
-
-
             View rootView = inflater.inflate(R.layout.fragment_venue_details, container, false);
 
-
-            TextView textVenueTitle = (TextView) rootView.findViewById(R.id.VenueTitle);
-            TextView textVenueHall = (TextView) rootView.findViewById(R.id.VenueHall);
-            TextView textVenueAddressLine1 = (TextView) rootView.findViewById(R.id.VenueAddress1);
-            TextView textVenueAddressLine2 = (TextView) rootView.findViewById(R.id.VenueAddress2);
-            TextView textVenueAddressLine3 = (TextView) rootView.findViewById(R.id.VenueAddress3);
-
-
+            //Get venue details
             final Venue venue = venues.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+
+            //Event Title
+            TextView textEventTitle = (TextView) rootView.findViewById(R.id.txt_event_name);
+
+            //Event Location Details
+            TextView textVenueTitle = (TextView) rootView.findViewById(R.id.VenueTitle);
+            TextView textVenueAddress = (TextView) rootView.findViewById(R.id.VenueAddress);
+
+            //Event Date TIme Details
+            TextView textEventDay = (TextView) rootView.findViewById(R.id.txt_event_day);
+            TextView textEventMonth = (TextView) rootView.findViewById(R.id.txt_event_month);
+            TextView textEventDate = (TextView) rootView.findViewById(R.id.txt_event_date);
+            TextView textEventTime = (TextView) rootView.findViewById(R.id.txt_event_time);
+
+            //Set event location details
+            String address = venue.getAddressLine1() + "\n" + venue.getAddressLine2() + "\n" + venue.getAddressLine3();
+            textEventTitle.setText(venue.getEventName());
             textVenueTitle.setText(venue.getVenueName());
-            textVenueHall.setText(venue.getHallName());
-            textVenueAddressLine1.setText(venue.getAddressLine1());
-            textVenueAddressLine2.setText(venue.getAddressLine2());
-            textVenueAddressLine3.setText(venue.getAddressLine3());
+            textVenueAddress.setText(address);
+
+            //Set event date time details
+            DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("E");
+            DateTimeFormatter monthFormatter = DateTimeFormat.forPattern("MMM");
+            DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("hh:mm a");
+
+            String day = dayFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+            String month = monthFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+            String date = Integer.toString(venue.getEventDate().getDayOfMonth());
+            String time = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+
+            textEventDay.setText(day);
+            textEventMonth.setText(month);
+            textEventDate.setText(date);
+            textEventTime.setText(time);
+
             if (mMapFragment != null) {
                 mMapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override

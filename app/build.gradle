@@ -90,6 +90,9 @@ dependencies {
     //Photo zoom
     compile 'com.commit451:PhotoView:1.2.4'
 
+    //font
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+
 }
 
 File propFile = file('signing.properties');

@@ -22,10 +22,10 @@ public class MenuOptions {
     public static final String ENTERTAINMENT_SANGEETH = "Sangeeth";
     public static final String BLOG = "Blog";
     public static final String INVITATION = "Invitation";
-    public static final String VENUE = "Venue";
+    public static final String EVENTS = "Events";
     public static final String VENUE_ENGAGEMENT = "Engagement";
-    public static final String VENUE_RECEPTION = "Reception";
-    public static final String VENUE_WEDDING = "Wedding";
+    public static final String EVENT_RECEPTION = "Reception";
+    public static final String EVENT_WEDDING = "Wedding";
     public static final String ABOUT = "About";
 
 
@@ -56,9 +56,9 @@ public class MenuOptions {
         menuGroupHeaders.add(BIOGRAPHY);
         menuGroupHeaders.add(GALLERY);
         menuGroupHeaders.add(ENTERTAINMENT);
-        menuGroupHeaders.add(BLOG);
+       // menuGroupHeaders.add(BLOG);
         menuGroupHeaders.add(INVITATION);
-        menuGroupHeaders.add(VENUE);
+        menuGroupHeaders.add(EVENTS);
         menuGroupHeaders.add(ABOUT);
 
         // Adding child data
@@ -71,18 +71,16 @@ public class MenuOptions {
         biography.add(BIOGRAPHY_GROOM);
 
         List<String> venue = new ArrayList<String>();
-        venue.add(VENUE_ENGAGEMENT);
-        venue.add(VENUE_RECEPTION);
-        venue.add(VENUE_WEDDING);
+        venue.add(EVENT_RECEPTION);
+        venue.add(EVENT_WEDDING);
 
         menuGroupCompleteList.put(menuGroupHeaders.get(0), new ArrayList()); // Header, Child data
         menuGroupCompleteList.put(menuGroupHeaders.get(1), biography);
         menuGroupCompleteList.put(menuGroupHeaders.get(2), new ArrayList());
         menuGroupCompleteList.put(menuGroupHeaders.get(3), entertainment);
         menuGroupCompleteList.put(menuGroupHeaders.get(4), new ArrayList());
-        menuGroupCompleteList.put(menuGroupHeaders.get(5), new ArrayList());
-        menuGroupCompleteList.put(menuGroupHeaders.get(6), venue);
-        menuGroupCompleteList.put(menuGroupHeaders.get(7), new ArrayList());
+        menuGroupCompleteList.put(menuGroupHeaders.get(5), venue);
+        menuGroupCompleteList.put(menuGroupHeaders.get(6), new ArrayList());
 
     }
 }

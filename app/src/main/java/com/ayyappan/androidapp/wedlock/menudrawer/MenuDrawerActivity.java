@@ -1,13 +1,9 @@
 package com.ayyappan.androidapp.wedlock.menudrawer;
 
-import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.AboutActivity;
 import com.ayyappan.androidapp.wedlock.HomeActivity;
@@ -25,33 +20,30 @@ import com.ayyappan.androidapp.wedlock.InvitationActivity;
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.biography.BiographyActivity;
 import com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity;
-import com.ayyappan.androidapp.wedlock.gallery.GalleryActivity;
 import com.ayyappan.androidapp.wedlock.gallery.GalleryGridActivity;
+import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.menudrawer.adapater.MenuDrawerListAdapter;
 import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 
-import org.joda.time.DateTime;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.ABOUT;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY_BRIDE;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY_GROOM;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BLOG;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.ENTERTAINMENT;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.ENTERTAINMENT_LIGHTMUSIC;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.ENTERTAINMENT_SANGEETH;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.GALLERY;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.HOME;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.INVITATION;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_ENGAGEMENT;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_RECEPTION;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_WEDDING;
+import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENTS;
+import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENT_RECEPTION;
+import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENT_WEDDING;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupCompleteList;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupHeaders;
 
@@ -61,11 +53,11 @@ import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMen
 public class MenuDrawerActivity extends AppCompatActivity {
 
     //menu drawer
-    ActionBarDrawerToggle drawerToggle;
+    private ActionBarDrawerToggle drawerToggle;
 
     //expandable list view
-    ExpandableListView drawerList;
-    MenuDrawerListAdapter listAdapter;
+    private ExpandableListView drawerList;
+    private static MenuDrawerListAdapter listAdapter = null;
 
     private int lastExpandedPosition = -1;
 
@@ -84,6 +76,7 @@ public class MenuDrawerActivity extends AppCompatActivity {
         drawerList = (ExpandableListView) findViewById(R.id.left_drawer);
 
         //create expandable list adapter
+        if(listAdapter == null)
         listAdapter = new MenuDrawerListAdapter(this, getMenuGroupHeaders(), getMenuGroupCompleteList());
 
         //initialise expandable list view with expandable list adapter
@@ -158,24 +151,18 @@ public class MenuDrawerActivity extends AppCompatActivity {
                                 break;
                         }
                         break;
-                    case VENUE:
+                    case EVENTS:
                         Intent intent = new Intent(MenuDrawerActivity.this, VenueActivity.class);
-
-                        List<Venue> venues = new ArrayList<>();
-
-                    //    venues.add(new Venue("Engagement", new DateTime("2016-02-10"),"Hotel Savera","Samvesh","146, Dr.Radhakrishnan Road","Mylapore, Chennai","Tamil Nadu 600004, India",13.045239, 80.261680));
-                        venues.add(new Venue("Reception", new DateTime("2016-02-10").withHourOfDay(19).withMinuteOfHour(0).withSecondOfMinute(0), "Sadayappa", "Samvesh", "146, Dr.Radhakrishnan Road", "Mylapore, Chennai", "Tamil Nadu 600004, India", 13.045760, 80.071426));
-                        venues.add(new Venue("Wedding", new DateTime("2016-02-10").withHourOfDay(19).withMinuteOfHour(0).withSecondOfMinute(0), "Sadayappa", "Samvesh", "146, Dr.Radhakrishnan Road", "Mylapore, Chennai", "Tamil Nadu 600004, India", 13.045760, 80.071426));
-
+                        List<Venue> venues = new GlobalData(getApplicationContext()).getVenue();
                         intent.putParcelableArrayListExtra("venues", (ArrayList<? extends Parcelable>) venues);
 
                         switch (childName) {
-                            case VENUE_RECEPTION:
-                                intent.putExtra("venue_position", 1);
+                            case EVENT_RECEPTION:
+                                intent.putExtra("venue_position", 0);
                                 startActivity(intent);
                                 break;
-                            case VENUE_WEDDING:
-                                intent.putExtra("venue_position", 2);
+                            case EVENT_WEDDING:
+                                intent.putExtra("venue_position", 1);
                                 startActivity(intent);
                                 break;
                         }
@@ -232,5 +219,16 @@ public class MenuDrawerActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
     }
 }

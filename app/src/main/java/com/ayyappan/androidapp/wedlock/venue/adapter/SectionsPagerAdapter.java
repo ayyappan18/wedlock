@@ -4,15 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 import com.ayyappan.androidapp.wedlock.venue.fragment.VenueFragment;
 
 import java.util.List;
 
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_ENGAGEMENT;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_RECEPTION;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.VENUE_WEDDING;
+import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENTS;
 import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupCompleteList;
 
 /**
@@ -30,7 +28,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return VenueFragment.newInstance(position);
+        return VenueFragment.newInstance(position,venues.get(position));
     }
 
     @Override
@@ -41,17 +39,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String childName = getMenuGroupCompleteList().get(VENUE).get(position);
+        String childName = getMenuGroupCompleteList().get(EVENTS).get(position);
 
         return childName;
-        /*switch (childName) {
-            case VENUE_ENGAGEMENT:
-                return "SECTION 1";
-            case VENUE_RECEPTION:
-                return "SECTION 2";
-            case VENUE_WEDDING:
-                return "SECTION 2";
-        }*/
-     //   return null;
     }
 }

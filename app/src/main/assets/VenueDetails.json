@@ -1,0 +1,26 @@
+{
+  "venues": [
+    {
+      "eventTitle": "Reception",
+      "eventDate": "09/02/2016 19:00:00",
+      "venueName": "Sadayapa Thirumana Mahal",
+      "hallName": "Sadayapa Thirumana Mahal",
+      "addressLine1": "No.85 A, Bangalore National Highway",
+      "addressLine2": "Thirumazhisai, Chennai",
+      "addressLine3": "Opposite Panimalar College",
+      "coordinateLat": "13.045760",
+      "coordinateLong": "80.071426"
+    },
+    {
+      "eventTitle": "Wedding",
+      "eventDate": "10/02/2016 06:30:00",
+      "venueName": "Sadayapa Thirumana Mahal",
+      "hallName": "Sadayapa Thirumana Mahal",
+      "addressLine1": "No.85 A, Bangalore National Highway",
+      "addressLine2": "Thirumazhisai, Chennai",
+      "addressLine3": "Opposite Panimalar College",
+      "coordinateLat": "13.045760",
+      "coordinateLong": "80.071426"
+    }
+  ]
+}

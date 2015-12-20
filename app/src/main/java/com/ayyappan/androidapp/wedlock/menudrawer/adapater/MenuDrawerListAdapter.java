@@ -4,17 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions;
+import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
 
 /**
  * Created by Ayyappan on 02/11/2015.
@@ -126,6 +125,9 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setText(headerTitle);
 
+        ImageView groupMenuIcon = (ImageView)convertView.findViewById(R.id.lbListIcon);
+        int image = getImageForGroup(headerTitle);
+        groupMenuIcon.setImageBitmap(IconDecoder.decodeSampledBitmapFromResource(_context.getResources(), image, 48, 48));
         return convertView;
     }
 
@@ -139,6 +141,18 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    private int getImageForGroup(String header){
+        switch(header){
+            case MenuOptions.HOME : return R.drawable.home_icon;
+            case MenuOptions.BIOGRAPHY : return R.drawable.bio_icon;
+            case MenuOptions.GALLERY : return R.drawable.gallery_icon;
+            case MenuOptions.ENTERTAINMENT : return R.drawable.entertainment_icon;
+            case MenuOptions.INVITATION : return R.drawable.invitation_icon;
+            case MenuOptions.EVENTS : return R.drawable.event_icon;
+            case MenuOptions.ABOUT : return R.drawable.about_icon;
+            default : return R.drawable. about_icon;
+        }
+    }
 
 }
 

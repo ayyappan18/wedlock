@@ -29,8 +29,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Ayyappan on 05/11/2015.
@@ -42,45 +46,71 @@ public class VenueFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-
+    Venue venue;
     private static GoogleMap googleMap;
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static VenueFragment newInstance(int sectionNumber) {
+    public static VenueFragment newInstance(int sectionNumber,Venue venue) {
         VenueFragment fragment = new VenueFragment();
+        fragment.venue = venue;
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public VenueFragment() {
+    public VenueFragment(){
+
+    }
+
+    public void setVenue(Venue venue){
+        this.venue = venue;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ArrayList<Venue> venues = getActivity().getIntent().getParcelableArrayListExtra("venues");
-        final Venue venue = venues.get(this.getArguments().getInt(ARG_SECTION_NUMBER));
-
         View venueFragmentView = inflater.inflate(R.layout.fragment_venue_details, container, false);
 
-        TextView textVenueTitle = (TextView) venueFragmentView.findViewById(R.id.VenueTitle);
-        TextView textVenueHall = (TextView) venueFragmentView.findViewById(R.id.VenueHall);
-        TextView textVenueAddressLine1 = (TextView) venueFragmentView.findViewById(R.id.VenueAddress1);
-        TextView textVenueAddressLine2 = (TextView) venueFragmentView.findViewById(R.id.VenueAddress2);
-        TextView textVenueAddressLine3 = (TextView) venueFragmentView.findViewById(R.id.VenueAddress3);
-        MapFragment mMapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
+        //Event Title
+        TextView textEventTitle = (TextView) venueFragmentView.findViewById(R.id.txt_event_name);
 
+        //Event Location Details
+        TextView textVenueTitle = (TextView) venueFragmentView.findViewById(R.id.VenueTitle);
+        TextView textVenueAddress = (TextView) venueFragmentView.findViewById(R.id.VenueAddress);
+
+        //Event Date TIme Details
+        TextView textEventDay = (TextView) venueFragmentView.findViewById(R.id.txt_event_day);
+        TextView textEventMonth = (TextView) venueFragmentView.findViewById(R.id.txt_event_month);
+        TextView textEventDate = (TextView) venueFragmentView.findViewById(R.id.txt_event_date);
+        TextView textEventTime = (TextView) venueFragmentView.findViewById(R.id.txt_event_time);
+
+        //Set event location details
+        String address = venue.getAddressLine1() + "\n" + venue.getAddressLine2() + "\n" + venue.getAddressLine3();
+        textEventTitle.setText(venue.getEventName());
         textVenueTitle.setText(venue.getVenueName());
-        textVenueHall.setText(venue.getHallName());
-        textVenueAddressLine1.setText(venue.getAddressLine1());
-        textVenueAddressLine2.setText(venue.getAddressLine2());
-        textVenueAddressLine3.setText(venue.getAddressLine3());
+        textVenueAddress.setText(address);
+
+        //Set event date time details
+        DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("E");
+        DateTimeFormatter monthFormatter = DateTimeFormat.forPattern("MMM");
+        DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("hh:mm a");
+
+        String day = dayFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+        String month = monthFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+        String date = Integer.toString(venue.getEventDate().getDayOfMonth());
+        String time = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+
+        textEventDay.setText(day);
+        textEventMonth.setText(month);
+        textEventDate.setText(date);
+        textEventTime.setText(time);
+
+        //Set Map
         setUpMapIfNeeded(venue);
 
         Button getDirectionButton = (Button) venueFragmentView.findViewById(R.id.GetDirections);

@@ -51,8 +51,6 @@ public class VenueActivity extends MenuDrawerActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,17 +58,38 @@ public class VenueActivity extends MenuDrawerActivity {
         setContentView(R.layout.activity_venue);
         super.onCreateDrawer();
 
-        // Initilization
-        viewPager = (ViewPager) findViewById(R.id.container);
 
-        ArrayList<Venue> venues =  getIntent().getParcelableArrayListExtra("venues");
+        ArrayList<Venue> venues = getIntent().getParcelableArrayListExtra("venues");
+        Integer venuePosition = getIntent().getIntExtra("venue_position", 0);
+
+        // Initializing view page
+        viewPager = (ViewPager) findViewById(R.id.container);
 
         // initialising the object of the FragmentManager. Here I'm passing getSupportFragmentManager(). You can pass getFragmentManager() if you are coding for Android 3.0 or above.
         fragmentManager = getSupportFragmentManager();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), venues);
+
+        //Create tab layout and register tab selection listener
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.setOnTabSelectedListener(tabSelectionListener());
+
+        //Add tabs
+        for (Venue venue : venues) {
+            tabLayout.addTab(tabLayout.newTab().setText(venue.getEventName()));
+        }
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        //set current view pager based on user selection
+        viewPager.setAdapter(mSectionsPagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setCurrentItem(venuePosition);
+
+    }
+
+    private TabLayout.OnTabSelectedListener tabSelectionListener(){
+        return new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -85,164 +104,6 @@ public class VenueActivity extends MenuDrawerActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
-
-        for(Venue venue: venues){
-            tabLayout.addTab(tabLayout.newTab().setText(venue.getEventName()));
-        }
-
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        viewPager.setAdapter(mSectionsPagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-   /*
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        // Adding Tabs
-         String[] tabs = { "Top Rated", "Games", "Movies" };
-
-        // Create a tab listener that is called when the user changes tabs.
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
-
-            }
-
-            @Override
-            public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
-
-            }
         };
-
-        // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 3; i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Tab " + (i + 1))
-                            .setTabListener(tabListener));
-        }*/
-     /*   List<Venue> venues = getIntent().getExtras().getParcelableArray("venues");
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);*/
-/*
-
-        venueFragment = new VenueFragment();
-        // initialising the object of the FragmentManager. Here I'm passing getSupportFragmentManager(). You can pass getFragmentManager() if you are coding for Android 3.0 or above.
-        fragmentManager = getSupportFragmentManager();
-        venueFragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, venueFragment).commit();
-*/
-
-
-        /*Venue venue = getIntent().getExtras().getParcelable("venue");
-
-        TextView textVenueTitle = (TextView) findViewById(R.id.VenueTitle);
-        TextView textVenueHall = (TextView) findViewById(R.id.VenueHall);
-        TextView textVenueAddressLine1 = (TextView) findViewById(R.id.VenueAddress1);
-        TextView textVenueAddressLine2 = (TextView) findViewById(R.id.VenueAddress2);
-        TextView textVenueAddressLine3 = (TextView) findViewById(R.id.VenueAddress3);
-        mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        textVenueTitle.setText(venue.getVenueName());
-        textVenueHall.setText(venue.getHallName());
-        textVenueAddressLine1.setText(venue.getAddressLine1());
-        textVenueAddressLine2.setText(venue.getAddressLine2());
-        textVenueAddressLine3.setText(venue.getAddressLine3());
-
-        setUpMapIfNeeded(venue);*/
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-      /*  if (googleMap != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .remove(getSupportFragmentManager().findFragmentById(R.id.gmap)).commit();
-            googleMap = null;
-        }*/
-    }
-
-    /*****
-     * Sets up the map if it is possible to do so
-     *****/
-    public void setUpMapIfNeeded(Venue venue) {
-        // Do a null check to confirm that we have not already instantiated the map.
-   //     if (googleMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-         /*   googleMap = ((SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.gmap)).getMap();
-           // setUpMap(venue);*/
-
-            // For dropping a marker at a point on the Map
-            googleMap.addMarker(
-                    new MarkerOptions()
-                            .position(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()))
-                            .title(venue.getVenueName())
-                            .snippet(venue.getAddressLine1()));
-
-            // For zooming automatically to the Dropped PIN Location
-            googleMap.moveCamera(
-                    CameraUpdateFactory
-                            .newLatLngZoom(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()), 15));
-
-          //  setUpMap(venue);
-
-            // Check if we were successful in obtaining the map.
-      /*  }
-        if (googleMap != null)
-        googleMap = ((SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.gmap)).getMap();*/
-    }
-
-    /**
-     * This is where we can add markers or lines, add listeners or move the
-     * camera.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #googleMap}
-     * is not null.
-     */
-    private void setUpMap(final Venue venue) {
-
-        if (mMapFragment != null) {
-            mMapFragment.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap gmap) {
-                    if (googleMap != null) {
-
-                        googleMap = gmap;
-
-                        googleMap.setMyLocationEnabled(true);
-                        googleMap.getUiSettings().setAllGesturesEnabled(true);
-
-                        // For dropping a marker at a point on the Map
-                        googleMap.addMarker(
-                                new MarkerOptions()
-                                        .position(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()))
-                                        .title(venue.getVenueName())
-                                        .snippet(venue.getAddressLine1()));
-
-                        // For zooming automatically to the Dropped PIN Location
-                        googleMap.moveCamera(
-                                CameraUpdateFactory
-                                        .newLatLngZoom(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()), 15));
-
-                    }
-                }
-            });
-
-        }
     }
 }

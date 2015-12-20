@@ -5,7 +5,11 @@ import android.content.Context;
 import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
 import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
 import com.ayyappan.androidapp.wedlock.login.bean.User;
+import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
+import com.ayyappan.androidapp.wedlock.venue.json.VenueDetailsJsonReader;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +20,35 @@ import java.util.List;
 public class GlobalData {
 
     private static Couple couple = null;
-    private static List<Venue> venue = null;
+    private static List<Venue> venues = null;
     private static String[] IMAGES_URLS = null;
     private static String userName = null;
     private static User user = null;
-
+    private Context context = null;
     private DBHelper db;
     private static GlobalData obj;
 
     public GlobalData(Context context) {
+        this.context = context;
         db = new DBHelper(context);
     }
 
-    public static List<Venue> getVenue() {
-        return venue;
+    public List<Venue> getVenue() {
+        if(GlobalData.venues == null){
+            try {
+                List<Venue> venues = VenueDetailsJsonReader.getVenues(context);
+                GlobalData.venues = venues;
+                return venues;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else
+            return GlobalData.venues;
     }
 
-    public static void setVenue(List<Venue> venue) {
-        GlobalData.venue = venue;
+    public void setVenue(List<Venue> venue) {
+        GlobalData.venues = venue;
     }
 
     public Couple getCouple() {

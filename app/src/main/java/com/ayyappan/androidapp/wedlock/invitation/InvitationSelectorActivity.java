@@ -81,7 +81,7 @@ public class InvitationSelectorActivity extends Activity {
             focusView.requestFocus();
         } else {
             //TODO: Retrieve invitation details from web service
-            if (invitationId.equals("1001") && invitationPasscode.equals("1234")) {
+            if (invitationId.equals("1001") && invitationPasscode.equals("2016")) {
                 GlobalData globalData = new GlobalData(getApplicationContext());
                 if (globalData.getCouple() == null)
                     new BiographyDetailsDownloader(getApplicationContext()).execute();

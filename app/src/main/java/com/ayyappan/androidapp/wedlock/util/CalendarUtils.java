@@ -1,4 +1,4 @@
-package com.ayyappan.androidapp.wedlock.venue;
+package com.ayyappan.androidapp.wedlock.util;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
