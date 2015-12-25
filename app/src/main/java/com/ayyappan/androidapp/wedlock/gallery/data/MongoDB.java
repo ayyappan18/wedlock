@@ -4,7 +4,9 @@ import com.ayyappan.androidapp.wedlock.biography.bean.Bio;
 import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
 import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
+import com.ayyappan.androidapp.wedlock.home.AppData;
 import com.google.gson.Gson;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -18,6 +20,7 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -53,25 +56,62 @@ public class MongoDB {
         return images;
     }
 
+
+    public AppData getAppData() {
+
+        DBCollection galleryCollection = db.getCollection("wedlock");
+        DBCursor docs = galleryCollection.find();
+        AppData result = null;
+
+        while (docs.hasNext()) {
+            DBObject doc = docs.next();
+            DBObject coupleObject = (DBObject) doc.get("couple");
+            Couple couple = getCouple(coupleObject);
+            BasicDBList imagesList = (BasicDBList) doc.get("images");
+            ArrayList<Image> images = getImagesList(imagesList);
+            result = new AppData();
+            result.setCouple(couple);
+            result.setImages(images);
+        }
+
+        return result;
+    }
+
     public Couple getCoupleInfo(){
         Couple couple = new Couple();
         DBCollection imagesCollection = db.getCollection("bio");
         DBCursor docs = imagesCollection.find();
         while (docs.hasNext()) {
             DBObject doc = docs.next();
-            DBObject brideDbObject = (DBObject)doc.get("bride");
-            Bio bride = new Bio((String)brideDbObject.get("name"),(String)brideDbObject.get("picture"),(String)brideDbObject.get("bio"));
-            couple.setBride(bride);
-
-            DBObject groomDbObject = (DBObject)doc.get("groom");
-            Bio groom = new Bio((String)groomDbObject.get("name"),(String)groomDbObject.get("picture"),(String)groomDbObject.get("bio"));
-
-            couple.setGroom(groom);
+            couple = getCouple(doc);
         }
         mongoClient.close();
         return couple;
     }
 
+    private Couple getCouple(DBObject doc){
+        Couple couple = new Couple();
+
+        DBObject brideDbObject = (DBObject)doc.get("bride");
+        Bio bride = new Bio((String)brideDbObject.get("name"),(String)brideDbObject.get("picture"),(String)brideDbObject.get("bio"));
+        couple.setBride(bride);
+
+        DBObject groomDbObject = (DBObject)doc.get("groom");
+        Bio groom = new Bio((String)groomDbObject.get("name"),(String)groomDbObject.get("picture"),(String)groomDbObject.get("bio"));
+
+        couple.setGroom(groom);
+        return couple;
+    }
+
+    private ArrayList<Image> getImagesList(BasicDBList images){
+        ArrayList<Image> imagesList = new ArrayList<>();
+
+        for(Iterator<Object> it = images.iterator(); it.hasNext();){
+            BasicDBObject doc = (BasicDBObject) it.next();
+            imagesList.add(new Image((Integer) doc.get("imageId"), (String) doc.get("thumbnailUri"), (String) doc.get("fullsizeUri")));
+        }
+        return imagesList;
+    }
     public void sendSongInterest(Song song){
         BasicDBObject basicDBObject = new BasicDBObject();
         basicDBObject.put("user", song.getUserName());

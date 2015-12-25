@@ -77,11 +77,11 @@ public class GalleryGridActivity extends MenuDrawerActivity {
 	protected boolean pauseOnFling = true;
 
 
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery);
 		onCreateDrawer();
+
 		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
 		listView = (GridView) findViewById(R.id.grid);
 
@@ -152,5 +152,11 @@ public class GalleryGridActivity extends MenuDrawerActivity {
 			});
 
 		}
+	}
+
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+
 	}
 }

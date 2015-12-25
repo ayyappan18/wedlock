@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.HomeActivity;
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.home.AppDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.BiographyDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.GalleryDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
@@ -83,10 +84,13 @@ public class InvitationSelectorActivity extends Activity {
             //TODO: Retrieve invitation details from web service
             if (invitationId.equals("1001") && invitationPasscode.equals("2016")) {
                 GlobalData globalData = new GlobalData(getApplicationContext());
-                if (globalData.getCouple() == null)
+                if(globalData.getCouple() == null || globalData.getImagesUrls() ==null){
+                   new AppDetailsDownloader(getApplicationContext()).execute();
+                }
+               /* if (globalData.getCouple() == null)
                     new BiographyDetailsDownloader(getApplicationContext()).execute();
                 if (globalData.getImagesUrls() == null)
-                    new GalleryDetailsDownloader(getApplicationContext()).execute();
+                    new GalleryDetailsDownloader(getApplicationContext()).execute();*/
                 startActivity(new Intent(InvitationSelectorActivity.this, LoginActivity.class));
             } else
                 Toast.makeText(getApplicationContext(), "Please enter valid invitation details", Toast.LENGTH_SHORT).show();

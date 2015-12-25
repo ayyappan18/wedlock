@@ -18,14 +18,23 @@ package com.ayyappan.androidapp.wedlock.gallery.widget;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.gallery.data.Constants;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.MemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import java.util.Collection;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
@@ -41,7 +50,11 @@ public class UILApplication extends Application {
 		}
 
 		super.onCreate();
-
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+						.setDefaultFontPath("EuphoriaScript-Regular.ttf")
+						.setFontAttrId(R.attr.fontPath)
+						.build()
+		);
 		initImageLoader(getApplicationContext());
 	}
 
@@ -55,6 +68,9 @@ public class UILApplication extends Application {
 		config.denyCacheImageMultipleSizesInMemory();
 		config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
 		config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+		config.memoryCacheSize(20 * 1024 * 1024);
+		config.memoryCache(new UsingFreqLimitedMemoryCache(20 * 1024 * 1024));
+
 		config.tasksProcessingOrder(QueueProcessingType.LIFO);
 		config.writeDebugLogs(); // Remove for release app
 

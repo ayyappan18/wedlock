@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.ayyappan.androidapp.wedlock.biography.bean.Bio;
 import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
+import com.ayyappan.androidapp.wedlock.invitation.bean.Invitation;
 import com.ayyappan.androidapp.wedlock.login.bean.User;
 import com.sun.mail.imap.protocol.BODY;
 
@@ -26,7 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String KEY_ROWID = "_id";
     public static final String GALLERY_COLUMN_URL = "url";
-    public static final String COUPLE_COLUMN_PERSON = "person";;
+    public static final String COUPLE_COLUMN_PERSON = "person";
+    ;
     public static final String COUPLE_COLUMN_NAME = "name";
     public static final String COUPLE_COLUMN_IMAGE_URL = "image";
     public static final String COUPLE_COLUMN_DETAIL = "detail";
@@ -34,14 +36,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_TABLE_NAME = "user";
     public static final String USER_COLUMN_NAME = "name";
     public static final String USER_COLUMN_AUTH_PROVIDER = "authprovider";
-    public static final String USER_COLUMN_EMAIL = "email";;
+    public static final String USER_COLUMN_EMAIL = "email";
+    ;
     public static final String USER_COLUMN_PHOTO = "photo";
     public static final String USER_COLUMN_PLACE = "place";
 
+    public static final String INVITATION_TABLE_NAME = "invitation";
+    public static final String INVITATION_COLUMN_ID = "id";
+    public static final String INVITATION_COLUMN_PASSCODE = "passcode";
+    public static final String INVITATION_COLUMN_NAME = "name";
+
     SQLiteDatabase db;
 
-    public DBHelper(Context context)
-    {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = getWritableDatabase();
     }
@@ -56,37 +63,62 @@ public class DBHelper extends SQLiteOpenHelper {
         String CREATE_COUPLE_TABLE = "CREATE TABLE IF NOT EXISTS " + COUPLE_TABLE_NAME +
                 "(" +
                 KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COUPLE_COLUMN_PERSON +" TEXT, " +
-                COUPLE_COLUMN_NAME +" TEXT, " +
-                COUPLE_COLUMN_IMAGE_URL +" TEXT, " +
+                COUPLE_COLUMN_PERSON + " TEXT, " +
+                COUPLE_COLUMN_NAME + " TEXT, " +
+                COUPLE_COLUMN_IMAGE_URL + " TEXT, " +
                 COUPLE_COLUMN_DETAIL + " TEXT " +
                 ")";
 
         String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + USER_TABLE_NAME +
                 "(" +
                 KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                USER_COLUMN_NAME +" TEXT NOT NULL, " +
-                USER_COLUMN_AUTH_PROVIDER +" TEXT NOT NULL, " +
-                USER_COLUMN_EMAIL +" TEXT, " +
-                USER_COLUMN_PHOTO +" TEXT, " +
+                USER_COLUMN_NAME + " TEXT NOT NULL, " +
+                USER_COLUMN_AUTH_PROVIDER + " TEXT NOT NULL, " +
+                USER_COLUMN_EMAIL + " TEXT, " +
+                USER_COLUMN_PHOTO + " TEXT, " +
                 USER_COLUMN_PLACE + " TEXT " +
                 ")";
+
+        String CREATE_INVITATION_TABLE = "CREATE TABLE IF NOT EXISTS " + INVITATION_TABLE_NAME +
+                "(" +
+                INVITATION_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                INVITATION_COLUMN_PASSCODE + " INTEGER, " +
+                INVITATION_COLUMN_NAME + " TEXT " +
+                ")";
+
 
         db.execSQL(CREATE_GALLERY_TABLE);
         db.execSQL(CREATE_COUPLE_TABLE);
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_INVITATION_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + GALLERY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + COUPLE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + INVITATION_TABLE_NAME);
         onCreate(db);
     }
 
 
-    private boolean insertImageUrl  (String url)
-    {
+    public boolean insertInvitation(Invitation invitation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(INVITATION_COLUMN_ID, invitation.getInvitationId());
+        contentValues.put(INVITATION_COLUMN_PASSCODE, invitation.getInvitationPasscode());
+        contentValues.put(INVITATION_COLUMN_NAME, invitation.getInvitationName());
+
+        if (db.insert(INVITATION_TABLE_NAME, null, contentValues) > 0)
+            return true;
+        else
+            return false;
+    }
+
+
+    private boolean insertImageUrl(String url) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(GALLERY_COLUMN_URL, url);
@@ -94,8 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    private boolean insertCouplePerson  (Bio bio, String person, boolean exists)
-    {
+    private boolean insertCouplePerson(Bio bio, String person, boolean exists) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COUPLE_COLUMN_PERSON, person);
@@ -103,34 +134,31 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COUPLE_COLUMN_IMAGE_URL, bio.getPictureUrl());
         contentValues.put(COUPLE_COLUMN_DETAIL, bio.getBio());
 
-        if(exists) {
+        if (exists) {
             if (db.update(COUPLE_TABLE_NAME, contentValues, COUPLE_COLUMN_PERSON + " = ", new String[]{person}) > 0) {
                 return true;
-            }
-            else
+            } else
                 return false;
-        }
-        else {
+        } else {
             if (db.insert(COUPLE_TABLE_NAME, null, contentValues) > 0) {
                 return true;
-            }
-            else
+            } else
                 return false;
         }
     }
 
-    public boolean insertCouple(Couple couple){
+    public boolean insertCouple(Couple couple) {
         Couple existingCouple = getCouple();
-        return insertCouplePerson(couple.getBride(), "bride", existingCouple.getBride() == null) && insertCouplePerson(couple.getGroom(),"groom",existingCouple.getGroom() == null);
+        return insertCouplePerson(couple.getBride(), "bride", existingCouple.getBride() == null) && insertCouplePerson(couple.getGroom(), "groom", existingCouple.getGroom() == null);
     }
 
     public boolean insertImageUrls(String[] urls) {
         SQLiteDatabase db = this.getWritableDatabase();
-    //    db.execSQL("DROP TABLE IF EXISTS "+ GALLERY_TABLE_NAME);
+        //    db.execSQL("DROP TABLE IF EXISTS "+ GALLERY_TABLE_NAME);
         boolean flag = false;
-        for(String url : urls) {
+        for (String url : urls) {
             flag = insertImageUrl(url);
-            if(!flag) return false;
+            if (!flag) return false;
         }
         return flag;
     }
@@ -171,7 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 */
 
-    public boolean saveUser(User user){
+    public boolean saveUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_NAME, user.getName());
@@ -180,24 +208,24 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COLUMN_PHOTO, user.getPhoto());
         contentValues.put(USER_COLUMN_PLACE, user.getPlace());
 
-        if(db.insert(USER_TABLE_NAME, null, contentValues) > 0)
+        if (db.insert(USER_TABLE_NAME, null, contentValues) > 0)
             return true;
         else
             return false;
     }
 
-    public User retrieveUser(){
+    public User retrieveUser() {
         // Select All Query
         String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery(selectQuery, null );
+        Cursor res = db.rawQuery(selectQuery, null);
         res.moveToFirst();
 
         User user = null;
 
-        while(res.isAfterLast() == false){
-           user = new User();
+        while (res.isAfterLast() == false) {
+            user = new User();
             user.setName(res.getString(res.getColumnIndex(USER_COLUMN_NAME)));
             user.setAuthProvider(res.getString(res.getColumnIndex(USER_COLUMN_AUTH_PROVIDER)));
             user.setEmail(res.getString(res.getColumnIndex(USER_COLUMN_EMAIL)));
@@ -211,30 +239,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Couple getCouple()
-    {
+    public Couple getCouple() {
         Couple couple = new Couple();
         // Select All Query
         String selectQuery = "SELECT * FROM " + COUPLE_TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery(selectQuery, null );
+        Cursor res = db.rawQuery(selectQuery, null);
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
+        while (res.isAfterLast() == false) {
             String person = res.getString(res.getColumnIndex(COUPLE_COLUMN_PERSON));
-            if( person== "bride"){
+            if (person.equals("bride")) {
                 String name = res.getString(res.getColumnIndex(COUPLE_COLUMN_NAME));
                 String picture = res.getString(res.getColumnIndex(COUPLE_COLUMN_IMAGE_URL));
                 String detail = res.getString(res.getColumnIndex(COUPLE_COLUMN_DETAIL));
-                Bio bride = new Bio(name,picture,detail);
+                Bio bride = new Bio(name, picture, detail);
                 couple.setBride(bride);
-            }
-            else if (person == "groom"){
+            } else if (person.equals("groom")) {
                 String name = res.getString(res.getColumnIndex(COUPLE_COLUMN_NAME));
                 String picture = res.getString(res.getColumnIndex(COUPLE_COLUMN_IMAGE_URL));
                 String detail = res.getString(res.getColumnIndex(COUPLE_COLUMN_DETAIL));
-                Bio groom = new Bio(name,picture,detail);
+                Bio groom = new Bio(name, picture, detail);
                 couple.setGroom(groom);
             }
             res.moveToNext();
@@ -242,25 +268,24 @@ public class DBHelper extends SQLiteOpenHelper {
         res.close();
         db.close();
 
-        if(couple.getGroom() == null || couple.getBride() == null)
+        if (couple.getGroom() == null || couple.getBride() == null)
             return null;
         else
             return couple;
     }
 
 
-    public ArrayList<String> getAllImageUrls()
-    {
+    public ArrayList<String> getAllImageUrls() {
         ArrayList<String> array_list = new ArrayList<String>();
 
         // Select All Query
         String selectQuery = "SELECT * FROM " + GALLERY_TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery(selectQuery, null );
+        Cursor res = db.rawQuery(selectQuery, null);
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
+        while (res.isAfterLast() == false) {
             array_list.add(res.getString(res.getColumnIndex(GALLERY_COLUMN_URL)));
             res.moveToNext();
         }

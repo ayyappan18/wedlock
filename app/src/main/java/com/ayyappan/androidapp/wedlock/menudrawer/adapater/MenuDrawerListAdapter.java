@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader;
     //Menu child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
-
+    private static HashMap<String, Bitmap> groupHeaderIcons =null;
     private static final int[] EMPTY_STATE_SET = {};
     private static final int[] GROUP_EXPANDED_STATE_SET =
             {android.R.attr.state_expanded};
@@ -36,10 +37,11 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
             GROUP_EXPANDED_STATE_SET // 1
     };
     public MenuDrawerListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
+                                 HashMap<String, List<String>> listChildData, HashMap<String, Bitmap> icons) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        this.groupHeaderIcons = icons;
     }
 
     @Override
@@ -126,8 +128,9 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setText(headerTitle);
 
         ImageView groupMenuIcon = (ImageView)convertView.findViewById(R.id.lbListIcon);
-        int image = getImageForGroup(headerTitle);
-        groupMenuIcon.setImageBitmap(IconDecoder.decodeSampledBitmapFromResource(_context.getResources(), image, 48, 48));
+       // int image = getImageForGroup(headerTitle);
+        groupMenuIcon.setImageBitmap(groupHeaderIcons.get(headerTitle));
+        //groupMenuIcon.setImageBitmap(IconDecoder.decodeSampledBitmapFromResource(_context.getResources(), image, 48, 48));
         return convertView;
     }
 
@@ -141,18 +144,6 @@ public class MenuDrawerListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private int getImageForGroup(String header){
-        switch(header){
-            case MenuOptions.HOME : return R.drawable.home_icon;
-            case MenuOptions.BIOGRAPHY : return R.drawable.bio_icon;
-            case MenuOptions.GALLERY : return R.drawable.gallery_icon;
-            case MenuOptions.ENTERTAINMENT : return R.drawable.entertainment_icon;
-            case MenuOptions.INVITATION : return R.drawable.invitation_icon;
-            case MenuOptions.EVENTS : return R.drawable.event_icon;
-            case MenuOptions.ABOUT : return R.drawable.about_icon;
-            default : return R.drawable. about_icon;
-        }
-    }
 
 }
 

@@ -23,6 +23,7 @@ import com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity;
 import com.ayyappan.androidapp.wedlock.gallery.GalleryGridActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.menudrawer.adapater.MenuDrawerListAdapter;
+import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
 import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 
@@ -77,7 +78,8 @@ public class MenuDrawerActivity extends AppCompatActivity {
 
         //create expandable list adapter
         if(listAdapter == null)
-        listAdapter = new MenuDrawerListAdapter(this, getMenuGroupHeaders(), getMenuGroupCompleteList());
+        listAdapter = new MenuDrawerListAdapter(this, getMenuGroupHeaders(), getMenuGroupCompleteList(),
+                IconDecoder.getMenuIconBitMaps(getApplicationContext()));
 
         //initialise expandable list view with expandable list adapter
         drawerList.setAdapter(listAdapter);
@@ -127,43 +129,41 @@ public class MenuDrawerActivity extends AppCompatActivity {
                                         int groupPosition, int childPosition, long id) {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
                 String childName = getMenuGroupCompleteList().get(groupName).get(childPosition);
+                Intent intent = new Intent(MenuDrawerActivity.this,MenuDrawerActivity.class);
+
                 switch (groupName) {
                     case BIOGRAPHY:
-                        Intent intent1 = new Intent(MenuDrawerActivity.this, BiographyActivity.class);
+                        intent = new Intent(MenuDrawerActivity.this, BiographyActivity.class);
                         switch (childName) {
                             case BIOGRAPHY_BRIDE:
-                                intent1.putExtra("selected_option",0);
-                                startActivity(intent1);
+                                intent.putExtra("selected_option", 0);
                                 break;
                             case BIOGRAPHY_GROOM:
-                                intent1.putExtra("selected_option",1);
-                                startActivity(intent1);
+                                intent.putExtra("selected_option", 1);
                                 break;
                         }
                         break;
                     case ENTERTAINMENT:
                         switch (childName) {
                             case ENTERTAINMENT_LIGHTMUSIC:
-                                startActivity(new Intent(MenuDrawerActivity.this, LightMusicActivity.class));
+                                intent = new Intent(MenuDrawerActivity.this, LightMusicActivity.class);
                                 break;
                             case ENTERTAINMENT_SANGEETH:
-                                startActivity(new Intent(MenuDrawerActivity.this, HomeActivity.class));
+                                intent = new Intent(MenuDrawerActivity.this, HomeActivity.class);
                                 break;
                         }
                         break;
                     case EVENTS:
-                        Intent intent = new Intent(MenuDrawerActivity.this, VenueActivity.class);
+                        intent = new Intent(MenuDrawerActivity.this, VenueActivity.class);
                         List<Venue> venues = new GlobalData(getApplicationContext()).getVenue();
                         intent.putParcelableArrayListExtra("venues", (ArrayList<? extends Parcelable>) venues);
 
                         switch (childName) {
                             case EVENT_RECEPTION:
                                 intent.putExtra("venue_position", 0);
-                                startActivity(intent);
                                 break;
                             case EVENT_WEDDING:
                                 intent.putExtra("venue_position", 1);
-                                startActivity(intent);
                                 break;
                         }
                         break;
@@ -171,8 +171,14 @@ public class MenuDrawerActivity extends AppCompatActivity {
                         return false;
                 }
 
+
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
+
+
+                startActivity(intent);
+                finish();
+
                 return true;
             }
         });
@@ -224,11 +230,5 @@ public class MenuDrawerActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-
     }
 }

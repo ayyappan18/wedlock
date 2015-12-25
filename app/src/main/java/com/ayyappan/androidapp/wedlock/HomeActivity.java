@@ -17,10 +17,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ayyappan.androidapp.wedlock.home.AppDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.BiographyDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.GalleryDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.imageslideshow.ImageViewerActivity;
+import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.menudrawer.MenuDrawerActivity;
 import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
@@ -56,7 +58,11 @@ public class HomeActivity extends MenuDrawerActivity {
         setContentView(R.layout.activity_home);
         super.onCreateDrawer();
 
+        CheckNetwork checkNetwork = new CheckNetwork();
 
+        if(checkNetwork.isOnline(getApplicationContext())){
+            new AppDetailsDownloader(getApplicationContext()).execute();
+        }
 
        // initialiseFaceBookAcessTokenTracker();
 

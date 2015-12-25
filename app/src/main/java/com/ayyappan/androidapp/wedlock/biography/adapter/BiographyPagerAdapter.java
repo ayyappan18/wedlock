@@ -1,16 +1,20 @@
 package com.ayyappan.androidapp.wedlock.biography.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ayyappan.androidapp.wedlock.biography.BiographyActivity;
 
+import java.util.HashMap;
+
 /**
  * Created by Ayyappan on 05/12/2015.
  */
 
 public class BiographyPagerAdapter extends FragmentPagerAdapter {
+
 
     public BiographyPagerAdapter(FragmentManager fm) {
         super(fm);

@@ -39,14 +39,17 @@ import com.ayyappan.androidapp.wedlock.home.BiographyDetailsDownloader;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.menudrawer.MenuDrawerActivity;
 import com.ayyappan.androidapp.wedlock.biography.adapter.BiographyPagerAdapter;
+import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BiographyActivity extends MenuDrawerActivity {
@@ -103,12 +106,13 @@ public class BiographyActivity extends MenuDrawerActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
+         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber, String person) {
+         public static PlaceholderFragment newInstance(int sectionNumber, String person) {
             PlaceholderFragment fragment = new PlaceholderFragment();
+
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             args.putString("person", person);
@@ -116,12 +120,15 @@ public class BiographyActivity extends MenuDrawerActivity {
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public PlaceholderFragment(){
+
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+
             View rootView = inflater.inflate(R.layout.fragment_biography, container, false);
 
             ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getContext()));
@@ -208,14 +215,14 @@ public class BiographyActivity extends MenuDrawerActivity {
         private void populateCoupleProfile(View rootView, Couple couple, Integer sectionNumber) {
             Bio bio;
 
-            Drawable pictureDrawable;
+            Bitmap pictureDrawable;
+            HashMap<String,Bitmap> profilePictures = IconDecoder.getCoupleProfileBitMaps(getActivity().getApplicationContext());
 
             if (sectionNumber == 0) {
-                pictureDrawable = getResources().getDrawable(R.drawable.bride);
+                pictureDrawable = profilePictures.get("bride");
                 bio = couple.getBride();
-                firstTimeLoad = false;
-            } else { //if(firstTimeLoad && person.equals("groom")) {
-                pictureDrawable = getResources().getDrawable(R.drawable.groom);
+            } else {
+                pictureDrawable = profilePictures.get("groom");
                 bio = couple.getGroom();
             }
 
@@ -223,8 +230,7 @@ public class BiographyActivity extends MenuDrawerActivity {
             nameText.setText(bio.getName());
 
             ImageView imageView = (ImageView) rootView.findViewById(R.id.picture);
-            imageView.setImageDrawable(pictureDrawable);
-
+            imageView.setImageBitmap(pictureDrawable);
 
             TextView bioText = (TextView) rootView.findViewById(R.id.bio);
             bioText.setText(bio.getBio());
@@ -256,6 +262,12 @@ public class BiographyActivity extends MenuDrawerActivity {
                 populateCoupleProfile(rootView,couple,sectionNumber);
             }
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        finish();
     }
 
 

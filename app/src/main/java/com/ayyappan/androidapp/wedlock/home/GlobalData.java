@@ -52,9 +52,9 @@ public class GlobalData {
     }
 
     public Couple getCouple() {
-      //  if(GlobalData.couple == null)
+        if(GlobalData.couple == null)
             return db.getCouple();
-       // else return couple;
+        else return couple;
     }
 
     public void setCouple(Couple couple) {
