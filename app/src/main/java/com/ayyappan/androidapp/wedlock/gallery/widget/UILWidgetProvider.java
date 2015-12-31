@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.ayyappan.androidapp.wedlock.UILApplication;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

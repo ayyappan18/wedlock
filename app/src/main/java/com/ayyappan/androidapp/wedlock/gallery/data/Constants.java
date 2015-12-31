@@ -15,13 +15,6 @@
  *******************************************************************************/
 package com.ayyappan.androidapp.wedlock.gallery.data;
 
-import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.database.DataSource;
-import com.ayyappan.androidapp.wedlock.database.googledrive.GoogleDriveDataSource;
-import com.google.gdata.util.ServiceException;
-
-import java.io.IOException;
-
 /**
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  */

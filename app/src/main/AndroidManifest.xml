@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ayyappan.androidapp.wedlock" >
+    package="com.ayyappan.androidapp.wedlock">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -13,36 +13,33 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- Creating Permission to receive Google Maps -->
-    <permission
-        android:name="com.arshad.map.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature" />
-
-    <!-- Permission to receive Google Maps -->
-    <uses-permission android:name="com.arshad.map.permission.MAPS_RECEIVE" />
-
     <application
+        android:name=".UILApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".gallery.widget.UILApplication"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".imageslideshow.ImageViewerActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-   <!--     <activity android:name=".LoginActivity" >
+        android:theme="@style/AppTheme">
+
+        <!-- Invitation Selection -->
+
+        <activity android:name=".invitation.InvitationSelectorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
+        </activity>
+
+        <!-- Login Activity -->
+        <activity android:name=".login.activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".invitation.InvitationSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity" />
+        </activity>
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -53,177 +50,21 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
-<!--
-            android:parentActivityName=".LoginActivity"
--->
-
-     <!--       <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.LoginActivity" />-->
-        </activity>
-
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".gallery.GalleryActivity"
-            android:label="@string/title_activity_gallery"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".gallery.GalleryGridActivity"
-            android:label="@string/title_activity_gallery"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-        <activity
-            android:name=".gallery.fragment.ImagePagerFragment"
-            android:label="@string/title_activity_gallery"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-        <activity
-            android:name=".gallery.fragment.ViewPagerActivity"
-            android:label="@string/title_activity_gallery"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-
-
-        <!-- Invitation Selection -->
-
-        <activity android:name=".invitation.InvitationSelectorActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-
-        <!-- Social media user login -->
-
-        <activity android:name=".login.activities.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".invitation.InvitationSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity" />
-        </activity>
-
-        <!-- Manual user login -->
-
-        <activity
-            android:name=".login.activities.RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-
-        <!-- Biography -->
-        <activity
-            android:name=".biography.BiographyActivity"
-            android:label="@string/title_activity_biography"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-        <!-- Light Music -->
-        <activity
-            android:name=".entertainment.LightMusicActivity"
-            android:label="@string/title_activity_light_music"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-        <!-- Song Request -->
-        <activity
-            android:name=".entertainment.SongRequestActivity"
-            android:label="@string/title_activity_song_request"
-            android:parentActivityName=".entertainment.LightMusicActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity" />
-        </activity>
-
-        <!-- Invitation -->
-        <activity
-            android:name=".InvitationActivity"
-            android:label="@string/title_activity_invitation"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-
-        <!-- Venue -->
-
-        <activity
-            android:name=".venue.VenueActivity"
-            android:label="@string/title_activity_event"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
-        </activity>
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCsZ1HDCpmlPf9I0a3SYmbEHurwubsQHoY" />
 
-        <!-- About -->
+        <!-- Main application activity-->
         <activity
-            android:name=".AboutActivity"
-            android:label="@string/title_activity_about"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:name=".home.ApplicationActivity"
+            android:label="@string/title_fragment_home"
+            android:parentActivityName=".login.activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                android:value="com.ayyappan.androidapp.wedlock.login.activities.LoginActivity" />
         </activity>
 
-        <!-- Widget -->
         <receiver android:name="com.ayyappan.androidapp.wedlock.gallery.widget.UILWidgetProvider" >
             <meta-data
                 android:name="android.appwidget.provider"
@@ -233,6 +74,188 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
+
+        <!--
+                <activity
+                    android:name=".HomeActivity"
+                    android:label="@string/title_activity_home"
+                    android:theme="@style/AppTheme.NoActionBar" >
+        &lt;!&ndash;
+                    android:parentActivityName=".LoginActivity"
+        &ndash;&gt;
+
+             &lt;!&ndash;       <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.LoginActivity" />&ndash;&gt;
+                </activity>
+
+                <activity
+                    android:name=".TestActivity"
+                    android:label="@string/title_activity_test"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+                <activity
+                    android:name=".gallery.GalleryActivity"
+                    android:label="@string/title_activity_gallery"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+                <activity
+                    android:name=".gallery.GalleryGridActivity"
+                    android:label="@string/title_activity_gallery"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+                <activity
+                    android:name=".gallery.fragment.ImagePagerFragment"
+                    android:label="@string/title_activity_gallery"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+                <activity
+                    android:name=".gallery.fragment.ViewPagerActivity"
+                    android:label="@string/title_activity_gallery"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+        -->
+
+
+
+        <!--
+
+                &lt;!&ndash; Social media user login &ndash;&gt;
+
+                <activity android:name=".login.activities.LoginActivity"
+                    android:label="@string/title_activity_login"
+                    android:parentActivityName=".invitation.InvitationSelectorActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity" />
+                </activity>
+
+                &lt;!&ndash; Manual user login &ndash;&gt;
+
+                <activity
+                    android:name=".login.activities.RegisterActivity"
+                    android:label="@string/title_activity_register"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                </activity>
+
+                &lt;!&ndash; Biography &ndash;&gt;
+                <activity
+                    android:name=".biography.BiographyActivity"
+                    android:label="@string/title_activity_biography"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+        -->
+
+
+
+        <!--
+
+                &lt;!&ndash; Light Music &ndash;&gt;
+                <activity
+                    android:name=".entertainment.LightMusicActivity"
+                    android:label="@string/title_activity_light_music"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+                &lt;!&ndash; Song Request &ndash;&gt;
+                <activity
+                    android:name=".entertainment.SongRequestActivity"
+                    android:label="@string/title_activity_song_request"
+                    android:parentActivityName=".entertainment.LightMusicActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity" />
+                </activity>
+
+                &lt;!&ndash; Invitation &ndash;&gt;
+                <activity
+                    android:name=".InvitationActivity"
+                    android:label="@string/title_activity_invitation"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+                &lt;!&ndash; Venue &ndash;&gt;
+
+                <activity
+                    android:name=".venue.VenueActivity"
+                    android:label="@string/title_activity_event"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+                &lt;!&ndash;
+                     The API key for Google Maps-based APIs is defined as a string resource.
+                     (See the file "res/values/google_maps_api.xml").
+                     Note that the API key is linked to the encryption key used to sign the APK.
+                     You need a different API key for each encryption key, including the release key that is used to
+                     sign the APK for publishing.
+                     You can define the keys for the debug and release targets in src/debug/ and src/release/.
+                &ndash;&gt;
+                <meta-data
+                    android:name="com.google.android.geo.API_KEY"
+                    android:value="AIzaSyCsZ1HDCpmlPf9I0a3SYmbEHurwubsQHoY" />
+
+                &lt;!&ndash; About &ndash;&gt;
+                <activity
+                    android:name=".AboutActivity"
+                    android:label="@string/title_activity_about"
+                    android:parentActivityName=".HomeActivity"
+                    android:theme="@style/AppTheme.NoActionBar" >
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
+                </activity>
+
+                &lt;!&ndash; Widget &ndash;&gt;
+                <receiver android:name="com.ayyappan.androidapp.wedlock.gallery.widget.UILWidgetProvider" >
+                    <meta-data
+                        android:name="android.appwidget.provider"
+                        android:resource="@xml/widget_provider" />
+
+                    <intent-filter>
+                        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                    </intent-filter>
+                </receiver>
+        -->
 
     </application>
 

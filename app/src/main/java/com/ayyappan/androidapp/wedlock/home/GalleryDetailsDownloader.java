@@ -2,15 +2,10 @@ package com.ayyappan.androidapp.wedlock.home;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
-import com.ayyappan.androidapp.wedlock.gallery.adapter.GalleryImageAdapter;
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
-import com.ayyappan.androidapp.wedlock.gallery.data.Constants;
-import com.ayyappan.androidapp.wedlock.gallery.data.MongoDB;
+import com.ayyappan.androidapp.wedlock.database.MongoDB;
 
 import java.util.List;
 

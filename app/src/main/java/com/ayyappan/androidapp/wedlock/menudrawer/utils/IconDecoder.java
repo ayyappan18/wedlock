@@ -45,7 +45,6 @@ public class IconDecoder {
         else
          return menuIcons;
     }
-
     public static HashMap<String, Bitmap> getCoupleProfileBitMaps(Context context){
         if(biographyBitmaps == null){
             HashMap<String, Bitmap> bitmaps = new HashMap<>();
@@ -58,6 +57,7 @@ public class IconDecoder {
             return biographyBitmaps;
     }
 
+/*
     private static int getBitmapId(String header){
         switch(header){
             case MenuOptions.HOME : return R.drawable.home_icon;
@@ -70,6 +70,7 @@ public class IconDecoder {
             default : return R.drawable. about_icon;
         }
     }
+*/
 
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {

@@ -3,7 +3,6 @@ package com.ayyappan.androidapp.wedlock.entertainment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -12,10 +11,9 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
-import com.ayyappan.androidapp.wedlock.gallery.data.MongoDB;
+import com.ayyappan.androidapp.wedlock.database.MongoDB;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.menudrawer.MenuDrawerActivity;
-import com.facebook.Profile;
 
 public class SongRequestActivity extends MenuDrawerActivity {
 

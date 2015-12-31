@@ -4,11 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
-import com.ayyappan.androidapp.wedlock.gallery.data.MongoDB;
+import com.ayyappan.androidapp.wedlock.database.MongoDB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

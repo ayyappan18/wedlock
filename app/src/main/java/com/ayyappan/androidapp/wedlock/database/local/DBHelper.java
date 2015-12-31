@@ -117,6 +117,51 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    public Invitation retrieveInvitation(Integer invitationId){
+        String selectQuery = "SELECT * FROM " + INVITATION_TABLE_NAME + " WHERE " + INVITATION_COLUMN_ID + "=" + invitationId;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuery, null);
+        res.moveToFirst();
+
+        Invitation invitation = null;
+
+        while (res.isAfterLast() == false) {
+            invitation = new Invitation();
+            invitation.setInvitationId(res.getInt(res.getColumnIndex(INVITATION_COLUMN_ID)));
+            invitation.setInvitationPasscode(res.getInt(res.getColumnIndex(INVITATION_COLUMN_PASSCODE)));
+            invitation.setInvitationName(res.getString(res.getColumnIndex(INVITATION_COLUMN_NAME)));
+            return invitation;
+        }
+        res.close();
+        db.close();
+        return invitation;
+
+    }
+
+
+    public Invitation retrieveInvitation(){
+        String selectQuery = "SELECT * FROM " + INVITATION_TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuery, null);
+        res.moveToFirst();
+
+        Invitation invitation = null;
+
+        while (res.isAfterLast() == false) {
+            invitation = new Invitation();
+            invitation.setInvitationId(res.getInt(res.getColumnIndex(INVITATION_COLUMN_ID)));
+            invitation.setInvitationPasscode(res.getInt(res.getColumnIndex(INVITATION_COLUMN_PASSCODE)));
+            invitation.setInvitationName(res.getString(res.getColumnIndex(INVITATION_COLUMN_NAME)));
+            return invitation;
+        }
+        res.close();
+        db.close();
+        return invitation;
+
+    }
+
 
     private boolean insertImageUrl(String url) {
         SQLiteDatabase db = this.getWritableDatabase();

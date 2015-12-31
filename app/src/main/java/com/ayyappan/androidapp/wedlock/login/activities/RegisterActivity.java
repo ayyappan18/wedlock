@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ayyappan.androidapp.wedlock.HomeActivity;
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.home.ApplicationActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.login.bean.User;
 import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
@@ -114,7 +114,7 @@ public class RegisterActivity extends Activity {
             }
 
             new GlobalData(RegisterActivity.this).setUser(registeredUser);
-            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+            startActivity(new Intent(RegisterActivity.this, ApplicationActivity.class));
 
 
 

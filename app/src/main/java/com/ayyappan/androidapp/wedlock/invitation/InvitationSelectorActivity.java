@@ -8,19 +8,18 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.ayyappan.androidapp.wedlock.HomeActivity;
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.UILApplication;
+import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
 import com.ayyappan.androidapp.wedlock.home.AppDetailsDownloader;
-import com.ayyappan.androidapp.wedlock.home.BiographyDetailsDownloader;
-import com.ayyappan.androidapp.wedlock.home.GalleryDetailsDownloader;
+import com.ayyappan.androidapp.wedlock.home.ApplicationActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
+import com.ayyappan.androidapp.wedlock.invitation.bean.Invitation;
 import com.ayyappan.androidapp.wedlock.login.activities.LoginActivity;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-import com.ayyappan.androidapp.wedlock.login.utils.Constants;
-import com.ayyappan.androidapp.wedlock.login.utils.ValidateUserInfo;
 
 /**
  * Created by Ayyappan on 20/08/2015.
@@ -29,10 +28,23 @@ public class InvitationSelectorActivity extends Activity {
     EditText edit_invitation_id, edit_invitation_code;
     Button btn_access_invitation;
 
+    private RelativeLayout layout; // the layout of the activity
+    private UILApplication app;
+    DBHelper db;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        db = new DBHelper(getApplicationContext());
+
+        if(db.retrieveInvitation() != null)
+            gotToLoginPage();
         setContentView(R.layout.activity_invitation_selector);
+
+        app = (UILApplication)getApplication();
+        layout = (RelativeLayout) findViewById(R.id.iv_background);
+        app.setBackground(layout, R.drawable.app_bg_login);
 
         edit_invitation_id = (EditText) findViewById(R.id.edit_invitation_id);
         edit_invitation_code = (EditText) findViewById(R.id.edit_invitation_passcode);
@@ -46,6 +58,25 @@ public class InvitationSelectorActivity extends Activity {
         });
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*layout = (LinearLayout) findViewById(R.id.iv_background);
+        app.setBackgroundL(layout, R.drawable.app_bg);*/
+    }
+
+    private void gotToLoginPage(){
+        GlobalData globalData = new GlobalData(getApplicationContext());
+        if(globalData.getCouple() == null || globalData.getImagesUrls() ==null){
+            new AppDetailsDownloader(getApplicationContext()).execute();
+        }
+        if(globalData.getUser() == null)
+            startActivity(new Intent(InvitationSelectorActivity.this, LoginActivity.class));
+        else
+            startActivity(new Intent(InvitationSelectorActivity.this, ApplicationActivity.class));
+        finish();
     }
 
     private void attemptToAccessInvitation() {
@@ -82,18 +113,16 @@ public class InvitationSelectorActivity extends Activity {
             focusView.requestFocus();
         } else {
             //TODO: Retrieve invitation details from web service
-            if (invitationId.equals("1001") && invitationPasscode.equals("2016")) {
-                GlobalData globalData = new GlobalData(getApplicationContext());
-                if(globalData.getCouple() == null || globalData.getImagesUrls() ==null){
-                   new AppDetailsDownloader(getApplicationContext()).execute();
-                }
-               /* if (globalData.getCouple() == null)
-                    new BiographyDetailsDownloader(getApplicationContext()).execute();
-                if (globalData.getImagesUrls() == null)
-                    new GalleryDetailsDownloader(getApplicationContext()).execute();*/
-                startActivity(new Intent(InvitationSelectorActivity.this, LoginActivity.class));
+            if (invitationId.equals("1002") && invitationPasscode.equals("1128")) {
+                db.insertInvitation(new Invitation(Integer.parseInt(invitationId), Integer.parseInt(invitationPasscode), "Nivedhitha Weds Nivedhitha"));
+                gotToLoginPage();
             } else
                 Toast.makeText(getApplicationContext(), "Please enter valid invitation details", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

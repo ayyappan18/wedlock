@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,19 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-
-import com.ayyappan.androidapp.wedlock.AboutActivity;
-import com.ayyappan.androidapp.wedlock.HomeActivity;
-import com.ayyappan.androidapp.wedlock.InvitationActivity;
+import android.widget.RelativeLayout;
 import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.biography.BiographyActivity;
-import com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity;
-import com.ayyappan.androidapp.wedlock.gallery.GalleryGridActivity;
+import com.ayyappan.androidapp.wedlock.UILApplication;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.menudrawer.adapater.MenuDrawerListAdapter;
 import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
-import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 
 import java.util.ArrayList;
@@ -64,6 +60,14 @@ public class MenuDrawerActivity extends AppCompatActivity {
 
     protected void onCreateDrawer()
     {
+
+        UILApplication app = (UILApplication) getApplication();
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.iv_background);
+        if(layout!=null) {
+            app.setBackground(layout, R.drawable.app_bg);
+        }
+
+
         // R.id.drawer_layout should be in every activity with exactly the same id.
        // drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -95,25 +99,6 @@ public class MenuDrawerActivity extends AppCompatActivity {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
-                switch (groupName) {
-                    case HOME:
-                        startActivity(new Intent(MenuDrawerActivity.this, HomeActivity.class));
-                        break;
-                    case GALLERY:
-                        startActivity(new Intent(MenuDrawerActivity.this, GalleryGridActivity.class));
-                        break;
-           /*         case BLOG:
-                        startActivity(new Intent(MenuDrawerActivity.this, HomeActivity.class));
-                        break;*/
-                    case INVITATION:
-                        startActivity(new Intent(MenuDrawerActivity.this, InvitationActivity.class));
-                        break;
-                    case ABOUT:
-                        startActivity(new Intent(MenuDrawerActivity.this, AboutActivity.class));
-                        break;
-                    default:
-                        return false;
-                }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -131,52 +116,12 @@ public class MenuDrawerActivity extends AppCompatActivity {
                 String childName = getMenuGroupCompleteList().get(groupName).get(childPosition);
                 Intent intent = new Intent(MenuDrawerActivity.this,MenuDrawerActivity.class);
 
-                switch (groupName) {
-                    case BIOGRAPHY:
-                        intent = new Intent(MenuDrawerActivity.this, BiographyActivity.class);
-                        switch (childName) {
-                            case BIOGRAPHY_BRIDE:
-                                intent.putExtra("selected_option", 0);
-                                break;
-                            case BIOGRAPHY_GROOM:
-                                intent.putExtra("selected_option", 1);
-                                break;
-                        }
-                        break;
-                    case ENTERTAINMENT:
-                        switch (childName) {
-                            case ENTERTAINMENT_LIGHTMUSIC:
-                                intent = new Intent(MenuDrawerActivity.this, LightMusicActivity.class);
-                                break;
-                            case ENTERTAINMENT_SANGEETH:
-                                intent = new Intent(MenuDrawerActivity.this, HomeActivity.class);
-                                break;
-                        }
-                        break;
-                    case EVENTS:
-                        intent = new Intent(MenuDrawerActivity.this, VenueActivity.class);
-                        List<Venue> venues = new GlobalData(getApplicationContext()).getVenue();
-                        intent.putParcelableArrayListExtra("venues", (ArrayList<? extends Parcelable>) venues);
-
-                        switch (childName) {
-                            case EVENT_RECEPTION:
-                                intent.putExtra("venue_position", 0);
-                                break;
-                            case EVENT_WEDDING:
-                                intent.putExtra("venue_position", 1);
-                                break;
-                        }
-                        break;
-                    default:
-                        return false;
-                }
-
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
 
 
-                startActivity(intent);
+                  startActivity(intent);
                 finish();
 
                 return true;
@@ -196,6 +141,15 @@ public class MenuDrawerActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    /*    layout = (RelativeLayout) findViewById(R.id.iv_background);
+        if(layout!=null)
+        app.setBackground(layout, R.drawable.app_bg);*/
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -219,6 +173,7 @@ public class MenuDrawerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

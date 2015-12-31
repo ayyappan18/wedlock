@@ -8,6 +8,8 @@ public class Invitation {
     private Integer invitationPasscode;
     private String invitationName;
 
+    public Invitation(){ }
+
     public Invitation(Integer invitationId, Integer invitationPasscode, String invitationName) {
         this.invitationId = invitationId;
         this.invitationPasscode = invitationPasscode;

@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ayyappan.androidapp.wedlock.biography.BiographyActivity;
+import com.ayyappan.androidapp.wedlock.biography.fragment.CoupleProfileFragment;
 
 import java.util.HashMap;
 
@@ -25,8 +25,8 @@ public class BiographyPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch(position){
-            case 0: return BiographyActivity.PlaceholderFragment.newInstance(position, "bride");
-            case 1 : return BiographyActivity.PlaceholderFragment.newInstance(position, "groom");
+            case 0: return CoupleProfileFragment.PlaceholderFragment.newInstance(position, "bride");
+            case 1 : return CoupleProfileFragment.PlaceholderFragment.newInstance(position, "groom");
             default: return null;
         }
     }

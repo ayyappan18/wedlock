@@ -8,10 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ayyappan.androidapp.wedlock.HomeActivity"
-    tools:showIn="@layout/app_bar_home">
-
+    tools:context="com.ayyappan.androidapp.wedlock.HomeFragment"
+    tools:showIn="@layout/app_bar_application">
 
     <RelativeLayout
         android:id="@+id/MainContent"

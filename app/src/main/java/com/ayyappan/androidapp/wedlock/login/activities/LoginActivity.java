@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.ayyappan.androidapp.wedlock.HomeActivity;
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.UILApplication;
+import com.ayyappan.androidapp.wedlock.home.ApplicationActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity;
 import com.ayyappan.androidapp.wedlock.login.bean.User;
@@ -65,18 +68,22 @@ public class LoginActivity extends AppCompatActivity implements
 
     private CallbackManager callbackManager;
     ProgressDialog ringProgressDialog;
-
+    UILApplication app;
     GlobalData globalData;
-
+    RelativeLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+
+
         globalData = new GlobalData(getApplicationContext());
         if (globalData.getUser() == null) {
             setContentView(R.layout.activity_login);
-
+            app = (UILApplication)getApplication();
+            layout = (RelativeLayout) findViewById(R.id.iv_background);
+            app.setBackground(layout, R.drawable.app_bg_login);
             //Check if internet is enabled
             CheckNetwork checkNetwork = new CheckNetwork();
             if (checkNetwork.isOnline(LoginActivity.this)) {
@@ -84,8 +91,21 @@ public class LoginActivity extends AppCompatActivity implements
             }
 
         } else {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
+            finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+  /*      layout = (LinearLayout) findViewById(R.id.iv_background);
+        app.setBackgroundL(layout, R.drawable.app_bg);*/
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void initialiseLogin() {
@@ -119,9 +139,11 @@ public class LoginActivity extends AppCompatActivity implements
         manualRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
             }
         });
+
 
     }
 
@@ -301,7 +323,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void redirectLoggedInUserToHome(User user) {
         globalData.setUser(user);
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
         finish();
     }
 

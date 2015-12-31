@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.venue.VenueActivity;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -163,8 +162,8 @@ public class VenueFragment extends Fragment {
         super.onResume();
         //add the markers
         // if (googleMap != null) {
-        ArrayList<Venue> venues = getActivity().getIntent().getParcelableArrayListExtra("venues");
-        Venue venue = venues.get(this.getArguments().getInt(ARG_SECTION_NUMBER));
+      //  ArrayList<Venue> venues = getActivity().getIntent().getParcelableArrayListExtra("venues");
+      //  Venue venue = venues.get(this.getArguments().getInt(ARG_SECTION_NUMBER));
         setUpMapIfNeeded(venue);
         //}
     }
