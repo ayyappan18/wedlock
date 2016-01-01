@@ -1,4 +1,4 @@
-package com.ayyappan.androidapp.wedlock.home;
+package com.ayyappan.androidapp.wedlock.activities;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,9 +20,12 @@ import com.ayyappan.androidapp.wedlock.InvitationFragment;
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.UILApplication;
 import com.ayyappan.androidapp.wedlock.biography.fragment.CoupleProfileFragment;
-import com.ayyappan.androidapp.wedlock.gallery.fragment.GalleryFragment;
+import com.ayyappan.androidapp.wedlock.fragments.GalleryFragment;
+import com.ayyappan.androidapp.wedlock.home.GlobalData;
+import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.menudrawer.adapater.MenuDrawerListAdapter;
 import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
+import com.ayyappan.androidapp.wedlock.tasks.DownloadAppDetailsTask;
 import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
 import com.ayyappan.androidapp.wedlock.venue.fragment.VenueActivityFragment;
 
@@ -61,12 +64,18 @@ public class ApplicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
 
-        app = (UILApplication) getApplication();
+      /*  app = (UILApplication) getApplication();
 
         //Set background Image
         backgroundLayout = (RelativeLayout) findViewById(R.id.iv_background);
         if(backgroundLayout!=null) {
             app.setBackground(backgroundLayout, R.drawable.app_bg);
+        }*/
+
+        CheckNetwork checkNetwork = new CheckNetwork();
+
+        if (checkNetwork.isOnline(getApplicationContext())) {
+            new DownloadAppDetailsTask(getApplicationContext()).execute();
         }
 
         //Set Menu drawerlist background

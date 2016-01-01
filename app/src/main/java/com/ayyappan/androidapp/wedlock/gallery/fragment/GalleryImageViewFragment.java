@@ -47,7 +47,7 @@ public class GalleryImageViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_view_pager, container, false);
+        View rootView = inflater.inflate(R.layout.activity_view_pager_gallery, container, false);
         mViewPager = (HackyViewPager) rootView.findViewById(R.id.view_pager);
 
         mViewPager.setBackgroundColor(Color.BLACK);

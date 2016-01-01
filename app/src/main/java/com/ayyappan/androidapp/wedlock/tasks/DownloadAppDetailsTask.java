@@ -1,4 +1,4 @@
-package com.ayyappan.androidapp.wedlock.home;
+package com.ayyappan.androidapp.wedlock.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,16 +6,18 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
+import com.ayyappan.androidapp.wedlock.home.AppData;
+import com.ayyappan.androidapp.wedlock.home.GlobalData;
 
 import java.util.List;
 
 /**
  * Created by Ayyappan on 05/12/2015.
  */
-public class AppDetailsDownloader extends AsyncTask<Void, Void, AppData> {
+public class DownloadAppDetailsTask extends AsyncTask<Void, Void, AppData> {
 
     private Context mContext;
-    public AppDetailsDownloader(Context context){
+    public DownloadAppDetailsTask(Context context){
         mContext = context;
     }
 

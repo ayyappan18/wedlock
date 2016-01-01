@@ -1,6 +1,5 @@
 package com.ayyappan.androidapp.wedlock;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,12 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.ayyappan.androidapp.wedlock.home.AppDetailsDownloader;
-import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-import com.facebook.CallbackManager;
-import com.facebook.ProfileTracker;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,12 +40,6 @@ public class HomeFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_home));
 
-    /*    CheckNetwork checkNetwork = new CheckNetwork();
-
-        if (checkNetwork.isOnline(getContext())) {
-            new AppDetailsDownloader(getContext()).execute();
-        }
-*/
         eventRespondLayout = (RelativeLayout) rootView.findViewById(R.id.EventRespond);
         Button clickGoingButton = (Button) rootView.findViewById(R.id.going);
         goingLayout = (RelativeLayout) rootView.findViewById(R.id.GoingResponse);

@@ -32,7 +32,7 @@ public class SongRequestActivity extends MenuDrawerActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fullName = new GlobalData(getApplicationContext()).getUserName();
+                String fullName = new GlobalData(getApplicationContext()).getUser().getName();
                 Song song = new Song(fullName,movieName.getText().toString(), songName.getText().toString());
 
                 InputMethodManager inputManager = (InputMethodManager)

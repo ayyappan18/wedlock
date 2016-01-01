@@ -2,15 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ayyappan.androidapp.wedlock">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
-
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -23,7 +15,7 @@
 
         <!-- Invitation Selection -->
 
-        <activity android:name=".invitation.InvitationSelectorActivity">
+        <activity android:name=".activities.InvitationSelectorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,13 +23,47 @@
         </activity>
 
         <!-- Login Activity -->
-        <activity android:name=".login.activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".invitation.InvitationSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:parentActivityName=".activities.InvitationSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity" />
+                android:value=".activities.InvitationSelectorActivity" />
+        </activity>
+
+        <!-- Register Activity -->
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.LoginActivity" />
+        </activity>
+
+        <!-- Main application activity-->
+        <activity
+            android:name=".activities.ApplicationActivity"
+            android:label="@string/title_fragment_home"
+            android:parentActivityName=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.LoginActivity" />
+        </activity>
+
+        <!-- Gallery view pager activity-->
+        <activity
+            android:name=".activities.GalleryViewPagerActivity"
+            android:label="@string/title_fragment_home"
+            android:parentActivityName=".activities.ApplicationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ApplicationActivity" />
         </activity>
 
         <activity
@@ -54,18 +80,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCsZ1HDCpmlPf9I0a3SYmbEHurwubsQHoY" />
 
-        <!-- Main application activity-->
-        <activity
-            android:name=".home.ApplicationActivity"
-            android:label="@string/title_fragment_home"
-            android:parentActivityName=".login.activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ayyappan.androidapp.wedlock.login.activities.LoginActivity" />
-        </activity>
-
-        <receiver android:name="com.ayyappan.androidapp.wedlock.gallery.widget.UILWidgetProvider" >
+        <receiver android:name="com.ayyappan.androidapp.wedlock.gallery.widget.UILWidgetProvider">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider" />
@@ -128,7 +143,7 @@
                 </activity>
 
                 <activity
-                    android:name=".gallery.fragment.ViewPagerActivity"
+                    android:name=".gallery.fragment.GalleryViewPagerActivity"
                     android:label="@string/title_activity_gallery"
                     android:parentActivityName=".HomeActivity"
                     android:theme="@style/AppTheme.NoActionBar" >
@@ -138,7 +153,6 @@
                 </activity>
 
         -->
-
 
 
         <!--
@@ -151,7 +165,7 @@
                     android:theme="@style/AppTheme.NoActionBar" >
                     <meta-data
                         android:name="android.support.PARENT_ACTIVITY"
-                        android:value="com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity" />
+                        android:value="com.ayyappan.androidapp.wedlock.activities.InvitationSelectorActivity" />
                 </activity>
 
                 &lt;!&ndash; Manual user login &ndash;&gt;
@@ -173,7 +187,6 @@
                         android:value="com.ayyappan.androidapp.wedlock.HomeActivity" />
                 </activity>
         -->
-
 
 
         <!--

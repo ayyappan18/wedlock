@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.ayyappan.androidapp.wedlock.gallery.fragment;
+package com.ayyappan.androidapp.wedlock.activities;
 
 import uk.co.senab.photoview.PhotoView;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -34,6 +35,7 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.gallery.data.Constants;
+import com.ayyappan.androidapp.wedlock.gallery.fragment.HackyViewPager;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -50,19 +52,18 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
  * Julia Zudikova
  */
 
-public class ViewPagerActivity extends Activity {
+public class GalleryViewPagerActivity extends Activity {
 
-	private static final String ISLOCKED_ARG = "isLocked";
-	
 	private ViewPager mViewPager;
-	private MenuItem menuLockItem;
 	private static DisplayImageOptions options;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_pager);
-        mViewPager = (HackyViewPager) findViewById(R.id.view_pager);
+
+        setContentView(R.layout.activity_view_pager_gallery);
+
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
 		options = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.ic_empty)
@@ -78,26 +79,20 @@ public class ViewPagerActivity extends Activity {
 
 		setContentView(mViewPager);
 
-		mViewPager.setAdapter(new SamplePagerAdapter(getApplicationContext()));
+		mViewPager.setBackgroundColor(Color.BLACK);
+		mViewPager.setAdapter(new GalleryPagerAdapter(getApplicationContext()));
 		mViewPager.setCurrentItem(getIntent().getIntExtra(Constants.Extra.IMAGE_POSITION, 0));
 
-
-		if (savedInstanceState != null) {
-			boolean isLocked = savedInstanceState.getBoolean(ISLOCKED_ARG, false);
-			((HackyViewPager) mViewPager).setLocked(isLocked);
-		}
 	}
 
-	static class SamplePagerAdapter extends PagerAdapter {
+	static class GalleryPagerAdapter extends PagerAdapter {
 
 		private static String[] IMAGE_URLS = null;
 
-		SamplePagerAdapter(Context context){
+		GalleryPagerAdapter(Context context){
 			IMAGE_URLS = new GlobalData(context).getImagesUrls();
 		}
-		/*private static final int[] sDrawables = { R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper,
-				R.drawable.wallpaper, R.drawable.wallpaper, R.drawable.wallpaper };
-*/
+
 		@Override
 		public int getCount() {
 			return IMAGE_URLS.length;
@@ -108,10 +103,6 @@ public class ViewPagerActivity extends Activity {
 			final PhotoView photoView = new PhotoView(container.getContext());
 
 			ImageLoader.getInstance().displayImage(IMAGE_URLS[position], photoView, options, new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingStarted(String imageUri, View view) {
-					//	spinner.setVisibility(View.VISIBLE);
-				}
 
 				@Override
 				public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
@@ -134,20 +125,15 @@ public class ViewPagerActivity extends Activity {
 							break;
 					}
 					Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-
-					//	spinner.setVisibility(View.GONE);
 				}
 
 				@Override
 				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 					photoView.setImageBitmap(loadedImage);
-					//	spinner.setVisibility(View.GONE);
 				}
 			});
 
-		//	photoView.setImageResource(sDrawables[position]);
-
-			// Now just add PhotoView to ViewPager and return it
+			// Adding PhotoView to ViewPager
 			container.addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
 			return photoView;
@@ -164,56 +150,4 @@ public class ViewPagerActivity extends Activity {
 		}
 
 	}
-
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.viewpager_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menuLockItem = menu.findItem(R.id.menu_lock);
-        toggleLockBtnTitle();
-        menuLockItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				toggleViewPagerScrolling();
-				toggleLockBtnTitle();
-				return true;
-			}
-		});
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-    
-    private void toggleViewPagerScrolling() {
-    	if (isViewPagerActive()) {
-    		((HackyViewPager) mViewPager).toggleLock();
-    	}
-    }
-    
-    private void toggleLockBtnTitle() {
-    	boolean isLocked = false;
-    	if (isViewPagerActive()) {
-    		isLocked = ((HackyViewPager) mViewPager).isLocked();
-    	}
-    	String title = (isLocked) ? getString(R.string.menu_unlock) : getString(R.string.menu_lock);
-    	if (menuLockItem != null) {
-    		menuLockItem.setTitle(title);
-    	}
-    }
-
-    private boolean isViewPagerActive() {
-    	return (mViewPager != null && mViewPager instanceof HackyViewPager);
-    }
-    
-	@Override
-	protected void onSaveInstanceState(@NonNull Bundle outState) {
-		if (isViewPagerActive()) {
-			outState.putBoolean(ISLOCKED_ARG, ((HackyViewPager) mViewPager).isLocked());
-    	}
-		super.onSaveInstanceState(outState);
-	}
-    
 }

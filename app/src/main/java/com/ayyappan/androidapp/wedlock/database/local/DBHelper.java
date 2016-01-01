@@ -14,6 +14,8 @@ import com.ayyappan.androidapp.wedlock.login.bean.User;
 import com.sun.mail.imap.protocol.BODY;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Ayyappan on 13/12/2015.
@@ -162,15 +164,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-
-    private boolean insertImageUrl(String url) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(GALLERY_COLUMN_URL, url);
-        db.insert(GALLERY_TABLE_NAME, null, contentValues);
-        return true;
-    }
-
     private boolean insertCouplePerson(Bio bio, String person, boolean exists) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -198,15 +191,26 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertImageUrls(String[] urls) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //    db.execSQL("DROP TABLE IF EXISTS "+ GALLERY_TABLE_NAME);
+        List<String> newUrls = new ArrayList<>(Arrays.asList(urls));
+
+        newUrls.removeAll(getAllImageUrls());
+
         boolean flag = false;
-        for (String url : urls) {
+        for (String url : newUrls) {
             flag = insertImageUrl(url);
             if (!flag) return false;
         }
         return flag;
     }
+
+    private boolean insertImageUrl(String url) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GALLERY_COLUMN_URL, url);
+        db.insert(GALLERY_TABLE_NAME, null, contentValues);
+        return true;
+    }
+
 /*
     public Cursor getData(int id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -320,8 +324,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<String> getAllImageUrls() {
-        ArrayList<String> array_list = new ArrayList<String>();
+    public List<String> getAllImageUrls() {
+        List<String> array_list = new ArrayList<>();
 
         // Select All Query
         String selectQuery = "SELECT * FROM " + GALLERY_TABLE_NAME;

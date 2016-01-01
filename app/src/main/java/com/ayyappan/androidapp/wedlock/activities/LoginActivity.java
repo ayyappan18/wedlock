@@ -1,6 +1,7 @@
-package com.ayyappan.androidapp.wedlock.login.activities;
+package com.ayyappan.androidapp.wedlock.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -8,18 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.UILApplication;
-import com.ayyappan.androidapp.wedlock.home.ApplicationActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.invitation.InvitationSelectorActivity;
 import com.ayyappan.androidapp.wedlock.login.bean.User;
 import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.login.utils.Constants;
+import com.ayyappan.androidapp.wedlock.tasks.SendUserTask;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,7 +24,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -42,6 +38,8 @@ import com.google.android.gms.plus.model.people.Person;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * A login screen that offers login via email/password.
@@ -65,47 +63,28 @@ public class LoginActivity extends AppCompatActivity implements
     private SignInButton mPlusSignInButton;
     private LoginButton facebookLoginButton;
     private Button manualRegistrationButton;
-
     private CallbackManager callbackManager;
     ProgressDialog ringProgressDialog;
-    UILApplication app;
     GlobalData globalData;
-    RelativeLayout layout;
+    CheckNetwork checkNetwork;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
-
 
         globalData = new GlobalData(getApplicationContext());
         if (globalData.getUser() == null) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
             setContentView(R.layout.activity_login);
-            app = (UILApplication)getApplication();
-            layout = (RelativeLayout) findViewById(R.id.iv_background);
-            app.setBackground(layout, R.drawable.app_bg_login);
-            //Check if internet is enabled
-            CheckNetwork checkNetwork = new CheckNetwork();
-            if (checkNetwork.isOnline(LoginActivity.this)) {
-                initialiseLogin();
-            }
 
+            //Check if internet is enabled
+            checkNetwork = new CheckNetwork();
+                initialiseLogin();
+          // }
         } else {
             startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
             finish();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-  /*      layout = (LinearLayout) findViewById(R.id.iv_background);
-        app.setBackgroundL(layout, R.drawable.app_bg);*/
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private void initialiseLogin() {
@@ -202,7 +181,6 @@ public class LoginActivity extends AppCompatActivity implements
                     e.printStackTrace();
                 }
 
-                new GlobalData(getApplicationContext()).setUserName(user.optString("name"));
                 redirectLoggedInUserToHome(fbUser);
             }
         }).executeAsync();
@@ -212,20 +190,22 @@ public class LoginActivity extends AppCompatActivity implements
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ringProgressDialog = ProgressDialog.show(LoginActivity.this, "Connecting...", "Atempting to connect", true);
-                ringProgressDialog.setCancelable(false);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            mShouldResolve = true;
-                            mGoogleApiClient.connect();
-                        } catch (Exception e) {
-                            ringProgressDialog.dismiss();
-                            e.printStackTrace();
+                if (checkNetwork.isOnline(LoginActivity.this)) {
+                    ringProgressDialog = ProgressDialog.show(LoginActivity.this, "Connecting...", "Atempting to connect", true);
+                    ringProgressDialog.setCancelable(false);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mShouldResolve = true;
+                                mGoogleApiClient.connect();
+                            } catch (Exception e) {
+                                ringProgressDialog.dismiss();
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }).start();
+                    }).start();
+                }
             }
         };
     }
@@ -281,6 +261,14 @@ public class LoginActivity extends AppCompatActivity implements
         LoginManager.getInstance().logOut();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        callbackManager = null;
+        mGoogleApiClient = null;
+
+    }
+
     /**
      * Fetching user's information name, email, profile pic
      */
@@ -304,7 +292,6 @@ public class LoginActivity extends AppCompatActivity implements
             googleUser.setPlace(location);
             googleUser.setPhoto(personPhotoUrl);
 
-            new GlobalData(getApplicationContext()).setUserName(personName);
             redirectLoggedInUserToHome(googleUser);
             // by default the profile url gives 50x50 px image only
             // we can replace the value with whatever dimension we want by
@@ -323,6 +310,12 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void redirectLoggedInUserToHome(User user) {
         globalData.setUser(user);
+
+        CheckNetwork checkNetwork = new CheckNetwork();
+        if (checkNetwork.isOnline(LoginActivity.this)) {
+            new SendUserTask(user).execute();
+        }
+
         startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
         finish();
     }
@@ -332,13 +325,15 @@ public class LoginActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if(callbackManager!=null)
             callbackManager.onActivityResult(requestCode, resultCode, data);
+        if(mShouldResolve)
+            mGoogleApiClient.connect();
 
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(LoginActivity.this, InvitationSelectorActivity.class));
         finish();
     }
+
 }
 

@@ -18,15 +18,8 @@ import java.util.List;
  */
 public class GlobalData {
 
-   /* private static Couple couple = null;
-    private static List<Venue> venues = null;
-    private static String[] IMAGES_URLS = null;
-    private static User user = null;*/
-   private static List<Venue> venues = null;
     private Context context = null;
     private DBHelper db;
-    private static GlobalData obj;
-    private static String userName = null;
 
     public GlobalData(Context context) {
         this.context = context;
@@ -34,72 +27,41 @@ public class GlobalData {
     }
 
     public List<Venue> getVenue() {
-     //   if(GlobalData.venues == null){
-            try {
-                List<Venue> venues = VenueDetailsJsonReader.getVenues(context);
-    //            GlobalData.venues = venues;
-                return venues;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-   /*     }else
-            return GlobalData.venues;*/
-    }
-
-    public void setVenue(List<Venue> venue) {
-        GlobalData.venues = venue;
+        try {
+            List<Venue> venues = VenueDetailsJsonReader.getVenues(context);
+            return venues;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Couple getCouple() {
-     //   if(GlobalData.couple == null)
-            return db.getCouple();
-     //   else return couple;
+        return db.getCouple();
     }
 
     public void setCouple(Couple couple) {
-        if(db.insertCouple(couple)) return;
-    //        GlobalData.couple = couple;
+        db.insertCouple(couple);
     }
 
     public String[] getImagesUrls() {
-    //    if(GlobalData.IMAGES_URLS == null) {
-            ArrayList<String> imageUrls = db.getAllImageUrls();
-            if (imageUrls.size() > 0) {
-                String[] result = new String[imageUrls.size()];
-     //           GlobalData.IMAGES_URLS = result;
-                return imageUrls.toArray(result);
-            } else
-                return null;
-     //   }
-   /*     else
-            return GlobalData.IMAGES_URLS;*/
+        List<String> imageUrls = db.getAllImageUrls();
+        if (imageUrls.size() > 0) {
+            String[] result = new String[imageUrls.size()];
+            return imageUrls.toArray(result);
+        } else
+            return null;
     }
 
     public void setImagesUrls(String[] imagesUrls) {
-        if(db.insertImageUrls(imagesUrls)) return; //GlobalData.IMAGES_URLS = imagesUrls;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        GlobalData.userName = userName;
+        db.insertImageUrls(imagesUrls);
     }
 
     public User getUser() {
-     //   if(GlobalData.user == null) {
-            User retrievedUser = db.retrieveUser();
-          //  if(retrievedUser != null)
-     //           GlobalData.user = retrievedUser;
-            return retrievedUser;
-     /*   }
-        else
-            return GlobalData.user;*/
+        return db.retrieveUser();
     }
 
     public void setUser(User user) {
-        if(db.saveUser(user)) return;//GlobalData.user = user;
+        db.saveUser(user);
     }
 }

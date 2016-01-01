@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#712b83</color>
+    <color name="colorPrimaryDark">#712b83</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="holo_blue_dark">#ff0099cc</color>
@@ -10,6 +10,10 @@
 
     <color name="blue">#00abea</color>
     <color name="white">#ffffff</color>
+
+    <color name="PURPLE_TITLE">#712b83</color>
+    <color name="PURPLE_SUBTITLE">#712b83</color>
+    <color name="PURPLE_BUTTON">#3C1048</color>
 
     <color name="app_primary">#008080</color>
     <color name="app_primary_dark">#45645C</color>

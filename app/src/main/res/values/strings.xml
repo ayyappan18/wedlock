@@ -109,6 +109,8 @@
 
     <string name="app_identity_request">Please provide your identity through one of the following ways</string>
 
+    <string name="app_register">Please provide your details</string>
+
     <string name="prompt_email">Email</string>
     <string name="prompt_location">Location</string>
     <string name="action_sign_in">Sign In</string>

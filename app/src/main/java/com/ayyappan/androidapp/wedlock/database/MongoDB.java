@@ -5,6 +5,7 @@ import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
 import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
 import com.ayyappan.androidapp.wedlock.home.AppData;
+import com.ayyappan.androidapp.wedlock.login.bean.User;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -44,6 +45,16 @@ public class MongoDB {
         db = mongoClient.getDB(mongoClientURI.getDatabase());
     }
 
+    public void sendUser(User user){
+        BasicDBObject basicDBObject = new BasicDBObject();
+        basicDBObject.put("name", user.getName());
+        basicDBObject.put("place", user.getPlace());
+        basicDBObject.put("authentication", user.getAuthProvider());
+        basicDBObject.put("email", user.getEmail());
+
+        DBCollection songsCollection = db.getCollection("users");
+        songsCollection.insert(basicDBObject);
+    }
     public List<Image> getImages() {
         List<Image> images = new ArrayList<>();
         DBCollection imagesCollection = db.getCollection("images");

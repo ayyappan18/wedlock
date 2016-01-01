@@ -1,6 +1,7 @@
-package com.ayyappan.androidapp.wedlock.gallery.fragment;
+package com.ayyappan.androidapp.wedlock.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.gallery.adapter.GalleryImageAdapter;
 import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
+import com.ayyappan.androidapp.wedlock.gallery.data.Constants;
+import com.ayyappan.androidapp.wedlock.activities.GalleryViewPagerActivity;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -40,12 +43,13 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fr_image_grid, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_grid_gallery, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_gallery));
 
         if(ImageLoader.getInstance()==null)
             ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getContext()));
+
         listView = (GridView) rootView.findViewById(R.id.grid);
 
         GlobalData globalData = new GlobalData(getContext());
@@ -67,19 +71,22 @@ public class GalleryFragment extends Fragment {
     }
 
 
-    protected static void startImagePagerFragment(int position, FragmentManager fragmentManager) {
+    protected void startImagePagerFragment(int position, FragmentManager fragmentManager) {
+        Intent intent = new Intent(getActivity(), GalleryViewPagerActivity.class);
+        intent.putExtra(Constants.Extra.IMAGE_POSITION,position);
+        startActivity(intent);
 
      //   fragmentManager.popBackStack();
-        fragmentManager.beginTransaction()
+       /* fragmentManager.beginTransaction()
                 .add(R.id.content_fragment, GalleryImageViewFragment.newInstance(position))
                 .addToBackStack("gallery")
-                .commit();
+                .commit();*/
        // listView.setVisibility(View.GONE);
       //  listView = null;
     }
 
 
-    private static class DownloadImageUrls extends AsyncTask<Void, Void, String[]> {
+    private class DownloadImageUrls extends AsyncTask<Void, Void, String[]> {
 
         private Context context;
         private FragmentManager fragmentManager;
