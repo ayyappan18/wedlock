@@ -38,7 +38,7 @@ public class CoupleProfileJsonReader {
 
         JSONObject jsonObject = new JSONObject(loadJSONFromAsset("CoupleProfile.json", context));
 
-        Couple couple = null;
+        Couple couple = new Couple();
 
         JSONObject brideJson = jsonObject.getJSONObject(BRIDE);
         Bio bride = new Bio();
@@ -47,7 +47,7 @@ public class CoupleProfileJsonReader {
         bride.setBio(brideJson.getString(BIO));
         couple.setBride(bride);
 
-        JSONObject groomJson = jsonObject.getJSONObject(BRIDE);
+        JSONObject groomJson = jsonObject.getJSONObject(GROOM);
         Bio groom = new Bio();
         groom.setName(groomJson.getString(NAME));
         groom.setPictureResourceId(getResourceId(groomJson.getString(PICTURE), context));

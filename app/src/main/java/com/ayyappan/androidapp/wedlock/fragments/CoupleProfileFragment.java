@@ -106,7 +106,7 @@ public class CoupleProfileFragment extends Fragment {
 
             if (couple == null) {
                 CheckNetwork checkNetwork = new CheckNetwork();
-                if (checkNetwork.isOnline(getContext()))
+                if (checkNetwork.isConnected(getContext()))
                     new BiographyDetailsLocalDownloader(rootView, getContext(), sectionNumber).execute();
                 else {
                     try {
