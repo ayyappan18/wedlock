@@ -24,8 +24,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside" />
 
             <TextView
                 android:id="@+id/name"

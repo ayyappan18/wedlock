@@ -2,15 +2,14 @@ package com.ayyappan.androidapp.wedlock.home;
 
 import android.content.Context;
 
-import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
+import com.ayyappan.androidapp.wedlock.model.Couple;
 import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
-import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
-import com.ayyappan.androidapp.wedlock.venue.json.VenueDetailsJsonReader;
+import com.ayyappan.androidapp.wedlock.model.User;
+import com.ayyappan.androidapp.wedlock.model.Venue;
+import com.ayyappan.androidapp.wedlock.utils.VenueDetailsJsonReader;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

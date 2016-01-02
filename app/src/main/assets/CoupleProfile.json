@@ -1,0 +1,12 @@
+{
+  "bride": {
+      "name": "Nivedhitha",
+      "picture": "bride",
+      "bio": "Sadayapa Thirumana Mahal"
+    },
+    "groom" : {
+      "name": "Ayyappan",
+      "picture": "groom",
+      "bio": "Sadayapa Thirumana Mahal"
+    }
+}

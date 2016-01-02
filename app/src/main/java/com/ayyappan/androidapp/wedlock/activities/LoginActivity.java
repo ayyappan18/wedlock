@@ -1,7 +1,6 @@
 package com.ayyappan.androidapp.wedlock.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -13,12 +12,13 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-import com.ayyappan.androidapp.wedlock.login.utils.Constants;
+import com.ayyappan.androidapp.wedlock.model.User;
+import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
+import com.ayyappan.androidapp.wedlock.utils.Constants;
 import com.ayyappan.androidapp.wedlock.tasks.SendUserTask;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookBroadcastReceiver;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -38,8 +38,6 @@ import com.google.android.gms.plus.model.people.Person;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * A login screen that offers login via email/password.
@@ -82,7 +80,10 @@ public class LoginActivity extends AppCompatActivity implements
                 initialiseLogin();
           // }
         } else {
-            startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
+            Intent intent = new Intent(LoginActivity.this, ApplicationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
             finish();
         }
     }
@@ -266,7 +267,8 @@ public class LoginActivity extends AppCompatActivity implements
         super.onDestroy();
         callbackManager = null;
         mGoogleApiClient = null;
-
+        LoginManager.getInstance().logOut();
+        System.gc();
     }
 
     /**
@@ -310,13 +312,15 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void redirectLoggedInUserToHome(User user) {
         globalData.setUser(user);
-
         CheckNetwork checkNetwork = new CheckNetwork();
         if (checkNetwork.isOnline(LoginActivity.this)) {
             new SendUserTask(user).execute();
         }
 
-        startActivity(new Intent(LoginActivity.this, ApplicationActivity.class));
+        Intent intent = new Intent(LoginActivity.this, ApplicationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
         finish();
     }
 
@@ -327,6 +331,12 @@ public class LoginActivity extends AppCompatActivity implements
             callbackManager.onActivityResult(requestCode, resultCode, data);
         if(mShouldResolve)
             mGoogleApiClient.connect();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
 
     }
 

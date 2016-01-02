@@ -3,6 +3,7 @@ package com.ayyappan.androidapp.wedlock;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,13 @@ public class HomeFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.content_home, container, false);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_home));
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.title_fragment_home));
+
+        // for refreshing UI
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    //    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_home));
 
         eventRespondLayout = (RelativeLayout) rootView.findViewById(R.id.EventRespond);
         Button clickGoingButton = (Button) rootView.findViewById(R.id.going);

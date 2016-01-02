@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="15dp"
-    android:background="@android:color/transparent">
+    android:padding="10dp">
 
     <ImageView
         android:src="@drawable/home_icon"
@@ -16,21 +15,18 @@
 
     <TextView
         android:id="@+id/lblListHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/SubTitle"
         android:paddingLeft="10dp"
         android:textSize="18sp"
         android:text="menu group name"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:textColor="#000000" />
+        android:layout_centerInParent="true" />
 
     <ImageView android:src="@drawable/expander_group"
         android:id="@+id/explist_indicator"
         android:layout_height="20dp"
         android:layout_width="20dp"
-        android:background="@android:color/transparent"
         android:layout_alignParentRight="true"
         android:layout_gravity="center"
         android:layout_centerInParent="true"/>

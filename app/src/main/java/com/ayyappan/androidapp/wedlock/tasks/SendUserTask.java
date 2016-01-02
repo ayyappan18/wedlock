@@ -3,7 +3,7 @@ package com.ayyappan.androidapp.wedlock.tasks;
 import android.os.AsyncTask;
 
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
+import com.ayyappan.androidapp.wedlock.model.User;
 
 /**
  * Created by Ayyappan on 31/12/2015.
@@ -18,7 +18,12 @@ public class SendUserTask extends AsyncTask<User, Void, Void> {
     @Override
     protected Void doInBackground(User... params) {
         MongoDB remoteDB = new MongoDB();
-        remoteDB.sendUser(user);
+        try {
+            remoteDB.sendUser(user);
+        }catch(Exception ex){
+            System.out.println(ex);
+            return null;
+        }
         return null;
     }
 

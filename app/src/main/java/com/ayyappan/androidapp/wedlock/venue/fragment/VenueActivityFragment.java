@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,7 @@ import android.view.ViewGroup;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.venue.adapter.SectionsPagerAdapter;
-import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.ayyappan.androidapp.wedlock.model.Venue;
 
 import java.util.List;
 
@@ -44,8 +44,14 @@ public class VenueActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_venue, container, false);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_event));
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.title_fragment_event));
 
+        // for refreshing UI
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_event));
 
         // Initializing view page
         viewPager = (ViewPager) rootView.findViewById(R.id.container);

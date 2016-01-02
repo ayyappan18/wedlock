@@ -3,48 +3,50 @@ package com.ayyappan.androidapp.wedlock.activities;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ayyappan.androidapp.wedlock.fragments.AboutFragment;
 import com.ayyappan.androidapp.wedlock.HomeFragment;
-import com.ayyappan.androidapp.wedlock.InvitationFragment;
+import com.ayyappan.androidapp.wedlock.fragments.CoupleProfileFragment;
+import com.ayyappan.androidapp.wedlock.fragments.InvitationFragment;
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.UILApplication;
-import com.ayyappan.androidapp.wedlock.biography.fragment.CoupleProfileFragment;
 import com.ayyappan.androidapp.wedlock.fragments.GalleryFragment;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-import com.ayyappan.androidapp.wedlock.menudrawer.adapater.MenuDrawerListAdapter;
-import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
+import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
+import com.ayyappan.androidapp.wedlock.adapters.MenuDrawerListAdapter;
 import com.ayyappan.androidapp.wedlock.tasks.DownloadAppDetailsTask;
-import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
+import com.ayyappan.androidapp.wedlock.model.Venue;
 import com.ayyappan.androidapp.wedlock.venue.fragment.VenueActivityFragment;
 
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.ABOUT;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY_BRIDE;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.BIOGRAPHY_GROOM;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENTS;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENT_RECEPTION;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENT_WEDDING;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.GALLERY;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.HOME;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.INVITATION;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupCompleteList;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupHeaders;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ABOUT;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_BRIDE;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_GROOM;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENTS;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_RECEPTION;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_WEDDING;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.GALLERY;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.HOME;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.INVITATION;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupCompleteList;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupHeaders;
 
 public class ApplicationActivity extends AppCompatActivity {
     //menu drawer
@@ -55,7 +57,7 @@ public class ApplicationActivity extends AppCompatActivity {
     private static MenuDrawerListAdapter listAdapter = null;
     private int lastExpandedPosition = -1;
     private FragmentManager fragmentManager;
-
+    private TextView txtWelcomeText;
     UILApplication app;
     RelativeLayout backgroundLayout;
 
@@ -64,6 +66,11 @@ public class ApplicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.inflateHeaderView(R.layout.menu_header);
+
+        txtWelcomeText = (TextView) headerView.findViewById(R.id.welcome_name);
+        txtWelcomeText.setText(new GlobalData(getApplicationContext()).getUser().getName());
       /*  app = (UILApplication) getApplication();
 
         //Set background Image
@@ -74,7 +81,7 @@ public class ApplicationActivity extends AppCompatActivity {
 
         CheckNetwork checkNetwork = new CheckNetwork();
 
-        if (checkNetwork.isOnline(getApplicationContext())) {
+        if (checkNetwork.isConnected(getApplicationContext())) {
             new DownloadAppDetailsTask(getApplicationContext()).execute();
         }
 
@@ -83,7 +90,7 @@ public class ApplicationActivity extends AppCompatActivity {
      /*   Bitmap menuBackgroundBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.menu_bg);
         Drawable menuBg = new BitmapDrawable(getResources(), menuBackgroundBitMap);
         drawerList.setBackground(menuBg);*/
-       // drawerList.setBackgroundDrawable(new BitmapDrawable(menuBackgroundBitMap));
+        // drawerList.setBackgroundDrawable(new BitmapDrawable(menuBackgroundBitMap));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,9 +99,8 @@ public class ApplicationActivity extends AppCompatActivity {
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //create expandable list adapter
-        if(listAdapter == null)
-            listAdapter = new MenuDrawerListAdapter(this, getMenuGroupHeaders(), getMenuGroupCompleteList(),
-                    IconDecoder.getMenuIconBitMaps(getApplicationContext()));
+        if (listAdapter == null)
+            listAdapter = new MenuDrawerListAdapter(this, getMenuGroupHeaders(), getMenuGroupCompleteList());
 
         //initialise expandable list view with expandable list adapter
         drawerList.setAdapter(listAdapter);
@@ -106,12 +112,12 @@ public class ApplicationActivity extends AppCompatActivity {
 
         //Initalise with home fragment
         fragmentManager = getSupportFragmentManager();
-        if(fragmentManager.getBackStackEntryCount() > 0 )
+        if (fragmentManager.getBackStackEntryCount() > 0)
             fragmentManager.popBackStack();
         else
             fragmentManager.beginTransaction()
-                .replace(R.id.content_fragment, HomeFragment.newInstance())
-                .commit();
+                    .replace(R.id.content_fragment, HomeFragment.newInstance())
+                    .commit();
 
         //Replace fragment based on group header selection
         drawerList.setOnGroupClickListener(groupHeaderNavigation());
@@ -133,7 +139,7 @@ public class ApplicationActivity extends AppCompatActivity {
 
     }
 
-    private ExpandableListView.OnGroupClickListener groupHeaderNavigation(){
+    private ExpandableListView.OnGroupClickListener groupHeaderNavigation() {
         return new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
@@ -150,7 +156,7 @@ public class ApplicationActivity extends AppCompatActivity {
                     case INVITATION:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, InvitationFragment.newInstance())
-                               .addToBackStack(null)
+                                .addToBackStack(null)
                                 .commit();
                         break;
                     case GALLERY:
@@ -166,7 +172,7 @@ public class ApplicationActivity extends AppCompatActivity {
                                 .commit();
                         break;
                     default:
-                       return false;
+                        return false;
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -176,7 +182,7 @@ public class ApplicationActivity extends AppCompatActivity {
         };
     }
 
-    private ExpandableListView.OnChildClickListener childNavigation(){
+    private ExpandableListView.OnChildClickListener childNavigation() {
         return new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -263,7 +269,7 @@ public class ApplicationActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-           // super.onBackPressed();
+            // super.onBackPressed();
         }
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
@@ -272,4 +278,18 @@ public class ApplicationActivity extends AppCompatActivity {
         }
     }
 
+    private void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+        clearBackStack();
+    }
 }

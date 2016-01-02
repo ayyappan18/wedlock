@@ -20,28 +20,20 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.gallery.data.Constants;
-import com.ayyappan.androidapp.wedlock.menudrawer.utils.IconDecoder;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.ayyappan.androidapp.wedlock.model.Constants;
+import com.ayyappan.androidapp.wedlock.utils.IconDecoder;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.MemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
-import java.util.Collection;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

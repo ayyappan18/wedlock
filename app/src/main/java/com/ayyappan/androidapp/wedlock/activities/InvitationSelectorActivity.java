@@ -1,7 +1,6 @@
 package com.ayyappan.androidapp.wedlock.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,10 +14,8 @@ import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
 import com.ayyappan.androidapp.wedlock.tasks.DownloadAppDetailsTask;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.invitation.bean.Invitation;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import com.ayyappan.androidapp.wedlock.model.Invitation;
+import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 
 /**
  * Created by Ayyappan on 20/08/2015.
@@ -29,7 +26,7 @@ public class InvitationSelectorActivity extends Activity {
 
     DBHelper localDB;
 
-    String invitationId,invitationPasscode = new String("");
+    String invitationId, invitationPasscode = new String("");
 
     boolean cancel = false;
     View focusView = null;
@@ -40,7 +37,7 @@ public class InvitationSelectorActivity extends Activity {
 
         localDB = new DBHelper(getApplicationContext());
 
-        if(localDB.retrieveInvitation() != null)
+        if (localDB.retrieveInvitation() != null)
             gotToLoginPage();
 
         setContentView(R.layout.activity_invitation_selector);
@@ -54,17 +51,16 @@ public class InvitationSelectorActivity extends Activity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    private View.OnClickListener accessInvitationListener(){
+    private View.OnClickListener accessInvitationListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateForm()){
+                if (validateForm()) {
                     // There was an error; don't attempt login and focus the first
                     // form field with an error.
-                    if(focusView!=null)
+                    if (focusView != null)
                         focusView.requestFocus();
-                }
-                else {
+                } else {
                     if (invitationId.equals("1002") && invitationPasscode.equals("1128")) {
                         localDB.insertInvitation(new Invitation(Integer.parseInt(invitationId), Integer.parseInt(invitationPasscode), "Nivedhitha Weds Nivedhitha"));
                         gotToLoginPage();
@@ -76,7 +72,7 @@ public class InvitationSelectorActivity extends Activity {
         };
     }
 
-    private boolean validateForm(){
+    private boolean validateForm() {
 
         //Get Field values
         invitationId = edit_invitation_id.getText().toString().trim();
@@ -105,20 +101,30 @@ public class InvitationSelectorActivity extends Activity {
         return cancel;
     }
 
-    private void gotToLoginPage(){
+    private void gotToLoginPage() {
+
         CheckNetwork checkNetwork = new CheckNetwork();
         GlobalData globalData = new GlobalData(getApplicationContext());
-        if(checkNetwork.isConnected(getApplicationContext())) {
+        if (checkNetwork.isConnected(getApplicationContext())) {
             if (globalData.getCouple() == null || globalData.getImagesUrls() == null) {
                 new DownloadAppDetailsTask(getApplicationContext()).execute();
             }
         }
 
-        if(globalData.getUser() == null)
-            startActivity(new Intent(InvitationSelectorActivity.this, LoginActivity.class));
+        Intent intent;
+        if (globalData.getUser() == null)
+            intent = new Intent(InvitationSelectorActivity.this, LoginActivity.class);
         else
-            startActivity(new Intent(InvitationSelectorActivity.this, ApplicationActivity.class));
+            intent = new Intent(InvitationSelectorActivity.this, ApplicationActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
 }

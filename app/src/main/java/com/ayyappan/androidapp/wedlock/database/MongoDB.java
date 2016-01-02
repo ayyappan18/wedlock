@@ -1,12 +1,14 @@
 package com.ayyappan.androidapp.wedlock.database;
 
-import com.ayyappan.androidapp.wedlock.biography.bean.Bio;
-import com.ayyappan.androidapp.wedlock.biography.bean.Couple;
+import android.content.Context;
+
+import com.ayyappan.androidapp.wedlock.model.Bio;
+import com.ayyappan.androidapp.wedlock.model.Couple;
 import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
-import com.ayyappan.androidapp.wedlock.gallery.bean.Image;
-import com.ayyappan.androidapp.wedlock.home.AppData;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
-import com.google.gson.Gson;
+import com.ayyappan.androidapp.wedlock.model.Image;
+import com.ayyappan.androidapp.wedlock.model.AppData;
+import com.ayyappan.androidapp.wedlock.model.User;
+import com.ayyappan.androidapp.wedlock.utils.CoupleProfileJsonReader;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -14,11 +16,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-
-import org.bson.codecs.configuration.CodecRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,7 +66,7 @@ public class MongoDB {
     }
 
 
-    public AppData getAppData() {
+    public AppData getAppData(Context context) {
 
         DBCollection galleryCollection = db.getCollection("wedlock");
         DBCursor docs = galleryCollection.find();
@@ -77,7 +75,7 @@ public class MongoDB {
         while (docs.hasNext()) {
             DBObject doc = docs.next();
             DBObject coupleObject = (DBObject) doc.get("couple");
-            Couple couple = getCouple(coupleObject);
+            Couple couple = getCouple(coupleObject,context);
             BasicDBList imagesList = (BasicDBList) doc.get("images");
             ArrayList<Image> images = getImagesList(imagesList);
             result = new AppData();
@@ -88,27 +86,27 @@ public class MongoDB {
         return result;
     }
 
-    public Couple getCoupleInfo(){
+    public Couple getCoupleInfo(Context context){
         Couple couple = new Couple();
         DBCollection imagesCollection = db.getCollection("bio");
         DBCursor docs = imagesCollection.find();
         while (docs.hasNext()) {
             DBObject doc = docs.next();
-            couple = getCouple(doc);
+            couple = getCouple(doc,context);
         }
         mongoClient.close();
         return couple;
     }
 
-    private Couple getCouple(DBObject doc){
+    private Couple getCouple(DBObject doc,Context context){
         Couple couple = new Couple();
 
         DBObject brideDbObject = (DBObject)doc.get("bride");
-        Bio bride = new Bio((String)brideDbObject.get("name"),(String)brideDbObject.get("picture"),(String)brideDbObject.get("bio"));
+        Bio bride = new Bio((String)brideDbObject.get("name"),(String)brideDbObject.get("picture"), CoupleProfileJsonReader.getResourceId((String)brideDbObject.get("pictureOffline"),context),(String)brideDbObject.get("bio"));
         couple.setBride(bride);
 
         DBObject groomDbObject = (DBObject)doc.get("groom");
-        Bio groom = new Bio((String)groomDbObject.get("name"),(String)groomDbObject.get("picture"),(String)groomDbObject.get("bio"));
+        Bio groom = new Bio((String)groomDbObject.get("name"),(String)groomDbObject.get("picture"),CoupleProfileJsonReader.getResourceId((String)groomDbObject.get("pictureOffline"),context), (String)groomDbObject.get("bio"));
 
         couple.setGroom(groom);
         return couple;

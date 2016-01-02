@@ -4,13 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
+import com.ayyappan.androidapp.wedlock.model.Venue;
 import com.ayyappan.androidapp.wedlock.venue.fragment.VenueFragment;
 
 import java.util.List;
 
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.EVENTS;
-import static com.ayyappan.androidapp.wedlock.menudrawer.data.MenuOptions.getMenuGroupCompleteList;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENTS;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupCompleteList;
 
 /**
  * Created by Ayyappan on 05/11/2015.

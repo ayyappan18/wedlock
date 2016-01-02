@@ -1,6 +1,5 @@
 package com.ayyappan.androidapp.wedlock.venue.fragment;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,15 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
-import com.ayyappan.androidapp.wedlock.venue.bean.Venue;
+import com.ayyappan.androidapp.wedlock.model.Venue;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,8 +28,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Locale;
 
 /**

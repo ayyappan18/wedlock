@@ -3,6 +3,7 @@ package com.ayyappan.androidapp.wedlock.entertainment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -13,15 +14,13 @@ import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.menudrawer.MenuDrawerActivity;
 
-public class SongRequestActivity extends MenuDrawerActivity {
+public class SongRequestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_request);
-        super.onCreateDrawer();
 
         final TextView movieName = (TextView) findViewById(R.id.movie_name);
         final TextView songName = (TextView) findViewById(R.id.song_name);

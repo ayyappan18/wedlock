@@ -1,7 +1,6 @@
 package com.ayyappan.androidapp.wedlock.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,13 +11,11 @@ import android.widget.EditText;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
-import com.ayyappan.androidapp.wedlock.login.bean.User;
-import com.ayyappan.androidapp.wedlock.login.utils.CheckNetwork;
-import com.ayyappan.androidapp.wedlock.login.utils.Constants;
-import com.ayyappan.androidapp.wedlock.login.utils.ValidateUserInfo;
+import com.ayyappan.androidapp.wedlock.model.User;
+import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
+import com.ayyappan.androidapp.wedlock.utils.Constants;
+import com.ayyappan.androidapp.wedlock.utils.ValidateUserInfo;
 import com.ayyappan.androidapp.wedlock.tasks.SendUserTask;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by AndreBTS on 20/08/2015.
@@ -99,7 +96,6 @@ public class RegisterActivity extends Activity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-
             User registeredUser = new User();
             registeredUser.setName(name);
             registeredUser.setEmail(email);
@@ -114,7 +110,14 @@ public class RegisterActivity extends Activity {
 
             new GlobalData(RegisterActivity.this).setUser(registeredUser);
             startActivity(new Intent(RegisterActivity.this, ApplicationActivity.class));
+            finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 
     @Override
