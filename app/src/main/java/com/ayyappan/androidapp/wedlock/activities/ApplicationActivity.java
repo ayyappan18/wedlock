@@ -10,13 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetAppDetailsAsyncTask;
 import com.ayyappan.androidapp.wedlock.fragments.AboutFragment;
 import com.ayyappan.androidapp.wedlock.HomeFragment;
 import com.ayyappan.androidapp.wedlock.fragments.CoupleProfileFragment;
@@ -27,9 +27,8 @@ import com.ayyappan.androidapp.wedlock.fragments.GalleryFragment;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.adapters.MenuDrawerListAdapter;
-import com.ayyappan.androidapp.wedlock.tasks.DownloadAppDetailsTask;
 import com.ayyappan.androidapp.wedlock.model.Venue;
-import com.ayyappan.androidapp.wedlock.venue.fragment.VenueActivityFragment;
+import com.ayyappan.androidapp.wedlock.fragments.EventsFragment;
 
 import java.util.List;
 
@@ -82,7 +81,8 @@ public class ApplicationActivity extends AppCompatActivity {
         CheckNetwork checkNetwork = new CheckNetwork();
 
         if (checkNetwork.isConnected(getApplicationContext())) {
-            new DownloadAppDetailsTask(getApplicationContext()).execute();
+         //   final DBHelper localDB = new DBHelper(getApplicationContext());
+            new GetAppDetailsAsyncTask(getApplicationContext()).execute();
         }
 
         //Set Menu drawerlist background
@@ -215,13 +215,13 @@ public class ApplicationActivity extends AppCompatActivity {
                         switch (childName) {
                             case EVENT_RECEPTION:
                                 fragmentManager.beginTransaction()
-                                        .replace(R.id.content_fragment, VenueActivityFragment.newInstance(venues, 0))
+                                        .replace(R.id.content_fragment, EventsFragment.newInstance(venues, 0))
                                         .addToBackStack(null)
                                         .commit();
                                 break;
                             case EVENT_WEDDING:
                                 fragmentManager.beginTransaction()
-                                        .replace(R.id.content_fragment, VenueActivityFragment.newInstance(venues, 1))
+                                        .replace(R.id.content_fragment, EventsFragment.newInstance(venues, 1))
                                         .addToBackStack(null)
                                         .commit();
                                 break;

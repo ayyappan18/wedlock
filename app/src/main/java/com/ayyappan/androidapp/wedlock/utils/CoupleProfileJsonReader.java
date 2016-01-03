@@ -75,6 +75,5 @@ public class CoupleProfileJsonReader {
 
     public static int getResourceId(String name, Context context) {
         return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-
     }
 }

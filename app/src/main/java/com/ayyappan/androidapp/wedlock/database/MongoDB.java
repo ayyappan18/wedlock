@@ -18,6 +18,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +40,11 @@ public class MongoDB {
 
     public MongoDB() {
         mongoClientURI = new MongoClientURI("mongodb://app:pass@ds047682.mongolab.com:47682/wedlock");
-        mongoClient = new MongoClient(mongoClientURI);
+        try {
+            mongoClient = new MongoClient(mongoClientURI);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         db = mongoClient.getDB(mongoClientURI.getDatabase());
     }
 

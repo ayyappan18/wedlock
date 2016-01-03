@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.adapters.GalleryGridAdapter;
+import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetGalleryUrlsAsyncTask;
 import com.ayyappan.androidapp.wedlock.model.Image;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
 import com.ayyappan.androidapp.wedlock.model.Constants;
@@ -71,7 +73,22 @@ public class GalleryFragment extends Fragment {
             GlobalData globalData = new GlobalData(getContext());
             String[] imageUrls = globalData.getImagesUrls();
             if (imageUrls == null || imageUrls.length == 0) {
-                new DownloadImageUrls(getContext(), getFragmentManager()).execute();
+               new GetGalleryUrlsAsyncTask(getContext(), new GetGalleryUrlsAsyncTask.AsyncResponse() {
+                   @Override
+                   public void processFinish(String[] imageUrls) {
+                       Toast.makeText(getContext(), "Gallery urls are downloaded in Gallery..", Toast.LENGTH_SHORT).show();
+                       DBHelper localDB = new DBHelper(getContext());
+                       localDB.insertImageUrls(imageUrls);
+                       ((GridView) listView).setAdapter(new GalleryGridAdapter(getContext(), imageUrls));
+                       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                           @Override
+                           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                               startImagePagerFragment(position, getFragmentManager());
+                           }
+                       });
+
+                   }
+               }).execute();
             } else {
                 ((GridView) listView).setAdapter(new GalleryGridAdapter(getContext(), imageUrls));
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,7 +111,7 @@ public class GalleryFragment extends Fragment {
         startActivity(intent);
     }
 
-
+/*
     private class DownloadImageUrls extends AsyncTask<Void, Void, String[]> {
 
         private Context context;
@@ -133,5 +150,5 @@ public class GalleryFragment extends Fragment {
             });
 
         }
-    }
+    }*/
 }

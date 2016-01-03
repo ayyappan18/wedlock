@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetCoupleProfileAsyncTask;
 import com.ayyappan.androidapp.wedlock.model.Image;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
 import com.ayyappan.androidapp.wedlock.model.AppData;
@@ -31,6 +32,7 @@ public class DownloadAppDetailsTask extends AsyncTask<Void, Void, AppData> {
         if (checkNetwork.isOnline(mContext))
             try {
                 return new MongoDB().getAppData(mContext);
+
             }catch(Exception ex){
                 System.out.println(ex);
                 return null;

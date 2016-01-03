@@ -176,7 +176,10 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COUPLE_COLUMN_IMAGE_RESOURCE_ID, bio.getPictureResourceId());
         contentValues.put(COUPLE_COLUMN_DETAIL, bio.getBio());
 
-        if (exists) {
+        db.insertWithOnConflict(COUPLE_TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
+        return true;
+      /*  if (exists) {
             if (db.update(COUPLE_TABLE_NAME, contentValues, COUPLE_COLUMN_PERSON + " = ", new String[]{person}) > 0) {
                 db.close();
                 return true;
@@ -192,7 +195,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 db.close();
                 return false;
             }
-        }
+        }*/
     }
 
     public boolean insertCouple(Couple couple) {

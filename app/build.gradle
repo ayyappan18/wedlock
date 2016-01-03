@@ -26,7 +26,7 @@ android {
 
     dexOptions {
         incremental true
-        javaMaxHeapSize "4g"
+        javaMaxHeapSize "2048M"
     }
 
     buildTypes {
@@ -35,7 +35,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -47,16 +46,13 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.1.0'
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/httpclient-4.0.1.jar')
-    //Google Spreadsheet API
-    compile files('libs/gdata-core-1.0.jar')
-    compile files('libs/gdata-client-1.0-1.47.1.jar')
-    compile files('libs/gdata-client-meta-1.0-1.47.1.jar')
 
     compile files('libs/gson-2.1.jar')
-    compile files('libs/jackson-core-asl-1.9.9.jar')
+   // compile files('libs/jackson-core-asl-1.9.9.jar')
 
     compile files('libs/joda-time-2.9.jar')
-    compile files('libs/mongo-java-driver-3.2.0-SNAPSHOT.jar')
+    compile files('libs/mongo-2.10.1.jar')
+ //   compile files('libs/mongo-java-driver-3.2.0-SNAPSHOT.jar')
     /*
         compile 'org.mongodb:mongodb-driver:3.1.1'
     */

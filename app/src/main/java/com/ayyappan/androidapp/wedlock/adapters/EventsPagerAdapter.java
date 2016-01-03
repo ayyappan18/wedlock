@@ -1,11 +1,11 @@
-package com.ayyappan.androidapp.wedlock.venue.adapter;
+package com.ayyappan.androidapp.wedlock.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ayyappan.androidapp.wedlock.model.Venue;
-import com.ayyappan.androidapp.wedlock.venue.fragment.VenueFragment;
+import com.ayyappan.androidapp.wedlock.childfragments.EventDetailsFragment;
 
 import java.util.List;
 
@@ -15,31 +15,27 @@ import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupComp
 /**
  * Created by Ayyappan on 05/11/2015.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class EventsPagerAdapter extends FragmentPagerAdapter {
 
     public static List<Venue> venues;
-    public SectionsPagerAdapter(FragmentManager fm, List<Venue> venues) {
+    public EventsPagerAdapter(FragmentManager fm, List<Venue> venues) {
         super(fm);
         this.venues = venues;
     }
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return VenueFragment.newInstance(position,venues.get(position));
+        return EventDetailsFragment.newInstance(position, venues.get(position));
     }
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return venues.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         String childName = getMenuGroupCompleteList().get(EVENTS).get(position);
-
         return childName;
     }
 }

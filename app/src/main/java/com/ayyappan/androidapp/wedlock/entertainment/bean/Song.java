@@ -1,10 +1,5 @@
 package com.ayyappan.androidapp.wedlock.entertainment.bean;
 
-import org.bson.BsonDocument;
-import org.bson.BsonDocumentWrapper;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.conversions.Bson;
-
 /**
  * Created by Ayyappan on 12/12/2015.
  */

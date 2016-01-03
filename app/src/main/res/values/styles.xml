@@ -34,4 +34,9 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="eventDate">
+        <item name="android:background">@drawable/event_date</item>
+        <item name="android:textColor">@color/PURPLE_BUTTON</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

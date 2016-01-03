@@ -8,6 +8,7 @@ public class Image {
     private String thumbnailUri;
     private String fullsizeUri;
 
+    public Image(){ }
     public Image(Integer imageId, String thumbnailUri, String fullsizeUri) {
         this.imageId = imageId;
         this.thumbnailUri = thumbnailUri;

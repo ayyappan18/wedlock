@@ -52,4 +52,8 @@ public class IconDecoder {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
+    public static int getResourceId(String name, Context context) {
+        return context.getResources().getIdentifier(name.toLowerCase(), "drawable", context.getPackageName());
+    }
 }

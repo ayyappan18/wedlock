@@ -1,4 +1,4 @@
-package com.ayyappan.androidapp.wedlock.venue.fragment;
+package com.ayyappan.androidapp.wedlock.childfragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.model.Venue;
+import com.ayyappan.androidapp.wedlock.utils.IconDecoder;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,7 +35,7 @@ import java.util.Locale;
 /**
  * Created by Ayyappan on 05/11/2015.
  */
-public class VenueFragment extends Fragment {
+public class EventDetailsFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -47,8 +49,8 @@ public class VenueFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static VenueFragment newInstance(int sectionNumber,Venue venue) {
-        VenueFragment fragment = new VenueFragment();
+    public static EventDetailsFragment newInstance(int sectionNumber, Venue venue) {
+        EventDetailsFragment fragment = new EventDetailsFragment();
         fragment.venue = venue;
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -56,19 +58,18 @@ public class VenueFragment extends Fragment {
         return fragment;
     }
 
-    public VenueFragment(){
+    public EventDetailsFragment() {
 
-    }
-
-    public void setVenue(Venue venue){
-        this.venue = venue;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View venueFragmentView = inflater.inflate(R.layout.fragment_venue_details, container, false);
+        View venueFragmentView = inflater.inflate(R.layout.fragment_event_details, container, false);
+
+        //Event Icon
+        ImageView eventIcon = (ImageView) venueFragmentView.findViewById(R.id.event_icon);
 
         //Event Title
         TextView textEventTitle = (TextView) venueFragmentView.findViewById(R.id.txt_event_name);
@@ -77,11 +78,8 @@ public class VenueFragment extends Fragment {
         TextView textVenueTitle = (TextView) venueFragmentView.findViewById(R.id.VenueTitle);
         TextView textVenueAddress = (TextView) venueFragmentView.findViewById(R.id.VenueAddress);
 
-        //Event Date TIme Details
-        TextView textEventDay = (TextView) venueFragmentView.findViewById(R.id.txt_event_day);
-        TextView textEventMonth = (TextView) venueFragmentView.findViewById(R.id.txt_event_month);
-        TextView textEventDate = (TextView) venueFragmentView.findViewById(R.id.txt_event_date);
-        TextView textEventTime = (TextView) venueFragmentView.findViewById(R.id.txt_event_time);
+        int eventResourceId = IconDecoder.getResourceId(venue.getEventName(), getContext());
+        eventIcon.setImageResource(eventResourceId);
 
         //Set event location details
         String address = venue.getAddressLine1() + "\n" + venue.getAddressLine2() + "\n" + venue.getAddressLine3();
@@ -90,7 +88,7 @@ public class VenueFragment extends Fragment {
         textVenueAddress.setText(address);
 
         //Set event date time details
-        DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("E");
+        DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("EEEE");
         DateTimeFormatter monthFormatter = DateTimeFormat.forPattern("MMM");
         DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("hh:mm a");
 
@@ -99,12 +97,10 @@ public class VenueFragment extends Fragment {
         String date = Integer.toString(venue.getEventDate().getDayOfMonth());
         String time = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
 
-        textEventDay.setText(day);
-        textEventMonth.setText(month);
-        textEventDate.setText(date);
-        textEventTime.setText(time);
+        String dateTime = day + "," + month + date + "-" + time;
+        TextView textEventDay = (TextView) venueFragmentView.findViewById(R.id.txt_event_date_time);
+        textEventDay.setText(dateTime);
 
-        //Set Map
         setUpMapIfNeeded(venue);
 
         Button getDirectionButton = (Button) venueFragmentView.findViewById(R.id.GetDirections);
@@ -155,57 +151,21 @@ public class VenueFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //add the markers
-        // if (googleMap != null) {
-      //  ArrayList<Venue> venues = getActivity().getIntent().getParcelableArrayListExtra("venues");
-      //  Venue venue = venues.get(this.getArguments().getInt(ARG_SECTION_NUMBER));
         setUpMapIfNeeded(venue);
-        //}
     }
 
-    /****
-     * The mapfragment's id must be removed from the FragmentManager
-     * *** or else if the same it is passed on the next time then
-     * *** app will crash
-     ****/
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (googleMap != null) {
-        /*    VenueActivity.fragmentManager.beginTransaction()
-                    .remove(VenueActivity.fragmentManager.findFragmentById(R.id.map)).commit();*/
             googleMap = null;
         }
-        //if (googleMap != null) {
-
-            /*FragmentManager fm = getActivity().getSupportFragmentManager();
-            Fragment fragment = (fm.findFragmentById(R.id.map));
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.remove(fragment);
-            ft.commit();*/
-        //}
         SupportMapFragment myMapFragment = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map));
         if (myMapFragment != null)
             getFragmentManager().beginTransaction().remove(myMapFragment).commit();
-       /* if (this.myMapFragment != null
-                && getFragmentManager().findFragmentById(
-                this.myMapFragment.getId()) != null) {
-
-            getFragmentManager().beginTransaction().remove(this.myMapFragment)
-                    .commit();
-            this.myMapFragment = null;
-        }
-*/
     }
 
-    /*****
-     * Sets up the map if it is possible to do so
-     *****/
     public void setUpMapIfNeeded(final Venue venue) {
-        // Do a null check to confirm that we have not already instantiated the map.
-        //  if (myMapFragment == null) {
-        // Try to obtain the map from the SupportMapFragment.
-
         SupportMapFragment myMapFragment = ((SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map));
         if (myMapFragment == null) {
@@ -214,50 +174,26 @@ public class VenueFragment extends Fragment {
             myMapFragment = SupportMapFragment.newInstance();
             fragmentTransaction.replace(R.id.map, myMapFragment).commit();
         }
-        if (myMapFragment != null) {
-            myMapFragment.getMapAsync(new OnMapReadyCallback() {
+        myMapFragment.getMapAsync(new OnMapReadyCallback() {
 
-                @Override
-                public void onMapReady(GoogleMap gMap) {
-                    // TODO Auto-generated method stub
-                    googleMap = gMap;
-                    setUpMap(venue);
-                }
-            });
-        }
-/*
-            googleMap = ((SupportMapFragment) getActivity().getSupportFragmentManager()
-                    .findFragmentById(R.id.map)).getMap();
-           */
-        // Check if we were successful in obtaining the map.
-        /*    if (googleMap != null)
-                setUpMap(venue);*/
-        //  }
+            @Override
+            public void onMapReady(GoogleMap gMap) {
+                googleMap = gMap;
+                setUpMap(venue);
+            }
+        });
+
     }
 
     private void setUpMap(Venue venue) {
-
-
- /*       if(googleMap == null){
-            googleMap = ((SupportMapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map)).getMap();
-        }*/
-        // For showing a move to my loction button
         googleMap.setMyLocationEnabled(true);
-
-       /* googleMap = ((SupportMapFragment) getFragmentManager()
-                .findFragmentById(R.id.map)).getMap();*/
-        // For dropping a marker at a point on the Map
         googleMap.addMarker(
                 new MarkerOptions()
                         .position(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()))
                         .title(venue.getVenueName())
                         .snippet(venue.getAddressLine1()));
-
-        // For zooming automatically to the Dropped PIN Location
         googleMap.moveCamera(
                 CameraUpdateFactory
                         .newLatLngZoom(new LatLng(venue.getCoordinateLat(), venue.getCoordinateLong()), 15));
-
     }
 }

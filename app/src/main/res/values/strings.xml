@@ -123,4 +123,6 @@
     <string name="error_field_required">Required</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="create_account">Register</string>
+    <string name="AddToCalendar">ADD TO CALENDAR</string>
+    <string name="GetDirections">GET DIRECTIONS</string>
 </resources>

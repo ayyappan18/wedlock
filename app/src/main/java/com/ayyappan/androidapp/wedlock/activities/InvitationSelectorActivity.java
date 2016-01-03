@@ -12,8 +12,12 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
-import com.ayyappan.androidapp.wedlock.tasks.DownloadAppDetailsTask;
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetAppDetailsAsyncTask;
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetCoupleProfileAsyncTask;
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetGalleryUrlsAsyncTask;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
+import com.ayyappan.androidapp.wedlock.model.AppData;
+import com.ayyappan.androidapp.wedlock.model.Image;
 import com.ayyappan.androidapp.wedlock.model.Invitation;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 
@@ -104,15 +108,14 @@ public class InvitationSelectorActivity extends Activity {
     private void gotToLoginPage() {
 
         CheckNetwork checkNetwork = new CheckNetwork();
-        GlobalData globalData = new GlobalData(getApplicationContext());
         if (checkNetwork.isConnected(getApplicationContext())) {
-            if (globalData.getCouple() == null || globalData.getImagesUrls() == null) {
-                new DownloadAppDetailsTask(getApplicationContext()).execute();
+            if (localDB.getCouple() == null || localDB.getAllImageUrls() == null || localDB.getAllImageUrls().size() == 0) {
+                new GetAppDetailsAsyncTask(getApplicationContext()).execute();
             }
         }
 
         Intent intent;
-        if (globalData.getUser() == null)
+        if (localDB.retrieveUser() == null)
             intent = new Intent(InvitationSelectorActivity.this, LoginActivity.class);
         else
             intent = new Intent(InvitationSelectorActivity.this, ApplicationActivity.class);

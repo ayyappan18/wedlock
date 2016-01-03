@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.adapters.BiographyPagerAdapter;
+import com.ayyappan.androidapp.wedlock.database.mongolab.GetCoupleProfileAsyncTask;
 import com.ayyappan.androidapp.wedlock.model.Bio;
 import com.ayyappan.androidapp.wedlock.model.Couple;
 import com.ayyappan.androidapp.wedlock.database.MongoDB;
@@ -92,7 +93,7 @@ public class CoupleProfileFragment extends Fragment {
                                  Bundle savedInstanceState) {
 
 
-            View rootView = inflater.inflate(R.layout.fragment_biography, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_biography, container, false);
 
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             actionBar.setTitle("Couple");
@@ -100,14 +101,27 @@ public class CoupleProfileFragment extends Fragment {
             if (ImageLoader.getInstance() == null)
                 ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getContext()));
 
-            Integer sectionNumber = getArguments().getInt("section_number");
+            final Integer sectionNumber = getArguments().getInt("section_number");
 
             Couple couple = new GlobalData(getContext()).getCouple();
 
             if (couple == null) {
                 CheckNetwork checkNetwork = new CheckNetwork();
                 if (checkNetwork.isConnected(getContext()))
-                    new BiographyDetailsLocalDownloader(rootView, getContext(), sectionNumber).execute();
+                    new GetCoupleProfileAsyncTask(getContext(), new GetCoupleProfileAsyncTask.AsyncResponse() {
+                        @Override
+                        public void processFinish(Couple couple) {
+                            if (couple == null) {
+                                CoupleProfileJsonReader localCouple = new CoupleProfileJsonReader();
+                                PlaceholderFragment.populateCoupleProfile(rootView, getContext(), couple, sectionNumber, true);
+                            } else {
+                                Toast.makeText(getContext(), "Couple profile details downloaded in Couple profile", Toast.LENGTH_SHORT).show();
+                                new GlobalData(getContext()).setCouple(couple);
+                                PlaceholderFragment.populateCoupleProfile(rootView, getContext(), couple, sectionNumber, true);
+                            }
+                        }
+                    }).execute();
+                  //  new BiographyDetailsLocalDownloader(rootView, getContext(), sectionNumber).execute();
                 else {
                     try {
                         Couple offlineCoupleDetails = new CoupleProfileJsonReader().getCouple(getContext());
@@ -146,42 +160,6 @@ public class CoupleProfileFragment extends Fragment {
             ImageView imageView = (ImageView) rootView.findViewById(R.id.picture);
             imageView.setImageResource(pictureResource);
 
-        }
-    }
-
-    private static class BiographyDetailsLocalDownloader extends AsyncTask<Void, Void, Couple> {
-
-        private View rootView;
-        private Context context;
-        private Integer sectionNumber;
-
-        public BiographyDetailsLocalDownloader(View rootView, Context context, Integer sectionNumber) {
-            this.rootView = rootView;
-            this.context = context;
-            this.sectionNumber = sectionNumber;
-        }
-
-        @Override
-        protected Couple doInBackground(Void... urls) {
-            try {
-                return new MongoDB().getCoupleInfo(context);
-            } catch (Exception ex) {
-                System.out.println(ex);
-                return null;
-            }
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(Couple couple) {
-            if (couple == null) {
-                CoupleProfileJsonReader localCouple = new CoupleProfileJsonReader();
-                PlaceholderFragment.populateCoupleProfile(rootView, context, couple, sectionNumber, true);
-            } else {
-                Toast.makeText(context, "Couple profile details downloaded in Couple profile", Toast.LENGTH_SHORT).show();
-                new GlobalData(context).setCouple(couple);
-                PlaceholderFragment.populateCoupleProfile(rootView, context, couple, sectionNumber, true);
-            }
         }
     }
 }
