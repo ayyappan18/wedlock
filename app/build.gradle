@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 21
     buildToolsVersion "23.0.1"
     repositories {
         jcenter()
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.ayyappan.androidapp.wedlock"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
@@ -40,36 +40,26 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
+   // compile 'com.android.support:appcompat-v7:23.1.0'
+    compile "com.android.support:support-v4:21.0.+"
+   // compile "com.android.support:appcompat-v7:19.0.+"
+
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
-    compile 'com.android.support:design:23.1.0'
-    compile 'com.google.android.gms:play-services:8.1.0'
+  //  compile 'com.android.support:design:23.1.0'
+  //  compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    compile 'com.google.android.gms:play-services-plus:8.1.0'
+
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/httpclient-4.0.1.jar')
 
     compile files('libs/gson-2.1.jar')
-   // compile files('libs/jackson-core-asl-1.9.9.jar')
 
     compile files('libs/joda-time-2.9.jar')
     compile files('libs/mongo-2.10.1.jar')
- //   compile files('libs/mongo-java-driver-3.2.0-SNAPSHOT.jar')
-    /*
-        compile 'org.mongodb:mongodb-driver:3.1.1'
-    */
-
-    //Google Drive API
-
-    /*    compile('com.google.api-client:google-api-client-android:1.20.0') {
-            exclude group: 'org.apache.httpcomponents'
-        }
-        compile('com.google.apis:google-api-services-drive:v2-rev170-1.20.0') {
-            exclude group: 'org.apache.httpcomponents'
-        }*/
 
     //gallery
     compile files('libs/universal-image-loader-1.9.5.jar')
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
 
     //Photo zoom
     compile 'com.commit451:PhotoView:1.2.4'

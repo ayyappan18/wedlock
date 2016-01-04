@@ -3,7 +3,6 @@ package com.ayyappan.androidapp.wedlock.activities;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -65,11 +64,11 @@ public class ApplicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+     /*   NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.inflateHeaderView(R.layout.menu_header);
 
         txtWelcomeText = (TextView) headerView.findViewById(R.id.welcome_name);
-        txtWelcomeText.setText(new GlobalData(getApplicationContext()).getUser().getName());
+        txtWelcomeText.setText(new GlobalData(getApplicationContext()).getUser().getName());*/
       /*  app = (UILApplication) getApplication();
 
         //Set background Image
@@ -145,7 +144,7 @@ public class ApplicationActivity extends AppCompatActivity {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack();
                 switch (groupName) {
                     case HOME:
                         fragmentManager.beginTransaction()
@@ -191,7 +190,7 @@ public class ApplicationActivity extends AppCompatActivity {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
                 String childName = getMenuGroupCompleteList().get(groupName).get(childPosition);
 
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack();
 
                 switch (groupName) {
                     case BIOGRAPHY:
@@ -262,7 +261,6 @@ public class ApplicationActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

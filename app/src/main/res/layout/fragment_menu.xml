@@ -6,8 +6,7 @@
     android:fitsSystemWindows="true"
     android:id="@+id/nav_view"
     android:layout_height="match_parent"
-    android:layout_width="wrap_content"
-    app:headerLayout="@layout/nav_header">
+    android:layout_width="wrap_content">
 
     <ExpandableListView
         android:cacheColorHint="#00000000"
@@ -21,6 +20,5 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:paddingTop="@dimen/nav_header_height"
-        app:headerLayout="@layout/nav_header" />
+        android:paddingTop="@dimen/nav_header_height" />
 </android.support.design.widget.NavigationView>

@@ -34,45 +34,36 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <android.support.design.widget.TextInputLayout
+
+        <EditText
+            android:id="@+id/edit_invitation_id"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edit_invitation_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_invitation_id"
-                android:inputType="number"
-                android:imeOptions="flagNavigateNext"
-                android:nextFocusDown="@+id/edit_invitation_passcode"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/grey_0"
-                android:textColorHint="#3c1047" />
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_invitation_id"
+            android:imeOptions="flagNavigateNext"
+            android:inputType="number"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/edit_invitation_passcode"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/grey_0"
+            android:textColorHint="#3c1047" />
 
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/edit_invitation_passcode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edit_invitation_passcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="@string/prompt_invitation_passcode"
-                android:imeActionId="@+id/btn_access_invitation"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/grey_0"
-                android:textColorHint="#3c1047" />
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/prompt_invitation_passcode"
+            android:imeActionId="@+id/btn_access_invitation"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/grey_0"
+            android:textColorHint="#3c1047" />
 
         <Button
             android:id="@+id/btn_access_invitation"
@@ -81,8 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/action_invitation_access"
-            android:textStyle="bold"
-            android:textColor="@color/grey_0" />
+            android:textColor="@color/grey_0"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>

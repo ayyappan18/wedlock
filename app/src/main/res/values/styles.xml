@@ -15,6 +15,12 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="ProgressBarStyle" parent="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
 
+    <style name="HeaderBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:elevation">4dp</item>
+        <!-- You may have to override this in a v21 version of this file -->
+    </style>
+
     <style name="Title" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/PURPLE_TITLE</item>
         <item name="android:layout_width">wrap_content</item>

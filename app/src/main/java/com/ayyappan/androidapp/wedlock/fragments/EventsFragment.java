@@ -1,17 +1,20 @@
 package com.ayyappan.androidapp.wedlock.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.adapters.EventsPagerAdapter;
+import com.ayyappan.androidapp.wedlock.adapters.SlidingTabLayout;
+import com.ayyappan.androidapp.wedlock.childfragments.EventDetailsFragment;
 import com.ayyappan.androidapp.wedlock.model.Venue;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class EventsFragment extends Fragment {
     private static final String EVENT_POSITION = "event-position";
     private EventsPagerAdapter mEventsPagerAdapter;
     private static ViewPager viewPager;
+    SlidingTabLayout mSlidingTabLayout;
 
     public static EventsFragment newInstance(List<Venue> venuesList, int position) {
         EventsFragment fragment = new EventsFragment();
@@ -45,32 +49,48 @@ public class EventsFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.title_fragment_event));
 
-        // Initializing view page
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
         mEventsPagerAdapter = new EventsPagerAdapter(getChildFragmentManager(), venues);
 
         //Create tab layout and register tab selection listener
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
-        tabLayout.setOnTabSelectedListener(tabSelectionListener());
+      //  tabLayout.setup(getContext(), getChildFragmentManager(), android.R.id.);
 
-        //Add tabs
-        for (Venue venue : venues) {
-            tabLayout.addTab(tabLayout.newTab().setText(venue.getEventName()));
-        }
-
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        //     tabLayout.setOnTabSelectedListener(tabSelectionListener());
         //set current view pager based on user selection
         viewPager.setAdapter(mEventsPagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.PURPLE_BUTTON));
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return R.color.white;
+            }
+        });
+        mSlidingTabLayout.setViewPager(viewPager);
+
+      /*  //Add tabs
+        for (Venue venue : venues) {
+            tabLayout.addTab(
+                    tabLayout.newTabSpec(venue.getEventName()).setIndicator(venue.getEventName(), null),
+                    EventDetailsFragment.class, null);
+
+       //     tabLayout.addTab(tabLayout.newTab().setText(venue.getEventName()));
+        }*/
+
+   //     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+    //    viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         viewPager.setCurrentItem(getArguments().getInt(EVENT_POSITION,0));
 
         return rootView;
     }
 
-    private TabLayout.OnTabSelectedListener tabSelectionListener(){
+  /*  private TabLayout.OnTabSelectedListener tabSelectionListener(){
         return new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -88,5 +108,5 @@ public class EventsFragment extends Fragment {
             }
         };
     }
-
+*/
 }
