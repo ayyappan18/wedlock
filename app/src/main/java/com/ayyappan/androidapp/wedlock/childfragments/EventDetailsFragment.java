@@ -97,7 +97,7 @@ public class EventDetailsFragment extends Fragment {
         String date = Integer.toString(venue.getEventDate().getDayOfMonth());
         String time = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
 
-        String dateTime = day + "," + month + date + "-" + time;
+        String dateTime = day + " ," + month + " " + date + " - " + time;
         TextView textEventDay = (TextView) venueFragmentView.findViewById(R.id.txt_event_date_time);
         textEventDay.setText(dateTime);
 

@@ -145,7 +145,7 @@ public class ApplicationActivity extends AppCompatActivity {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
-                fragmentManager.popBackStack();
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 switch (groupName) {
                     case HOME:
                         fragmentManager.beginTransaction()
@@ -191,7 +191,7 @@ public class ApplicationActivity extends AppCompatActivity {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
                 String childName = getMenuGroupCompleteList().get(groupName).get(childPosition);
 
-                fragmentManager.popBackStack();
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                 switch (groupName) {
                     case BIOGRAPHY:

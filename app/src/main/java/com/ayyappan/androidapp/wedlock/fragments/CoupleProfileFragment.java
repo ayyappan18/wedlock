@@ -1,8 +1,6 @@
 package com.ayyappan.androidapp.wedlock.fragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,17 +18,13 @@ import com.ayyappan.androidapp.wedlock.adapters.BiographyPagerAdapter;
 import com.ayyappan.androidapp.wedlock.database.mongolab.GetCoupleProfileAsyncTask;
 import com.ayyappan.androidapp.wedlock.model.Bio;
 import com.ayyappan.androidapp.wedlock.model.Couple;
-import com.ayyappan.androidapp.wedlock.database.MongoDB;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.utils.CoupleProfileJsonReader;
-import com.ayyappan.androidapp.wedlock.utils.IconDecoder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONException;
-
-import java.util.HashMap;
 
 public class CoupleProfileFragment extends Fragment {
 
@@ -54,7 +48,7 @@ public class CoupleProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.biography_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_couple_profile, container, false);
         mSectionsPagerAdapter = new BiographyPagerAdapter(getChildFragmentManager());
 
         Integer sectionNumber = getArguments().getInt(PROFILE_SELECTION, 0);

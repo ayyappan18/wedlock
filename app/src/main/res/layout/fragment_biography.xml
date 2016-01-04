@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context="com.ayyappan.androidapp.wedlock.TestActivity$PlaceholderFragment">
+    tools:context="com.ayyappan.androidapp.wedlock.fragments.CoupleProfileFragment.PlaceholderFragment">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -41,24 +41,6 @@
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_below="@id/name" />
-
-
-            <!--    <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_below="@id/section_label"
-                    android:layout_centerHorizontal="true">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView2"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="93dp"
-                        android:src="@mipmap/ic_launcher" />
-                </RelativeLayout>-->
         </RelativeLayout>
     </ScrollView>
 
