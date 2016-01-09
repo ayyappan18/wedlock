@@ -12,7 +12,8 @@ import org.joda.time.DateTime;
 public class Venue implements Parcelable{
 
     private String eventName;
-    private DateTime eventDate;
+    private DateTime eventStartDate;
+    private DateTime eventEndDate;
     private String venueName;
     private String hallName;
     private String addressLine1;
@@ -24,9 +25,10 @@ public class Venue implements Parcelable{
         super();
     }
 
-    public Venue(String eventName, DateTime eventDate, String venueName, String hallName, String addressLine1, String addressLine2, String addressLine3, Double coordinateLat, Double coordinateLong){
+    public Venue(String eventName, DateTime eventStartDate, DateTime eventEndDate, String venueName, String hallName, String addressLine1, String addressLine2, String addressLine3, Double coordinateLat, Double coordinateLong){
         this.eventName = eventName;
-        this.eventDate = eventDate;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
         this.venueName = venueName;
         this.hallName = hallName;
         this.addressLine1 = addressLine1;
@@ -39,7 +41,8 @@ public class Venue implements Parcelable{
     private Venue(Parcel in) {
         super();
         this.eventName = in.readString();
-        this.eventDate = new DateTime(in.readString());
+        this.eventStartDate = new DateTime(in.readString());
+        this.eventEndDate = new DateTime(in.readString());
         this.venueName = in.readString();
         this.hallName = in.readString();
         this.addressLine1 = in.readString();
@@ -53,7 +56,8 @@ public class Venue implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(getEventName());
-        parcel.writeString(getEventDate().toString());
+        parcel.writeString(getEventStartDate().toString());
+        parcel.writeString(getEventEndDate().toString());
         parcel.writeString(getVenueName());
         parcel.writeString(getHallName());
         parcel.writeString(getAddressLine1());
@@ -79,13 +83,22 @@ public class Venue implements Parcelable{
         return 0;
     }
 
-    public DateTime getEventDate() {
-        return eventDate;
+    public DateTime getEventStartDate() {
+        return eventStartDate;
     }
 
-    public void setEventDate(DateTime eventDate) {
-        this.eventDate = eventDate;
+    public void setEventStartDate(DateTime eventStartDate) {
+        this.eventStartDate = eventStartDate;
     }
+
+    public DateTime getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(DateTime eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
     public String getEventName() {
         return eventName;
     }

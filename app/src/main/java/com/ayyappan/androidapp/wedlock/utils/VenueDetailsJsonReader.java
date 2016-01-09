@@ -25,7 +25,8 @@ public class VenueDetailsJsonReader {
     public static final String VENUES = "venues";
 
     public static final String EVENT_NAME = "eventTitle";
-    public static final String EVENT_DATE = "eventDate";
+    public static final String EVENT_START_DATE = "eventStartDate";
+    public static final String EVENT_END_DATE = "eventEndDate";
     public static final String VENUE_NAME = "venueName";
     public static final String HALL_NAME = "hallName";
 
@@ -55,10 +56,12 @@ public class VenueDetailsJsonReader {
             Venue venue = new Venue();
             JSONObject venueObj = jsonArray.getJSONObject(i);
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/M/YYYY HH:mm:ss");
-            DateTime eventDate = formatter.parseDateTime(venueObj.getString(EVENT_DATE));
+            DateTime eventStartDate = formatter.parseDateTime(venueObj.getString(EVENT_START_DATE));
+            DateTime eventEndDate = formatter.parseDateTime(venueObj.getString(EVENT_END_DATE));
 
             venue.setEventName(venueObj.getString(EVENT_NAME));
-            venue.setEventDate(eventDate);
+            venue.setEventStartDate(eventStartDate);
+            venue.setEventEndDate(eventEndDate);
             venue.setVenueName(venueObj.getString(VENUE_NAME));
             venue.setHallName(venueObj.getString(HALL_NAME));
             venue.setAddressLine1(venueObj.getString(ADDRESSLINE1));

@@ -42,7 +42,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:layout_centerHorizontal="true"
-                style="@style/eventDate"
+                style="@style/eventStartDate"
                 android:orientation="vertical">
 
                 <LinearLayout

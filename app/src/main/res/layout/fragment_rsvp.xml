@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/rsvp_time_txt"
-        style="@style/eventDate"
+        style="@style/eventStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/reception_icon"
@@ -63,7 +63,7 @@
 
     <TextView
         android:id="@+id/rsvp_location_txt"
-        style="@style/eventDate"
+        style="@style/eventStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/rsvp_time_txt"
@@ -180,7 +180,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/rsvp_response"
-        style="@style/eventDate"
+        style="@style/eventStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/response"

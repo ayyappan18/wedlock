@@ -62,7 +62,7 @@
 
             <LinearLayout
                 android:id="@+id/Home_Event_Details"
-                style="@style/eventDate"
+                style="@style/eventStartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/MainContent"
@@ -155,7 +155,7 @@
 
             <RelativeLayout
                 android:id="@+id/Timer"
-                style="@style/eventDate"
+                style="@style/eventStartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

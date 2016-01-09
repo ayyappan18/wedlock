@@ -88,16 +88,17 @@ public class EventDetailsFragment extends Fragment {
         textVenueAddress.setText(address);
 
         //Set event date time details
-        DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("EEEE");
+        DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("EEE");
         DateTimeFormatter monthFormatter = DateTimeFormat.forPattern("MMM");
         DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("hh:mm a");
 
-        String day = dayFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
-        String month = monthFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
-        String date = Integer.toString(venue.getEventDate().getDayOfMonth());
-        String time = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventDate());
+        String day = dayFormatter.withLocale(Locale.getDefault()).print(venue.getEventStartDate());
+        String month = monthFormatter.withLocale(Locale.getDefault()).print(venue.getEventStartDate());
+        String date = Integer.toString(venue.getEventStartDate().getDayOfMonth());
+        String startTime = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventStartDate());
+        String endTime = timeFormatter.withLocale(Locale.getDefault()).print(venue.getEventEndDate());
 
-        String dateTime = day + ", " + month + " " + date + " - " + time;
+        String dateTime = day + ", " + month + " " + date + " - " + startTime + " to " + endTime;
         TextView textEventDay = (TextView) venueFragmentView.findViewById(R.id.txt_event_date_time);
         textEventDay.setText(dateTime);
 
@@ -122,7 +123,7 @@ public class EventDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Long beginTime = venue.getEventDate().getMillis();
+                Long beginTime = venue.getEventStartDate().getMillis();
                 Long endTime = beginTime + 1000 * 60 * 60 * 4;
                 Intent intent = new Intent(Intent.ACTION_INSERT)
                         .setData(CalendarContract.Events.CONTENT_URI)
