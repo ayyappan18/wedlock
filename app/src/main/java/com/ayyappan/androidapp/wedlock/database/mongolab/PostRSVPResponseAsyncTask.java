@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.ayyappan.androidapp.wedlock.activities.ApplicationActivity;
 import com.ayyappan.androidapp.wedlock.database.local.DBHelper;
 import com.ayyappan.androidapp.wedlock.model.Rsvp;
 import com.ayyappan.androidapp.wedlock.model.User;
@@ -18,13 +19,16 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Ayyappan on 03/01/2016.
  */
 public class PostRSVPResponseAsyncTask extends AsyncTask<Rsvp, Void, Rsvp> {
 
     private Context context;
-    public PostRSVPResponseAsyncTask(Context context){ this.context = context; }
+
+    public PostRSVPResponseAsyncTask(Context context){ this.context = context;}
 
     @Override
     protected Rsvp doInBackground(Rsvp... arg0) {

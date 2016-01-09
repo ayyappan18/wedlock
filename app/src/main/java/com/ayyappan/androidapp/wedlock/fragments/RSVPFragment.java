@@ -18,10 +18,13 @@ import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.model.Rsvp;
 import com.ayyappan.androidapp.wedlock.model.User;
 
+import java.lang.ref.WeakReference;
+
 public class RSVPFragment extends Fragment {
 
     private GlobalData data;
     private DBHelper local;
+
     public static RSVPFragment newInstance() {
         RSVPFragment fragment = new RSVPFragment();
         return fragment;
@@ -106,7 +109,7 @@ public class RSVPFragment extends Fragment {
                 response.setVisibility(View.VISIBLE);
                 User user = data.getUser();
                 Rsvp rsvp = new Rsvp(user.getName(), user.getEmail(), "No");
-                insertOrUpdateInMongo(user,rsvp);
+                insertOrUpdateInMongo(user, rsvp);
             }
         };
     }
@@ -115,10 +118,11 @@ public class RSVPFragment extends Fragment {
         Rsvp existingRsvp = local.retrieveRsvp(user.getName());
         if(existingRsvp != null && existingRsvp.getOid() != null) {
             rsvp.setOid(existingRsvp.getOid());
-            new UpdateRSVPResponseAsyncTask(getContext()).execute(rsvp);
+            new UpdateRSVPResponseAsyncTask(getActivity()).execute(rsvp);
         }
         else{
-            new PostRSVPResponseAsyncTask(getContext()).execute(rsvp);
+            new PostRSVPResponseAsyncTask(getActivity()).execute(rsvp);
         }
     }
+
 }

@@ -149,33 +149,37 @@ public class ApplicationActivity extends AppCompatActivity {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
-                fragmentManager.popBackStack();
                 switch (groupName) {
                     case HOME:
+                        fragmentManager.popBackStack();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, HomeFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
                         break;
                     case INVITATION:
+                        fragmentManager.popBackStack();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, InvitationFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
                         break;
                     case GALLERY:
+                        fragmentManager.popBackStack();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, GalleryFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
                         break;
                     case RSVP:
+                        fragmentManager.popBackStack();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, RSVPFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
                         break;
                     case ABOUT:
+                        fragmentManager.popBackStack();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, AboutFragment.newInstance())
                                 .addToBackStack(null)
@@ -201,18 +205,18 @@ public class ApplicationActivity extends AppCompatActivity {
                 String groupName = getMenuGroupHeaders().get(groupPosition);
                 String childName = getMenuGroupCompleteList().get(groupName).get(childPosition);
 
-                fragmentManager.popBackStack();
-
                 switch (groupName) {
                     case BIOGRAPHY:
                         switch (childName) {
                             case BIOGRAPHY_BRIDE:
+                                fragmentManager.popBackStack();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, CoupleProfileFragment.newInstance(0))
                                         .addToBackStack(null)
                                         .commit();
                                 break;
                             case BIOGRAPHY_GROOM:
+                                fragmentManager.popBackStack();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, CoupleProfileFragment.newInstance(1))
                                         .addToBackStack(null)
@@ -223,6 +227,7 @@ public class ApplicationActivity extends AppCompatActivity {
                     case ENTERTAINMENT:
                         switch (childName) {
                             case ENTERTAINMENT_LIGHTMUSIC:
+                                fragmentManager.popBackStack();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, LightMusicFragment.newInstance())
                                         .addToBackStack(null)
@@ -234,12 +239,14 @@ public class ApplicationActivity extends AppCompatActivity {
                         List<Venue> venues = new GlobalData(getApplicationContext()).getVenue();
                         switch (childName) {
                             case EVENT_RECEPTION:
+                                fragmentManager.popBackStack();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, EventsFragment.newInstance(venues, 0))
                                         .addToBackStack(null)
                                         .commit();
                                 break;
                             case EVENT_WEDDING:
+                                fragmentManager.popBackStack();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, EventsFragment.newInstance(venues, 1))
                                         .addToBackStack(null)
