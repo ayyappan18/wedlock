@@ -23,6 +23,8 @@ import com.ayyappan.androidapp.wedlock.fragments.InvitationFragment;
 import com.ayyappan.androidapp.wedlock.R;
 import com.ayyappan.androidapp.wedlock.UILApplication;
 import com.ayyappan.androidapp.wedlock.fragments.GalleryFragment;
+import com.ayyappan.androidapp.wedlock.fragments.LightMusicFragment;
+import com.ayyappan.androidapp.wedlock.fragments.RSVPFragment;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.adapters.MenuDrawerListAdapter;
@@ -37,12 +39,15 @@ import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ABOUT;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_BRIDE;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_GROOM;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ENTERTAINMENT;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ENTERTAINMENT_LIGHTMUSIC;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENTS;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_RECEPTION;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_WEDDING;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.GALLERY;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.HOME;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.INVITATION;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.RSVP;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupCompleteList;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.getMenuGroupHeaders;
 
@@ -65,10 +70,10 @@ public class ApplicationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_application);
 
      /*   NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View headerView = navigationView.inflateHeaderView(R.layout.menu_header);
+        View headerView = navigationView.inflateHeaderView(R.layout.menu_header);*/
 
-        txtWelcomeText = (TextView) headerView.findViewById(R.id.welcome_name);
-        txtWelcomeText.setText(new GlobalData(getApplicationContext()).getUser().getName());*/
+        txtWelcomeText = (TextView) findViewById(R.id.welcome_name);
+        txtWelcomeText.setText(new GlobalData(getApplicationContext()).getUser().getName());
       /*  app = (UILApplication) getApplication();
 
         //Set background Image
@@ -161,7 +166,13 @@ public class ApplicationActivity extends AppCompatActivity {
                     case GALLERY:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.content_fragment, GalleryFragment.newInstance())
-                                .addToBackStack("home")
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    case RSVP:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content_fragment, RSVPFragment.newInstance())
+                                .addToBackStack(null)
                                 .commit();
                         break;
                     case ABOUT:
@@ -204,6 +215,16 @@ public class ApplicationActivity extends AppCompatActivity {
                             case BIOGRAPHY_GROOM:
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_fragment, CoupleProfileFragment.newInstance(1))
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                        }
+                        break;
+                    case ENTERTAINMENT:
+                        switch (childName) {
+                            case ENTERTAINMENT_LIGHTMUSIC:
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_fragment, LightMusicFragment.newInstance())
                                         .addToBackStack(null)
                                         .commit();
                                 break;
@@ -257,10 +278,10 @@ public class ApplicationActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
+/*    @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+    }*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

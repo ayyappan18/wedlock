@@ -29,6 +29,8 @@ public class MenuOptions {
     public static final String EVENT_RECEPTION = "Reception";
     public static final String EVENT_WEDDING = "Wedding";
     public static final String ABOUT = "About";
+    public static final String RSVP = "RSVP";
+
 
 
     private static MenuOptions ourInstance = new MenuOptions();
@@ -57,6 +59,7 @@ public class MenuOptions {
             case MenuOptions.ENTERTAINMENT : return R.drawable.entertainment_icon;
             case MenuOptions.INVITATION : return R.drawable.invitation_icon;
             case MenuOptions.EVENTS : return R.drawable.event_icon;
+            case MenuOptions.RSVP : return R.drawable.about_icon;
             case MenuOptions.ABOUT : return R.drawable.about_icon;
             default : return R.drawable. about_icon;
         }
@@ -74,6 +77,7 @@ public class MenuOptions {
        // menuGroupHeaders.add(BLOG);
         menuGroupHeaders.add(INVITATION);
         menuGroupHeaders.add(EVENTS);
+        menuGroupHeaders.add(RSVP);
         menuGroupHeaders.add(ABOUT);
 
         // Adding child data
@@ -96,6 +100,8 @@ public class MenuOptions {
         menuGroupCompleteList.put(menuGroupHeaders.get(4), new ArrayList());
         menuGroupCompleteList.put(menuGroupHeaders.get(5), venue);
         menuGroupCompleteList.put(menuGroupHeaders.get(6), new ArrayList());
+        menuGroupCompleteList.put(menuGroupHeaders.get(7), new ArrayList());
+
 
     }
 }

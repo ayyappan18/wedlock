@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#712b83</color>
     <color name="colorPrimaryDark">#712b83</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#712b83</color>
 
     <color name="holo_blue_dark">#ff0099cc</color>
     <color name="view_divider_color">#BABABA</color>
@@ -14,9 +14,10 @@
     <color name="PURPLE_TITLE">#712b83</color>
     <color name="PURPLE_SUBTITLE">#712b83</color>
     <color name="PURPLE_BUTTON">#3C1048</color>
-
-    <color name="app_primary">#008080</color>
-    <color name="app_primary_dark">#45645C</color>
+    <color name="DARK_PURPLE">#280432</color>
+    <color name="LIGHT_PURPLE">#712b83</color>
+    <color name="app_primary">#712b83</color>
+    <color name="app_primary_dark">#712b83</color>
 
 <!--
     <item name="blue" type="color">#FF33B5E5</item>

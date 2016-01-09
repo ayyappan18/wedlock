@@ -1,5 +1,6 @@
 package com.ayyappan.androidapp.wedlock.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -11,14 +12,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.database.mongolab.PostUserDetailsAsyncTask;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.model.User;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.utils.Constants;
-import com.ayyappan.androidapp.wedlock.tasks.SendUserTask;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookBroadcastReceiver;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -37,12 +37,14 @@ import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements
+public class LoginActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -89,6 +91,8 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void initialiseLogin() {
+
+        LoginManager.getInstance().logOut();
 
         //Facebook Login
         facebookLoginButton = (LoginButton) findViewById(R.id.f_sign_in_button);
@@ -311,10 +315,14 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void redirectLoggedInUserToHome(User user) {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss a");
+        String date = sdf.format(c.getTime());
+        user.setDateOfLogin(date);
         globalData.setUser(user);
         CheckNetwork checkNetwork = new CheckNetwork();
         if (checkNetwork.isOnline(LoginActivity.this)) {
-            new SendUserTask(user).execute();
+            new PostUserDetailsAsyncTask().execute(user);
         }
 
         Intent intent = new Intent(LoginActivity.this, ApplicationActivity.class);

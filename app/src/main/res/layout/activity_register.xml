@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_bg_login"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/app_bg_login"
     tools:context=".RegisterActivity">
 
 
@@ -41,6 +41,7 @@
 
         <TextView
             android:id="@+id/txt_identity_request"
+            style="@style/SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/txt_logo"
@@ -50,68 +51,53 @@
             android:layout_gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:text="@string/app_register"
-            style="@style/SubTitle"
             android:textAlignment="center" />
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/edit_nome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_name"
+            android:imeOptions="flagNavigateNext"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/edit_email"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/LIGHT_PURPLE"
+            android:textColorHint="@color/grey_300" />
+        <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
 
-            <AutoCompleteTextView
-                android:id="@+id/edit_nome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_name"
-                android:inputType="textCapSentences"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:imeOptions="flagNavigateNext"
-                android:nextFocusDown="@+id/edit_email"
-                android:textColor="@color/grey_0"
-                android:textColorHint="@color/grey_0" />
-            <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_email"
+            android:imeOptions="flagNavigateNext"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/edit_location"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/LIGHT_PURPLE"
+            android:textColorHint="@color/grey_300" />
+        <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
 
-            <AutoCompleteTextView
-                android:id="@+id/edit_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:imeOptions="flagNavigateNext"
-                android:nextFocusDown="@+id/edit_location"
-                android:textColor="@color/grey_0"
-                android:textColorHint="@color/grey_0" />
-            <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/edit_location"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edit_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="@string/prompt_location"
-                android:imeActionId="@+id/login"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textCapSentences"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/grey_0"
-                android:textColorHint="@color/grey_0" />
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/prompt_location"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/LIGHT_PURPLE"
+            android:textColorHint="@color/grey_300" />
 
         <Button
             android:id="@+id/btn_register"
@@ -121,8 +107,8 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/login_btn"
             android:text="@string/action_register"
-            android:textStyle="bold"
-            android:textColor="@color/grey_0" />
+            android:textColor="@color/grey_0"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>

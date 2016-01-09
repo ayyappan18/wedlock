@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.ayyappan.androidapp.wedlock.model.Bio;
 import com.ayyappan.androidapp.wedlock.model.Couple;
 import com.ayyappan.androidapp.wedlock.model.Invitation;
+import com.ayyappan.androidapp.wedlock.model.Rsvp;
 import com.ayyappan.androidapp.wedlock.model.User;
 
 import java.util.ArrayList;
@@ -37,8 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_TABLE_NAME = "user";
     public static final String USER_COLUMN_NAME = "name";
     public static final String USER_COLUMN_AUTH_PROVIDER = "authprovider";
-    public static final String USER_COLUMN_EMAIL = "email";
-    ;
+    public static final String USER_COLUMN_EMAIL = "email";;
     public static final String USER_COLUMN_PHOTO = "photo";
     public static final String USER_COLUMN_PLACE = "place";
 
@@ -46,6 +46,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String INVITATION_COLUMN_ID = "id";
     public static final String INVITATION_COLUMN_PASSCODE = "passcode";
     public static final String INVITATION_COLUMN_NAME = "name";
+
+    public static final String RSVP_TABLE_NAME = "rsvp";
+    public static final String RSVP_COLUMN_ID = "Oid";
+    public static final String RSVP_COLUMN_NAME = "name";
+    public static final String RSVP_COLUMN_EMAIL = "email";
+    public static final String RSVP_COLUMN_RESPONSE = "repsonse";
 
     SQLiteDatabase db;
 
@@ -81,6 +87,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 USER_COLUMN_PLACE + " TEXT " +
                 ")";
 
+        String CREATE_RSVP_TABLE = "CREATE TABLE IF NOT EXISTS " + RSVP_TABLE_NAME +
+                "(" +
+                KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                RSVP_COLUMN_ID + " TEXT, " +
+                RSVP_COLUMN_NAME + " TEXT NOT NULL UNIQUE, " +
+                RSVP_COLUMN_EMAIL + " TEXT, " +
+                RSVP_COLUMN_RESPONSE + " TEXT" +
+                ")";
+
         String CREATE_INVITATION_TABLE = "CREATE TABLE IF NOT EXISTS " + INVITATION_TABLE_NAME +
                 "(" +
                 INVITATION_COLUMN_ID + " INTEGER PRIMARY KEY, " +
@@ -93,6 +108,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_COUPLE_TABLE);
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_INVITATION_TABLE);
+        db.execSQL(CREATE_RSVP_TABLE);
     }
 
     @Override
@@ -102,6 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + COUPLE_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + INVITATION_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RSVP_TABLE_NAME);
         onCreate(db);
     }
 
@@ -167,6 +184,46 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void insertOrUpdateRsvp(Rsvp rsvp){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(RSVP_COLUMN_ID, rsvp.getOid());
+        contentValues.put(RSVP_COLUMN_NAME, rsvp.getName());
+        contentValues.put(RSVP_COLUMN_EMAIL, rsvp.getEmail());
+        contentValues.put(RSVP_COLUMN_RESPONSE, rsvp.getResponse());
+
+        int id = (int) db.insertWithOnConflict(RSVP_TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        if (id == -1) {
+            db.update(RSVP_TABLE_NAME, contentValues, RSVP_COLUMN_NAME +"=?", new String[] {rsvp.getName()});  // number 1 is the _id here, update to variable for your code
+        }
+        db.close();
+    }
+
+    public Rsvp retrieveRsvp(String name){
+        String selectQuery = "SELECT * FROM " + RSVP_TABLE_NAME + " WHERE " + RSVP_COLUMN_NAME + " = '" + name +"'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuery, null);
+
+        res.moveToFirst();
+
+        Rsvp rsvp = null;
+
+        while (res.isAfterLast() == false) {
+            rsvp = new Rsvp();
+            rsvp.setOid(res.getString(res.getColumnIndex(RSVP_COLUMN_ID)));
+            rsvp.setName(res.getString(res.getColumnIndex(RSVP_COLUMN_NAME)));
+            rsvp.setEmail(res.getString(res.getColumnIndex(RSVP_COLUMN_EMAIL)));
+            rsvp.setResponse(res.getString(res.getColumnIndex(RSVP_COLUMN_RESPONSE)));
+            res.close();
+            db.close();
+            return rsvp;
+        }
+        res.close();
+        db.close();
+        return rsvp;
+
+    }
     private boolean insertOrUpdateCouple(Bio bio, String person, boolean exists) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

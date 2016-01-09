@@ -46,8 +46,8 @@
             android:nextFocusDown="@+id/edit_invitation_passcode"
             android:padding="8dp"
             android:singleLine="true"
-            android:textColor="@color/grey_0"
-            android:textColorHint="#3c1047" />
+            android:textColor="@color/LIGHT_PURPLE"
+            android:textColorHint="@color/grey_300" />
 
 
         <EditText
@@ -62,8 +62,8 @@
             android:maxLines="1"
             android:padding="8dp"
             android:singleLine="true"
-            android:textColor="@color/grey_0"
-            android:textColorHint="#3c1047" />
+            android:textColor="@color/LIGHT_PURPLE"
+            android:textColorHint="@color/grey_300" />
 
         <Button
             android:id="@+id/btn_access_invitation"

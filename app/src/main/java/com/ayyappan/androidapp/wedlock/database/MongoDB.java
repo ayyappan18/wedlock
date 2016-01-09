@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.ayyappan.androidapp.wedlock.model.Bio;
 import com.ayyappan.androidapp.wedlock.model.Couple;
-import com.ayyappan.androidapp.wedlock.entertainment.bean.Song;
+import com.ayyappan.androidapp.wedlock.model.Song;
 import com.ayyappan.androidapp.wedlock.model.Image;
 import com.ayyappan.androidapp.wedlock.model.AppData;
 import com.ayyappan.androidapp.wedlock.model.User;
@@ -19,7 +19,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,14 +52,18 @@ public class MongoDB {
     }
 
     public void sendUser(User user){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss a");
+        String date = sdf.format(c.getTime());
         BasicDBObject basicDBObject = new BasicDBObject();
         basicDBObject.put("name", user.getName());
         basicDBObject.put("place", user.getPlace());
         basicDBObject.put("authentication", user.getAuthProvider());
         basicDBObject.put("email", user.getEmail());
+        basicDBObject.put("date", date);
 
-        DBCollection songsCollection = db.getCollection("users");
-        songsCollection.insert(basicDBObject);
+        DBCollection usersCollection = db.getCollection("users");
+        usersCollection.insert(basicDBObject);
     }
     public List<Image> getImages() {
         List<Image> images = new ArrayList<>();

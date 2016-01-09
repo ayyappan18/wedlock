@@ -1,5 +1,9 @@
 package com.ayyappan.androidapp.wedlock.database.mongolab;
 
+import com.ayyappan.androidapp.wedlock.model.Rsvp;
+import com.ayyappan.androidapp.wedlock.model.Song;
+import com.ayyappan.androidapp.wedlock.model.User;
+
 /**
  * Created by Ayyappan on 03/01/2016.
  */
@@ -7,6 +11,9 @@ public class QueryBuilder {
 
     private static final String DATABASE = "wedlock";
     private static final String COUPLE_COLLECTION = "bio";
+    private static final String USERS = "users";
+    private static final String SONGS = "songs";
+    private static final String RSVP = "rsvp";
     private static final String GALLERY_COLLECTION = "images";
     private static final String APIKEY = "m74mI8v69PkdV4Xlcn-tJpX2jCF4MEtF";
     private static final String APP_DETAILS_COLLECTION = "wedlock";
@@ -67,6 +74,12 @@ public class QueryBuilder {
 
     public String coupleCollecionRequest() { return COUPLE_COLLECTION;}
 
+    public String usersCollecionRequest() { return USERS;}
+
+    public String rsvpCollecionRequest() { return RSVP;}
+
+    public String songsCollecionRequest() { return SONGS;}
+
     public String appDetailsCollecionRequest() { return APP_DETAILS_COLLECTION;}
 
     public String galleryCollecionRequest() { return GALLERY_COLLECTION;}
@@ -91,32 +104,61 @@ public class QueryBuilder {
     }
 
 
-    /**
-     * Builds a complete URL using the methods specified above
-     * @return
-     */
-    public String buildContactsSaveURL()
+    public String buildUserSaveURL()
     {
-        return getBaseUrl()+documentRequest()+docApiKeyUrl();
+        return getBaseUrl()+usersCollecionRequest()+docApiKeyUrl();
     }
 
-    /**
-     * This method is identical to the one above.
-     * @return
-     */
-    public String buildContactsGetURL()
+    public String buildRsvpResponseURL()
     {
-        return getBaseUrl()+documentRequest()+docApiKeyUrl();
+        return getBaseUrl()+rsvpCollecionRequest()+docApiKeyUrl();
     }
 
-    /**
-     * Get a Mongodb document that corresponds to the given object id
-     * @param doc_id
-     * @return
-     */
-    public String buildContactsUpdateURL(String doc_id)
+    public String buildRsvpResponseUpdateURL(String doc_id)
     {
-        return getBaseUrl()+documentRequest()+docApiKeyUrl(doc_id);
+        return getBaseUrl()+rsvpCollecionRequest()+docApiKeyUrl(doc_id);
     }
 
+    public String buildSongSaveURL()
+    {
+        return getBaseUrl()+songsCollecionRequest()+docApiKeyUrl();
+    }
+
+    public String createUser(User user)
+    {
+        return String
+                .format("{\"name\": \"%s\", "
+                                + "\"email\": \"%s\", \"place\": \"%s\", \"authProdiver\": \"%s\", "
+                                + "\"date\": \"%s\"}",
+                        user.getName(), user.getEmail(),user.getPlace(),user.getAuthProvider(),user.getDateOfLogin());
+    }
+
+
+    public String createSong(Song song)
+    {
+        return String
+                .format("{\"movie\": \"%s\", "
+                                + "\"song\": \"%s\", "
+                                + "\"user\": \"%s\"}",
+                        song.getMovieName(), song.getSongName(),song.getUserName());
+    }
+
+    public String createRsvp(Rsvp rsvp)
+    {
+        return String
+                .format("{\"name\": \"%s\", "
+                                + "\"email\": \"%s\", "
+                                + "\"response\": \"%s\"}",
+                        rsvp.getName(), rsvp.getEmail(), rsvp.getResponse());
+    }
+
+    public String updateRsvp(Rsvp rsvp)
+    {
+        return String
+                .format("{ \"$set\" : "
+                        + "{\"name\": \"%s\", "
+                        + "\"email\": \"%s\", "
+                        + "\"response\": \"%s\"}" + "}",
+                        rsvp.getName(), rsvp.getEmail(), rsvp.getResponse());
+    }
 }

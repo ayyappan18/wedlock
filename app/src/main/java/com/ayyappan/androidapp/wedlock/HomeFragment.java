@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.content_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.title_fragment_home));
@@ -47,19 +47,18 @@ public class HomeFragment extends Fragment {
         actionBar.setDisplayHomeAsUpEnabled(true);
     //    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.title_fragment_home));
 
-        eventRespondLayout = (RelativeLayout) rootView.findViewById(R.id.EventRespond);
+      /*  eventRespondLayout = (RelativeLayout) rootView.findViewById(R.id.EventRespond);
         Button clickGoingButton = (Button) rootView.findViewById(R.id.going);
         goingLayout = (RelativeLayout) rootView.findViewById(R.id.GoingResponse);
         clickGoingButton.setOnClickListener(GoingEventButtonListener());
 
         Button clickMaybeButton = (Button) rootView.findViewById(R.id.maybe);
         clickMaybeButton.setOnClickListener(MaybeEventButtonListener());
-
+*/
         txtTimerDay = (TextView) rootView.findViewById(R.id.txtTimerDay);
         txtTimerHour = (TextView) rootView.findViewById(R.id.txtTimerHour);
         txtTimerMinute = (TextView) rootView.findViewById(R.id.txtTimerMinute);
         txtTimerSecond = (TextView) rootView.findViewById(R.id.txtTimerSecond);
-        tvEvent = (TextView) rootView.findViewById(R.id.tvhappyevent);
 
      /*   String firstName = new GlobalData(getContext()).getUser().getName();
         txtUsername = (TextView) rootView.findViewById(R.id.username);

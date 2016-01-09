@@ -21,12 +21,6 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        multiDexEnabled = true
-    }
-
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "2048M"
     }
 
     buildTypes {
@@ -40,21 +34,16 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-   // compile 'com.android.support:appcompat-v7:23.1.0'
     compile "com.android.support:support-v4:21.0.+"
-   // compile "com.android.support:appcompat-v7:19.0.+"
 
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
-  //  compile 'com.android.support:design:23.1.0'
-  //  compile 'com.google.android.gms:play-services:8.1.0'
     compile 'com.google.android.gms:play-services-maps:8.1.0'
     compile 'com.google.android.gms:play-services-plus:8.1.0'
+    compile 'com.google.android.gms:play-services-base:8.1.0'
 
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/httpclient-4.0.1.jar')
-
     compile files('libs/gson-2.1.jar')
-
     compile files('libs/joda-time-2.9.jar')
     compile files('libs/mongo-2.10.1.jar')
 

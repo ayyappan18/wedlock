@@ -1,4 +1,4 @@
-package com.ayyappan.androidapp.wedlock.entertainment.bean;
+package com.ayyappan.androidapp.wedlock.model;
 
 /**
  * Created by Ayyappan on 12/12/2015.

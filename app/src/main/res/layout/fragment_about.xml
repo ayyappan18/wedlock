@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/app_name"
+            android:textColor="@color/LIGHT_PURPLE"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="16pt" />
 
@@ -40,7 +41,8 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:paddingBottom="5dp"
-                android:text="@string/title_fragment_about"
+                android:text="Version"
+                android:textColor="@color/LIGHT_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="14pt" />
 
@@ -54,6 +56,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="20dp"
                 android:text="@string/about_version"
+                android:textColor="@color/DARK_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="8pt" />
 
@@ -67,8 +70,9 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="5dp"
                 android:text="Developed By"
+                android:textColor="@color/LIGHT_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14pt" />
+                android:textSize="12pt" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -80,6 +84,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="5dp"
                 android:text="@string/about_dev_name"
+                android:textColor="@color/DARK_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="10pt" />
 
@@ -92,6 +97,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/about_dev_email"
+                android:textColor="@color/DARK_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -103,6 +109,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/about_dev_mobile_number_uk"
+                android:textColor="@color/DARK_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -111,9 +118,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="false"
+                android:layout_marginBottom="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/about_dev_mobile_number_india"
+                android:textColor="@color/DARK_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
     </LinearLayout>

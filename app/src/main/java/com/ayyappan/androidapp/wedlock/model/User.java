@@ -9,6 +9,7 @@ public class User {
     private String photo;
     private String place;
     private String authProvider;
+    private String dateOfLogin;
 
     public String getName() {
         return name;
@@ -48,5 +49,13 @@ public class User {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public String getDateOfLogin() {
+        return dateOfLogin;
+    }
+
+    public void setDateOfLogin(String dateOfLogin) {
+        this.dateOfLogin = dateOfLogin;
     }
 }

@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ayyappan.androidapp.wedlock.R;
+import com.ayyappan.androidapp.wedlock.database.mongolab.PostUserDetailsAsyncTask;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.model.User;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.utils.Constants;
 import com.ayyappan.androidapp.wedlock.utils.ValidateUserInfo;
-import com.ayyappan.androidapp.wedlock.tasks.SendUserTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by AndreBTS on 20/08/2015.
@@ -103,9 +106,14 @@ public class RegisterActivity extends Activity {
             registeredUser.setPlace(location);
             registeredUser.setPhoto("Unknown");
 
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss a");
+            String date = sdf.format(c.getTime());
+            registeredUser.setDateOfLogin(date);
+
             CheckNetwork checkNetwork = new CheckNetwork();
             if (checkNetwork.isConnected(RegisterActivity.this)) {
-                new SendUserTask(registeredUser).execute();
+                new PostUserDetailsAsyncTask().execute(registeredUser);
             }
 
             new GlobalData(RegisterActivity.this).setUser(registeredUser);

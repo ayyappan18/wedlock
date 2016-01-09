@@ -134,7 +134,7 @@ public class GetAppDetailsAsyncTask extends AsyncTask<Void, Void, AppData> {
     protected void onPostExecute(AppData appData) {
       //  delegate.processFinish(data);
         if(appData!=null){
-            Toast.makeText(context, "App Details downloaded new Mongo", Toast.LENGTH_SHORT).show();
+      //      Toast.makeText(context, "App Details downloaded new Mongo", Toast.LENGTH_SHORT).show();
             DBHelper localDB = new DBHelper(context);
             localDB.insertCouple(appData.getCouple());
             String[] imageUrls = new String[appData.getImages().size()];

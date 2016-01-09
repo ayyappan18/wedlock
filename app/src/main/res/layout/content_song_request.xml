@@ -8,12 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/app_bg"
     tools:context="com.ayyappan.androidapp.wedlock.entertainment.LightMusicActivity"
     tools:showIn="@layout/app_bar_song_request">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:fillViewport="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,53 +23,104 @@
 
             <TextView
                 android:id="@+id/song_request"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView7"
-                android:layout_alignParentRight="false"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
                 android:paddingBottom="5dp"
                 android:text="Request a song"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="10pt" />
+                android:textColor="#712b83"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <TextView
                 android:id="@+id/song_request_detail"
+                android:layout_below="@id/song_request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView7"
-                android:layout_alignParentRight="false"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
                 android:paddingBottom="5dp"
-                android:text="Interested to listen to any particular song? Please register your interest by entering the details of the song in the below form. We cannot guarentee it to be played since final song list will be choosen by the band."
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="10pt"
-                android:layout_below="@id/song_request" />
+                android:textColor="@color/LIGHT_PURPLE"
+                android:text="Interested to listen to any particular song? Please register your interest by entering the details of the song in the below form."
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+            <TextView
+                android:id="@+id/warning"
+                android:layout_below="@id/song_request_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="5dp"
+                android:text="(We cannot guarentee it to be played since final song list will be choosen by the band.)"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/DARK_PURPLE"/>
+
+            <ImageView
+                android:id="@+id/movie_icon"
+                android:layout_below="@+id/warning"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/movie_icon" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"
+                android:layout_centerHorizontal="true"
                 android:hint="Movie name"
+                style="@style/eventDate"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:ems="10"
+                android:layout_marginTop="20dp"
+                android:imeOptions="flagNavigateNext"
+                android:nextFocusDown="@+id/song_name"
                 android:id="@+id/movie_name"
-                android:layout_below="@id/song_request_detail" />
+                android:layout_below="@id/movie_icon" />
+
+            <ImageView
+                android:id="@+id/song_icon"
+                android:layout_below="@+id/movie_name"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/song_icon" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"
+                style="@style/eventDate"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:hint="Song name"
                 android:ems="10"
                 android:id="@+id/song_name"
-                android:layout_below="@id/movie_name" />
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:imeActionId="@+id/submit_song_interest_button"
+                android:imeOptions="actionDone"
+                android:layout_below="@id/song_icon" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Button"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="Send song interest"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:id="@+id/submit_song_interest_button"
                 android:layout_below="@id/song_name" />
         </RelativeLayout>

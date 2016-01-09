@@ -20,12 +20,11 @@
 
         <TextView
             android:id="@+id/txt_event_name"
-            style="@style/Title"
+            style="@style/SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_icon"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             android:paddingRight="10dp"
             android:textStyle="bold" />
 
@@ -37,15 +36,13 @@
             android:layout_below="@+id/txt_event_name"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:alpha=".5"
-            android:backgroundTint="@color/white"
             android:gravity="center"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/VenueTitle"
@@ -55,7 +52,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:maxLines="2"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/PURPLE_SUBTITLE" />
 
         <TextView
@@ -65,7 +63,7 @@
             android:layout_below="@+id/VenueTitle"
             android:maxLines="3"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/PURPLE_SUBTITLE" />
 
 
@@ -107,10 +105,10 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="7dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:paddingTop="5dp">
+                    android:paddingTop="7dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -125,6 +123,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:text="@string/AddToCalendar"
+                        android:textAlignment="textStart"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -138,10 +137,10 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="7dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:paddingTop="5dp">
+                    android:paddingTop="7dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -156,6 +155,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:text="@string/GetDirections"
+                        android:textAlignment="textStart"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/white" />
                 </LinearLayout>
