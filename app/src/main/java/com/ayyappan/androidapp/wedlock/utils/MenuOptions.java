@@ -59,7 +59,7 @@ public class MenuOptions {
             case MenuOptions.ENTERTAINMENT : return R.drawable.entertainment_icon;
             case MenuOptions.INVITATION : return R.drawable.invitation_icon;
             case MenuOptions.EVENTS : return R.drawable.event_icon;
-            case MenuOptions.RSVP : return R.drawable.about_icon;
+            case MenuOptions.RSVP : return R.drawable.invitation_icon;
             case MenuOptions.ABOUT : return R.drawable.about_icon;
             default : return R.drawable. about_icon;
         }
@@ -71,7 +71,7 @@ public class MenuOptions {
 
         // Adding child data
         menuGroupHeaders.add(HOME);
-        menuGroupHeaders.add(BIOGRAPHY);
+     //   menuGroupHeaders.add(BIOGRAPHY);
         menuGroupHeaders.add(GALLERY);
         menuGroupHeaders.add(ENTERTAINMENT);
        // menuGroupHeaders.add(BLOG);
@@ -94,14 +94,12 @@ public class MenuOptions {
         venue.add(EVENT_WEDDING);
 
         menuGroupCompleteList.put(menuGroupHeaders.get(0), new ArrayList()); // Header, Child data
-        menuGroupCompleteList.put(menuGroupHeaders.get(1), biography);
-        menuGroupCompleteList.put(menuGroupHeaders.get(2), new ArrayList());
-        menuGroupCompleteList.put(menuGroupHeaders.get(3), entertainment);
-        menuGroupCompleteList.put(menuGroupHeaders.get(4), new ArrayList());
-        menuGroupCompleteList.put(menuGroupHeaders.get(5), venue);
+    //    menuGroupCompleteList.put(menuGroupHeaders.get(1), biography);
+        menuGroupCompleteList.put(menuGroupHeaders.get(1), new ArrayList());
+        menuGroupCompleteList.put(menuGroupHeaders.get(2), entertainment);
+        menuGroupCompleteList.put(menuGroupHeaders.get(3), new ArrayList());
+        menuGroupCompleteList.put(menuGroupHeaders.get(4), venue);
+        menuGroupCompleteList.put(menuGroupHeaders.get(5), new ArrayList());
         menuGroupCompleteList.put(menuGroupHeaders.get(6), new ArrayList());
-        menuGroupCompleteList.put(menuGroupHeaders.get(7), new ArrayList());
-
-
     }
 }

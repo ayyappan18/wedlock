@@ -27,6 +27,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         style="@style/SubTitle"
+        android:textStyle="bold"
         android:text="Please connect to internet and retry again"/>
 
 </FrameLayout>

@@ -36,6 +36,6 @@
             android:maxLines="2"
             android:minLines="1"
             android:text="name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 </RelativeLayout>

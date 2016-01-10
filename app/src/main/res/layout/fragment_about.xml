@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/app_name"
+            android:textStyle="bold"
             android:textColor="@color/LIGHT_PURPLE"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="16pt" />
@@ -42,6 +43,7 @@
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:text="Version"
+                android:textStyle="bold"
                 android:textColor="@color/LIGHT_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="14pt" />
@@ -70,6 +72,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="5dp"
                 android:text="Developed By"
+                android:textStyle="bold"
                 android:textColor="@color/LIGHT_PURPLE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="12pt" />

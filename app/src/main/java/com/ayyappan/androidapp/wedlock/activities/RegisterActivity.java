@@ -24,7 +24,7 @@ import java.util.Calendar;
  * Created by AndreBTS on 20/08/2015.
  */
 public class RegisterActivity extends Activity {
-    EditText edit_nome, edit_email, edit_location;
+    EditText edit_nome, edit_location;
     Button btn_registrar;
 
     @Override
@@ -41,8 +41,8 @@ public class RegisterActivity extends Activity {
         }
 
         edit_nome = (EditText) findViewById(R.id.edit_nome);
-        edit_email = (EditText) findViewById(R.id.edit_email);
-        edit_email.setText(email);
+     //   edit_email = (EditText) findViewById(R.id.edit_email);
+      //  edit_email.setText(email);
         edit_location = (EditText) findViewById(R.id.edit_location);
 
         btn_registrar = (Button) findViewById(R.id.btn_register);
@@ -64,7 +64,7 @@ public class RegisterActivity extends Activity {
     public void attemptCreate() {
         // Store values at the time of the login attempt.
         String name = edit_nome.getText().toString();
-        String email = edit_email.getText().toString();
+     //   String email = edit_email.getText().toString();
         String location = edit_location.getText().toString();
 
         boolean cancel = false;
@@ -77,14 +77,14 @@ public class RegisterActivity extends Activity {
             edit_nome.setError(getString(R.string.error_field_required));
             focusView = edit_nome;
             cancel = true;
-        } else if (TextUtils.isEmpty(email)) {
+      /*  } else if (TextUtils.isEmpty(email)) {
             edit_email.setError(getString(R.string.error_field_required));
             focusView = edit_email;
             cancel = true;
         } else if (!validate.isEmailValid(email)) {
             edit_email.setError(getString(R.string.error_invalid_email));
             focusView = edit_email;
-            cancel = true;
+            cancel = true;*/
         } else {
             // Check for a valid password, if the user entered one.
             if (TextUtils.isEmpty(location)) {
@@ -101,7 +101,7 @@ public class RegisterActivity extends Activity {
         } else {
             User registeredUser = new User();
             registeredUser.setName(name);
-            registeredUser.setEmail(email);
+            registeredUser.setEmail("Unknown");
             registeredUser.setAuthProvider("Manual");
             registeredUser.setPlace(location);
             registeredUser.setPhoto("Unknown");

@@ -25,6 +25,7 @@ import com.ayyappan.androidapp.wedlock.UILApplication;
 import com.ayyappan.androidapp.wedlock.fragments.GalleryFragment;
 import com.ayyappan.androidapp.wedlock.fragments.LightMusicFragment;
 import com.ayyappan.androidapp.wedlock.fragments.RSVPFragment;
+import com.ayyappan.androidapp.wedlock.fragments.SangeethFragment;
 import com.ayyappan.androidapp.wedlock.home.GlobalData;
 import com.ayyappan.androidapp.wedlock.utils.CheckNetwork;
 import com.ayyappan.androidapp.wedlock.adapters.MenuDrawerListAdapter;
@@ -41,6 +42,7 @@ import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_BRIDE;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.BIOGRAPHY_GROOM;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ENTERTAINMENT;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ENTERTAINMENT_LIGHTMUSIC;
+import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.ENTERTAINMENT_SANGEETH;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENTS;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_RECEPTION;
 import static com.ayyappan.androidapp.wedlock.utils.MenuOptions.EVENT_WEDDING;
@@ -233,6 +235,13 @@ public class ApplicationActivity extends AppCompatActivity {
                                         .addToBackStack(null)
                                         .commit();
                                 break;
+                            case ENTERTAINMENT_SANGEETH:
+                                fragmentManager.popBackStack();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_fragment, SangeethFragment.newInstance())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
                         }
                         break;
                     case EVENTS:
@@ -306,7 +315,7 @@ public class ApplicationActivity extends AppCompatActivity {
 
     private void clearBackStack() {
         FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
+        if (manager.getBackStackEntryCount() > 1) {
             FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }

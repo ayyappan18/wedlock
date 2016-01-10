@@ -63,6 +63,7 @@ public class LoginActivity extends Activity implements
     private SignInButton mPlusSignInButton;
     private LoginButton facebookLoginButton;
     private Button manualRegistrationButton;
+    private Button guestRegistrationButton;
     private CallbackManager callbackManager;
     ProgressDialog ringProgressDialog;
     GlobalData globalData;
@@ -91,8 +92,6 @@ public class LoginActivity extends Activity implements
     }
 
     private void initialiseLogin() {
-
-        LoginManager.getInstance().logOut();
 
         //Facebook Login
         facebookLoginButton = (LoginButton) findViewById(R.id.f_sign_in_button);
@@ -128,7 +127,19 @@ public class LoginActivity extends Activity implements
             }
         });
 
+        //Manual registration
+        guestRegistrationButton = (Button) findViewById(R.id.guest_registration_button);
+        guestRegistrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User guestUser = new User("","Unknown","Unknown","Unknown","Guest");
+                redirectLoggedInUserToHome(guestUser);
+            }
+        });
 
+        LoginManager.getInstance().logOut();
+        if(mGoogleApiClient.isConnected())
+            mGoogleApiClient.disconnect();
     }
 
     private void registerFacebookCallback() {
@@ -149,7 +160,7 @@ public class LoginActivity extends Activity implements
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this, "Error on Login, check your facebook app_id", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Error on Login, check your internet connection", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -254,7 +265,7 @@ public class LoginActivity extends Activity implements
         } else {
             // Show the signed-out UI
         }
-    }
+}
 
     @Override
     protected void onStop() {
@@ -281,9 +292,7 @@ public class LoginActivity extends Activity implements
     private void getGooglePlusProfileInformation() {
         ringProgressDialog.dismiss();
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-            Person currentPerson = Plus.PeopleApi
-                    .getCurrentPerson(mGoogleApiClient);
-
+            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             String personName = currentPerson.getDisplayName();
             String personPhotoUrl = currentPerson.getImage().getUrl();
             String email = Plus.AccountApi.getAccountName(mGoogleApiClient);

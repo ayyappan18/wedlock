@@ -124,12 +124,12 @@ public class EventDetailsFragment extends Fragment {
             public void onClick(View view) {
 
                 Long beginTime = venue.getEventStartDate().getMillis();
-                Long endTime = beginTime + 1000 * 60 * 60 * 4;
+                Long endTime = venue.getEventEndDate().getMillis();
                 Intent intent = new Intent(Intent.ACTION_INSERT)
                         .setData(CalendarContract.Events.CONTENT_URI)
                         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
                         .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
-                        .putExtra(CalendarContract.Events.TITLE, "Nivedhitha & Ayyappan Reception")
+                        .putExtra(CalendarContract.Events.TITLE, "Nivedhitha & Ayyappan " +venue.getEventName())
                         .putExtra(CalendarContract.Events.DESCRIPTION, "Reception")
                         .putExtra(CalendarContract.Events.EVENT_LOCATION, venue.getVenueName())
                         .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);

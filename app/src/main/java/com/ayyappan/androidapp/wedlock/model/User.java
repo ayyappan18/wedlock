@@ -15,6 +15,16 @@ public class User {
         return name;
     }
 
+    public User(String name, String email, String photo, String place, String authProvider) {
+        this.name = name;
+        this.email = email;
+        this.photo = photo;
+        this.place = place;
+        this.authProvider = authProvider;
+    }
+
+    public User(){ }
+
     public void setName(String name) {
         this.name = name;
     }

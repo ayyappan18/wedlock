@@ -67,6 +67,7 @@
             android:textColor="@color/LIGHT_PURPLE"
             android:textColorHint="@color/grey_300" />
         <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
+<!--
 
         <EditText
             android:id="@+id/edit_email"
@@ -81,9 +82,9 @@
             android:singleLine="true"
             android:textColor="@color/LIGHT_PURPLE"
             android:textColorHint="@color/grey_300" />
-        <!--android:textColorHint="@color/abc_primary_text_material_dark" />-->
+        &lt;!&ndash;android:textColorHint="@color/abc_primary_text_material_dark" />&ndash;&gt;
 
-
+-->
         <EditText
             android:id="@+id/edit_location"
             android:layout_width="match_parent"
@@ -98,6 +99,7 @@
             android:singleLine="true"
             android:textColor="@color/LIGHT_PURPLE"
             android:textColorHint="@color/grey_300" />
+
 
         <Button
             android:id="@+id/btn_register"

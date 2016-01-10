@@ -15,6 +15,7 @@
     <string name="title_fragment_gallery">Gallery</string>
     <string name="title_fragment_biography">Couple Profile</string>
     <string name="title_fragment_light_music">Music</string>
+    <string name="title_fragment_sangeeth">Sangeeth</string>
     <string name="title_fragment_song_request">Song Request</string>
     <string name="title_fragment_invitation">Invitation</string>
     `
@@ -28,7 +29,7 @@
 
     <!-- ABOUT -->
 
-    <string name="about_version">1.0.3</string>
+    <string name="about_version">1.2</string>
     <string name="about_dev_name">R.S.Ayyappan</string>
     <string name="about_dev_email">ayyappan18@gmail.com</string>
     <string name="about_dev_mobile_number_india">+91-9962003698</string>
@@ -100,7 +101,7 @@
     <!-- Strings related to create account -->
     <string name="already_registered">Already have an account? Sign in</string>
     <string name="prompt_name">Name</string>
-    <string name="action_register">Register</string>
+    <string name="action_register">Continue</string>
 
     <!-- Strings related to forgot account-->
     <string name="action_recover">Recover</string>
@@ -109,7 +110,7 @@
     <!-- Strings related to login -->
     <string name="app_decription">Personalized app wedding invite</string>
 
-    <string name="app_identity_request">Please provide your identity through one of the following ways</string>
+    <string name="app_identity_request">Please provide your identity through one of the following secure ways</string>
 
     <string name="app_register">Please provide your details</string>
 
@@ -127,6 +128,8 @@
     <string name="create_account">Register</string>
     <string name="AddToCalendar">Add Remainder</string>
     <string name="GetDirections">Get direction</string>
-    <string name="welcome_text">We are very excited to announce about our wedding and we request the honor of your presence
-at our marriage. Thanks for downloading our wedding app and please register your availability in the RSVP section.</string>
+    <string name="welcome_text">Our hearts filled with love and happiness as we realise our dreams come true.
+        Wedding bells on its way, love midway and hope for a life full of everlasting love and joy.
+        Come witness our life\'s most important occasion as we hold our hands and be as one.
+        Please register your availability in the RSVP section.</string>
 </resources>
